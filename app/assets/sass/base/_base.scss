@@ -49,6 +49,16 @@ h1 {
 
 }
 
+h3 {
+
+	font-family: "Montserrat";
+	text-transform: uppercase;
+	font-style: normal;
+
+	@include font-size(18);
+
+}
+
 .centre-wrap {
 
 	width: 100%;

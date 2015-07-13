@@ -12,7 +12,17 @@
 
 	width: 100%;
 	clear: both;
-	max-height: 675px;
+	max-height: 825px;
+
+}
+
+.bottom {
+
+	width: 100%;
+	clear: both;
+	background: url(../img/bottom-bg.jpg) bottom center no-repeat;
+	overflow: hidden;
+	padding-top: 350px;
 
 }
 
@@ -122,6 +132,12 @@ nav {
 
 }
 
+.inner-slider {
+
+	z-index: 1;
+
+}
+
 .pager {
 
 	width: 100%;
@@ -153,5 +169,131 @@ nav {
 
 
 	}
+
+}
+
+.social_sec {
+
+	@include width(3, 1.60%);
+	float: left;
+	color: $primaryColour;
+	text-align: center;
+	margin-bottom: 55px;
+
+	h3 {
+
+		border-bottom: 1px solid $primaryColour;
+		padding: 0 0 15px 0;
+		margin-bottom: 20px;
+
+	}
+
+	p {
+
+		margin-bottom: 15px;
+		@include font-size(18);
+
+	}
+
+}
+
+.twitter-feed {
+
+	width: 100%;
+	padding-top: 20px;
+	text-align: left;
+	padding-right: 50px;
+
+	p {
+
+		@include font-size(15);
+		line-height: 23px;
+
+		&.date {
+
+			text-align: right;
+
+		}
+
+	}
+
+}
+
+.instagram-feed {
+
+	width: 100%;
+	padding-top: 20px;
+	overflow: hidden;
+
+	img {
+
+		@include width(2, 4%);
+		float: left;
+
+	}
+
+}
+
+.social-wrap {
+
+	width: 100%;
+	border-bottom: 1px solid $primaryColour;
+	float: left;
+	margin-bottom: 2px;
+
+}
+
+
+footer {
+
+	float: left;
+	width: 100%;
+	border-top: 1px solid $primaryColour;
+	padding-top: 30px;
+	text-align: center;
+	padding-bottom: 30px;
+
+	color: $primaryColour;
+
+	ul {
+
+		text-align: center;
+		margin-bottom: 25px;
+
+		li {
+
+			display: inline-block;
+			@include font-size(15);
+			font-family: "Montserrat";
+			font-style: normal;
+			border-right: 1px solid $primaryColour;
+			line-height: 15px;
+			padding: 0 10px;
+
+			a {
+
+				color: $primaryColour;
+
+			}
+
+			&.icons {
+
+				border: none;
+				font-family: "icons";
+
+			}
+
+		}
+
+	}
+
+}
+
+.propcom {
+
+	color: $primaryColour;
+	font-family: "icons";
+
+	@include font-size(35);
 
 }

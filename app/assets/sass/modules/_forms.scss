@@ -1,0 +1,53 @@
+.field-wrap {
+
+	width: 100%;
+	border: 1px solid $primaryColour;
+	margin-bottom: 10px;
+	padding: 0 10px;
+
+}
+
+form {
+
+	padding: 0 40px;
+
+}
+
+input[type="text"], input[type="email"] {
+
+	background: none;
+	border: none;
+	color: $primaryColour;
+	line-height: 32px;
+	@include font-size(15);
+	width: 80%;
+
+	font-family: "calluna";
+	padding-left: 10px;
+
+	&:focus {
+
+		outline: none;
+
+	}
+
+}
+
+input[type="submit"] {
+
+	line-height: 20px;
+	margin-top: 10px;
+
+}
+
+label {
+
+	line-height: 16px;
+	@include font-size(18);
+	float: left;
+	border-right: 1px solid $primaryColour;
+	padding-right: 10px;
+	margin-top: 8px;
+	width: 20%;
+
+}

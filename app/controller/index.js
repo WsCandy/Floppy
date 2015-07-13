@@ -18,32 +18,33 @@ exports.params = function(page) {
 
 }
 
-exports.post = function *(next) {
+// exports.post = function *(next) {
 
-	try {
+// 	try {
 
-		yield this.render('index', {
+// 		yield this.render('index', {
 
-	 		view: this.page['index'] ? this.page['index'] : this.page['default'],
-	 		page: 'index',
-	 		response: this.request.body
+// 	 		view: this.page['index'] ? this.page['index'] : this.page['default'],
+// 	 		page: 'index',
+// 	 		response: this.request.body,
+// 	 		images: getImages('index')
 
-	 	});
+// 	 	});
 
-	}
+// 	}
 
-	catch(err) {
+// 	catch(err) {
 
-		if(err.syscall === 'open') {
+// 		if(err.syscall === 'open') {
 
-			this.body = err.message;
+// 			this.body = err.message;
 			
-		} else {
+// 		} else {
 
-			this.status = 404;
+// 			this.status = 404;
 
-		}
+// 		}
 
-	}
+// 	}
 
-}
+// }
