@@ -1,0 +1,27 @@
+{
+  "name": "prop-build-test",
+  "version": "1.0.0",
+  "description": "Propeller Build test with node",
+  "main": "server/bin/www.js",
+  "scripts": {
+    "test": "node server/bin/www.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WsCandy/build-test.git"
+  },
+  "dependencies": {
+    "koa": "^0.21.0",
+    "koa-body": "^1.2.1",
+    "koa-ejs": "^2.0.1",
+    "koa-logger": "^1.2.2",
+    "koa-router": "^5.1.2",
+    "koa-static": "^1.4.9"
+  },
+  "author": "Samuel Woodbridge",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WsCandy/build-test/issues"
+  },
+  "homepage": "https://github.com/WsCandy/build-test"
+}
