@@ -30,7 +30,20 @@
 		</section>
 
 		<section class="slider">
-			<img src="/assets/img/hero/1.jpg" alt="Propeller Build Test">
+
+			<div class="inner-slider">
+				
+				<% for(var i = 0; i < images.length; i++) { %>
+
+					<img zrs-src="/assets/img/hero/<%= page %>/<%= images[i]%>" alt="Propeller Build Test">
+
+				<% } %>
+
+			</div>
+
+			<div class="pager"></div>
+
+
 		</section>
 
 	</div>

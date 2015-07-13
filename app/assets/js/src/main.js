@@ -1,5 +1,14 @@
-(function() {
+window.propFuncs = {
 
-	console.log('lala');
+	sliders__ready: function() {
 
-})();
+		$('.slider').zRS({
+
+			transition: 'fade',
+			slideBy: 1
+
+		});
+
+	}
+
+}

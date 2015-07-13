@@ -1,9 +1,18 @@
+var fs = require('fs');
+
+var getImages = function(page) {
+
+	return fs.readdirSync(__dirname + '/../assets/img/hero/'+page);
+
+}
+
 exports.params = function(page) {
 
 	return {
 
 		view: page['index'] ? page['index'] : page['default'],
-		page: 'index'
+		page: 'index',
+		images: getImages('index')
 
 	}
 

@@ -60,7 +60,7 @@ exports.init = function(app) {
 
 		try {
 
-			var controller = require('../app/controller')(router);
+			var controller = require('../app/controller');
 
 			yield this.render('index', controller.params(page));
 
