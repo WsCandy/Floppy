@@ -1,0 +1,59 @@
+@font-face {
+
+	font-family: "icons";
+		src:url("../fonts/prop-build.eot");
+		src:url("../fonts/prop-build.eot?#iefix") format("embedded-opentype"),
+			url("../fonts/prop-build.woff") format("woff"),
+			url("../fonts/prop-build.ttf") format("truetype"),
+			url("../fonts/prop-build.svg#prop-build") format("svg");
+	font-weight: normal;
+	font-style: normal;
+
+}
+
+* {
+
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+
+	-webkit-font-smoothing: antialiased;
+
+}
+
+body {
+
+	font-family: "calluna";
+	font-style: italic;
+	font-size: 100%;
+	background: $secondaryColour;
+
+}
+
+a {
+
+	text-decoration: none;
+
+}
+
+h1 {
+
+	font-family: "Montserrat";
+	text-transform: uppercase;
+	font-style: normal;
+
+	@include font-size(40);
+	line-height: 40px;
+	margin-bottom: 30px;
+
+}
+
+.centre-wrap {
+
+	width: 100%;
+	max-width: 1270px;
+	margin: 0 auto;
+	padding: 0 15px;
+
+}

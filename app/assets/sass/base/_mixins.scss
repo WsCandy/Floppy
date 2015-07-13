@@ -1,0 +1,29 @@
+@mixin width($count, $margin) {
+ 
+	width: (1 / $count * 100%) - $margin + ($margin / $count);
+	margin-right: $margin;
+ 
+	// This is an IE8 Fix, I know it's stupid, don't tell me.
+	
+	&.last {
+ 
+	 	margin-right: 0;
+ 
+	 }
+	
+	&:nth-of-type(#{($count)+"n+0"}), {
+		
+		margin-right: 0;
+		
+	}
+ 
+}
+
+@mixin font-size($value) {
+
+	$em : $value / 16;
+
+	font-size: $value+px;
+	font-size: $em+em;
+
+}

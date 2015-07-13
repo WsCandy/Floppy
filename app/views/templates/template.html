@@ -5,9 +5,11 @@
 		<meta name="description" content="<%- view.desc %>">
 		<link rel='shortcut icon' type='image/x-icon' href='/assets/favicon.ico' />
 		<link rel="stylesheet" href="/assets/css/main.css">
-		<% if(site.responsive === true) { %>
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-		<% } %>
+
+		<script src="//use.typekit.net/hcg5orb.js"></script>
+		<script>try{Typekit.load();}catch(e){}</script>
+		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 
 		<script>
 			(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create","<%- site.analytics %>","auto");ga("send","pageview"<%- page === 'not-found' ?",'/404/?url='+document.location.pathname+document.location.search+'&ref='+document.referrer":""%>);
@@ -16,10 +18,48 @@
 	</head>
 	<body id="<%- page %>">		
 		
+		<section class="top">			
+			<div class="centre-wrap">
+				<a href="/" class="logo">
+					<img src="/assets/img/logo.png" alt="Propeller Build Test">
+				</a>
+
+				<nav>
+					<ul>
+						<li>
+							<a href="" title="About">About</a>
+						</li>
+						<li>
+							<a href="" title="Menus">Menus</a>
+						</li>
+						<li>
+							<a href="" title="Locations">Locations</a>
+						</li>
+						<li>
+							<a href="" title="Bookings">Bookings</a>
+						</li>
+						<li>
+							<a href="" title="Gallery">Gallery</a>
+						</li>
+						<li>
+							<a href="" title="Contact">Contact</a>
+						</li>
+					</ul>
+				</nav>
+
+				<div class="social">
+					
+					<a href="/" class="social__link">c</a>
+					<a href="/" class="social__link">a</a>
+					<a href="/" class="social__link">b</a>
+
+				</div>
+
+			</div>
+		</section>
+
 		<%- body %>
 
 	</body>
-
-	<script type="text/javascript" src="/assets/js/test.js"></script>
 
 </html>

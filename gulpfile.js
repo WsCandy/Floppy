@@ -96,7 +96,7 @@ var reloadFile = function(data) {
 var watchTask = function() {
 
 	gulp.watch(options.assetsPath+'sass/**/*.scss', ['sass']);
-	gulp.watch(options.viewsPath+'**/*.php').on('change', reloadFile);
+	gulp.watch(options.viewsPath+'**/*.html').on('change', reloadFile);
 
 	if(legacy !== true) {
 
