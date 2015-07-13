@@ -1,0 +1,41 @@
+[
+	{
+
+		"index" : {
+
+			"title"	: "Home",
+			"desc"	: "This is the homepage, wow"
+
+		},
+
+		"about" : {
+
+			"title"	: "About",
+			"desc"	: "This is the about us page, wow"
+
+		},
+
+		"sam-about" : {
+
+			"title"	: "Tester",
+			"desc"	: "This is Sam's page!!"
+
+		},
+
+		"404" : {
+
+			"title"	: "Error 404 Page Not Found",
+			"desc"	: "Error 404, Page Not Found"
+
+		},
+
+		"default" : {
+
+			"title"	: "Default title",
+			"desc"	: "Default decription"
+
+		}
+		
+	}
+
+]
