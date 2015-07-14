@@ -21,48 +21,42 @@ var images = function() {
 
 	self.app.use(function *(next){
 
-		var process = this,
-			errors;
+		var error;
 
-		this.state.images = function getImages(page, path) {
+		this.state.images = function(page, path) {
 
-			fs.readdir(__dirname + '/../'+ (path = (path ? path : 'assets/img/hero/')) + page, function(err, data) {
-
-				if(err) {
-
-					process.status = 500;
-					errors = err.message;
-
-				};
+			try {
 
 
-				eventEmitter.emit('recievedImages', data, path);
+					var data = fs.readdirSync(__dirname + '/../'+ (path = (path ? path : 'assets/img/hero/')) + page),
+						finalImages = []
 
-			});
+					for (var image in data) {
 
-			eventEmitter.on('recievedImages', function(data, path) {
+						finalImages.push('/' + path + '' + (page ? page + '/' : '') + data[image]);
 
-				var finalImages = []
+					}
 
-				for (var image in data) {
+					self.images = finalImages;
 
-					finalImages.push('/' + path + '/' +data[image]);
+				    return self.images;
 
 				}
 
-				self.images = finalImages;
-		        
-		    });			
+			catch (err) {
 
-		    return self.images;
+				error = err.message;
+
+			}
 
 		}
 
 		yield next;
 
-		if(this.status === 500) {
+		if(error) {
 
-			this.body =  'Error ' + this.status + ' ' + errors;
+			this.status = 500;
+			this.body =  'Error ' + this.status + ' ' + error;
 
 		}
 

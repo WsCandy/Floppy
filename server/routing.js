@@ -61,9 +61,29 @@ exports.init = function(app) {
 
 		try {
 
-			var controller = require('../app/controller');
+			var controller = require('../app/controller/index');
+				
+			try {
 
-			yield this.render('index', controller.params(page));
+				yield this.render('index', controller.params(page, 'index'));
+
+			}
+
+			catch(err) {
+
+				console.log(err);
+
+				if(err.syscall === 'open') {
+
+					this.body = err.message;
+					
+				} else {
+
+					this.status = 404;
+
+				}
+				
+			}
 
 		} 
 
@@ -74,8 +94,7 @@ exports.init = function(app) {
 				yield this.render('index', {
 
 			 		view: page['index'] ? page['index'] : page['default'],
-			 		page: 'index',
-			 		response: null
+			 		page: 'index'
 
 			 	});
 
@@ -100,14 +119,13 @@ exports.init = function(app) {
 		router.post('/', koaBody, function *(next) {
 
 			this.page = page;
-
 			yield next;
 
-		}, testModule('../app/controller') && require('../app/controller').post ? require('../app/controller').post : function *(next) {
+		}, testModule('../app/controller/index') && require('../app/controller/index').post ? require('../app/controller/index').post : function *(next) {
 
 			this.status = 403;
 			this.body = this.status + ' ' + this.message + ' - Naughty';
-
+			
 			yield next;
 
 		});
@@ -118,7 +136,7 @@ exports.init = function(app) {
 
 		try {
 
-			var controller = require('../app/controller/'+this.params['page']+'.js');
+			var controller = require('../app/controller/'+this.params['page']);
 				
 			try {
 
@@ -176,10 +194,9 @@ exports.init = function(app) {
 		router.post('/:page', koaBody, function *(next) {
 
 			this.page = page;
-
 			yield next;
 
-		}, testModule('../app/controller/'+this.params['page']+'.js') && require('../app/controller/'+this.params['page']+'.js').post ? require('../app/controller/'+this.params['page']+'.js').post : function *(next) {
+		}, testModule('../app/controller/'+this.params['page']) && require('../app/controller/'+this.params['page']).post ? require('../app/controller/'+this.params['page']).post : function *(next) {
 
 			this.status = 403;
 			this.body = this.status + ' ' + this.message + ' - Naughty';
@@ -197,7 +214,7 @@ exports.init = function(app) {
 
 		try {
 
-			var controller = require('../app/controller/'+this.params['dir'] + '/' + this.params['page']+'.js');
+			var controller = require('../app/controller/'+this.params['dir'] + '/' + this.params['page']);
 				
 			yield this.render(this.params['dir'] + '/' + this.params['page'], controller.params(page, this.params['page'], pageString));
 
