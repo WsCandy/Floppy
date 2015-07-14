@@ -23,25 +23,26 @@ var images = function() {
 
 		var error;
 
-		this.state.images = function(page, path) {
+		this.state.images = function(path) {
+
+			console.log(path);
 
 			try {
 
+				var data = fs.readdirSync(__dirname + '/../'+ path),
+					finalImages = [];
 
-					var data = fs.readdirSync(__dirname + '/../'+ (path = (path ? path : 'assets/img/hero/')) + page),
-						finalImages = []
+				for (var image in data) {
 
-					for (var image in data) {
-
-						finalImages.push('/' + path + '' + (page ? page + '/' : '') + data[image]);
-
-					}
-
-					self.images = finalImages;
-
-				    return self.images;
+					finalImages.push('/' + path + '/' + data[image]);
 
 				}
+
+				self.images = finalImages;
+
+			    return self.images;
+
+			}
 
 			catch (err) {
 

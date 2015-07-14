@@ -33,11 +33,11 @@
 
 			<div class="inner-slider">
 				
-				<% var hero = images('', 'assets/img/instagram/') %>
+				<% var image = images('assets/img/instagram/') %>
 
-				<% for(var i = 0; i < hero.length; i++) { %>
+				<% for(var i = 0; i < image.length; i++) { %>
 
-					<img zrs-src="<%= hero[i]%>" alt="Propeller Build Test">
+					<img zrs-src="<%= image[i]%>" alt="Propeller Build Test">
 
 				<% } %>
 
