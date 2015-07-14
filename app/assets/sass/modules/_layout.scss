@@ -6,6 +6,12 @@
 	padding-bottom: 290px;
 	text-align: center;
 
+	@include mq($tab) {
+
+		padding-bottom: 230px;
+
+	}
+
 }
 
 .middle {
@@ -13,6 +19,12 @@
 	width: 100%;
 	clear: both;
 	max-height: 825px;
+
+	@include mq($tab) {
+
+		max-height: none;
+
+	}
 
 }
 
@@ -23,6 +35,12 @@
 	background: url(../img/bottom-bg.jpg) bottom center no-repeat;
 	overflow: hidden;
 	padding-top: 350px;
+
+	@include mq($tab) {
+
+		padding-top: 5%;
+
+	}
 
 }
 
@@ -74,6 +92,12 @@ nav {
 
 		}
 
+		@include mq($tab) {
+
+			padding: 0 20px;
+
+		}
+
 	}
 
 }
@@ -99,6 +123,39 @@ nav {
 		@include font-size(20);
 		line-height: 36px;
 
+		&--facebook {
+
+			&:hover {
+
+				color: #3b5998;
+				border-color: #3b5998;
+
+			}
+
+		}
+
+		&--twitter {
+
+			&:hover {
+
+				color: #55acee;
+				border-color: #55acee;
+
+			}
+			
+		}
+
+		&--instagram {
+
+			&:hover {
+
+				color: #3f729b;
+				border-color: #3f729b;
+
+			}
+			
+		}
+
 	}
 
 }
@@ -121,6 +178,11 @@ nav {
 
 	}
 
+	@include mq($tab) {
+
+		padding: 75px 100px;
+
+	}
 
 }
 

@@ -16,6 +16,7 @@ body {
   font-family: "calluna";
   font-style: italic;
   font-size: 100%;
+  position: relative;
   background: #000000; }
 
 a {
@@ -49,11 +50,17 @@ h3 {
   padding-top: 155px;
   padding-bottom: 290px;
   text-align: center; }
+  @media screen and (max-width: 985px) {
+    .top {
+      padding-bottom: 230px; } }
 
 .middle {
   width: 100%;
   clear: both;
   max-height: 825px; }
+  @media screen and (max-width: 985px) {
+    .middle {
+      max-height: none; } }
 
 .bottom {
   width: 100%;
@@ -61,6 +68,9 @@ h3 {
   background: url(../img/bottom-bg.jpg) bottom center no-repeat;
   overflow: hidden;
   padding-top: 350px; }
+  @media screen and (max-width: 985px) {
+    .bottom {
+      padding-top: 5%; } }
 
 .logo {
   margin: 0 auto 65px auto;
@@ -91,6 +101,9 @@ nav {
       width: 100%;
       display: inline-block;
       line-height: 0px; }
+    @media screen and (max-width: 985px) {
+      nav ul {
+        padding: 0 20px; } }
 
 .social {
   text-align: center;
@@ -109,6 +122,15 @@ nav {
     font-size: 20px;
     font-size: 1.25em;
     line-height: 36px; }
+    .social__link--facebook:hover {
+      color: #3b5998;
+      border-color: #3b5998; }
+    .social__link--twitter:hover {
+      color: #55acee;
+      border-color: #55acee; }
+    .social__link--instagram:hover {
+      color: #3f729b;
+      border-color: #3f729b; }
 
 .main {
   width: 100%;
@@ -121,6 +143,9 @@ nav {
     font-size: 18px;
     font-size: 1.125em;
     line-height: 25px; }
+  @media screen and (max-width: 985px) {
+    .main {
+      padding: 75px 100px; } }
 
 .slider {
   width: 100%;

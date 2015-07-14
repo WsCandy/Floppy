@@ -19,6 +19,28 @@
  
 }
 
+@mixin mq($value, $axis: false) {
+
+	@if $axis {
+
+		@media screen and ("max-"+$axis: $value) {
+
+			@content;
+
+		}
+
+	} @else {
+
+		@media screen and (max-width: $value) {
+
+			@content;
+
+		}
+		
+	}
+
+}
+
 @mixin font-size($value) {
 
 	$em : $value / 16;
