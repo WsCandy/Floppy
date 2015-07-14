@@ -66,7 +66,7 @@ var sassTask = function() {
 			onSuccess: function(data) {
 
 				gutil.log(gutil.colors.green('SASS successfully written! Amazing!'));
-				browserSync.reload(options.assetsPath+'css/'+data.map.file);
+				browserSync.reload(options.assetsPath+'css/main.css');
 
 			},
 			onError: function(err) {
@@ -149,7 +149,7 @@ gulp.task('browser-sync', function() {
 		logPrefix: 'Propeller Browser Sync',
     	proxy: {
 		
-		    target: 'http://localhost:3000',
+		    target: 'http://localhost:4200',
 		    middleware: function(req, res, next) {
 		    	
 		    	next();
