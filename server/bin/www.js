@@ -2,9 +2,8 @@ var koa = require('koa'),
 	static = require('koa-static'),
 	controller = require('../controller'),
 	routing = require('../routing'),
+	states = require(__dirname+'/../../app/controller/states/states.js')
 	logger = require('koa-logger');
-	
-
 
 var app = module.exports = koa();
 
@@ -30,8 +29,10 @@ app.use(function *(next) {
 app.use(logger());
 app.use(static(__dirname + '/../../app'));
 
+states.init(app);
 controller.init(app);
 routing.init(app);
+
 
 app.on('error', function(err, ctx){
 

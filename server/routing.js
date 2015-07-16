@@ -43,6 +43,7 @@ exports.init = function(app) {
 
 		yield next;
 
+
 		if(this.response.status == 404) {
 
 			yield this.render('404', {
@@ -52,10 +53,10 @@ exports.init = function(app) {
 
 			});
 
-		}
-		
+		}		
 
 	});
+	
 
 	router.get('/', function *(next) {
 
@@ -85,7 +86,7 @@ exports.init = function(app) {
 				
 			}
 
-		} 
+		}
 
 		catch(err) {
 
@@ -116,6 +117,7 @@ exports.init = function(app) {
 
 		}
 
+		
 		router.post('/', koaBody, function *(next) {
 
 			this.page = page;
@@ -255,5 +257,8 @@ exports.init = function(app) {
 
 	});
 
-	app.use(router.routes());
+	app
+		.use(router.routes())
+		.use(router.allowedMethods());
+
 }

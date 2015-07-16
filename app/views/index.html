@@ -71,8 +71,13 @@
 				<a href="" class="button" title="Follow">Follow</a>
 
 				<div class="instagram-feed">
-					<img src="/assets/img/instagram/1.jpg" alt="Example Instagram">
-					<img src="/assets/img/instagram/2.jpg" alt="Example Instagram">
+
+					<% for(var i = 0; i < 2; i++) { %>
+
+						<img src="<%= instagram[i].images.standard_resolution.url %>" alt="<%= instagram[i].caption.text %>">
+
+					<% } %>
+
 				</div>
 
 			</div>
