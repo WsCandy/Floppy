@@ -1,6 +1,8 @@
 var Q = require('q'),
 	https = require('https'),
-	self = this;
+	self = this,
+	fs = require('fs'),
+	cache;
 
 exports.init = function(app) {
 	
@@ -15,15 +17,28 @@ var instagram = function *(next) {
 
 }
 
-var complete = function(data, process) {
+var complete = function(data, process, time) {
 
 	process.state.instagram = data;
+
+	if(!time) {
+
+		fs.writeFile(__dirname+'/../../cache/instagram.json', JSON.stringify(data), function() {
+
+			cache = new Date();
+			cache.setMinutes(cache.getMinutes() + 15);
+			console.log('Instagram cache set, expires ' + cache)
+
+		});
+		
+	}
 
 }
 
 var getInstagram = function(process) {
 	
 	var deferred = Q.defer();
+		currentTime = new Date();
 
 	var accessToken = '414143281.467ede5.b2f838f87a0b418e9d1b7fa21a6d7135',
 		options = {
@@ -33,35 +48,50 @@ var getInstagram = function(process) {
 			method: 'GET'
 
 		};
+	
+	if(cache && currentTime.getTime() < cache.getTime()) {
 
-	var request = https.request(options, function(response) {
-		
-		var body = '';
+		fs.readFile(__dirname+'/../../cache/instagram.json', {encoding: 'utf8'}, function(err, data) {
 
-		console.log(response.statusCode)
+			var info = JSON.parse(data);
 
-		response.on('data', function(data) {
-
-			body += data;
-
-		});
-
-		response.on('end', function() {
-
-			var info = JSON.parse(body).data;
-			deferred.resolve(complete(info, process));
+			console.log('Using cached...');
+			deferred.resolve(complete(info, process, currentTime));
 
 		});
 
-		response.on('error', function(err) {
+	} else {
 
-			console.log(err);
+		var request = https.request(options, function(response) {
+			
+			var body = '';
+
+			console.log(response.statusCode)
+
+			response.on('data', function(data) {
+
+				body += data;
+
+			});
+
+			response.on('end', function() {
+
+				var info = JSON.parse(body).data;
+				deferred.resolve(complete(info, process));
+
+			});
+
+			response.on('error', function(err) {
+
+				console.log(err);
+
+			});
 
 		});
 
-	});
+		request.end();		
 
-	request.end();
+	}
 
 	return deferred.promise;
 
