@@ -42,7 +42,7 @@ app.use(conditional());
 app.use(etag());
 
 controller.init(app);
-states.init(app, routing);
+states.init(app);
 routing.init(app);
 
 
