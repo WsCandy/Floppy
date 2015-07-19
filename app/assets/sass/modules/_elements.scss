@@ -57,6 +57,12 @@
 
 	}
 
+	@include mq($mob) {
+
+		@include width(2, 0%);
+
+	}
+
 }
 
 .button {

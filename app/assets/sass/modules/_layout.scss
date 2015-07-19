@@ -176,11 +176,24 @@ nav {
 		@include font-size(18);
 		line-height: 25px;
 
+		@include mq($mob) {
+
+			@include font-size(15);
+			line-height: 20px;
+
+		}
+
 	}
 
 	@include mq($tab) {
 
 		padding: 75px 100px;
+
+	}
+
+	@include mq($mob) {
+
+		padding: 75px 15px;
 
 	}
 
@@ -257,6 +270,12 @@ nav {
 
 	}
 
+	@include mq($mob) {
+
+		@include width(1, 0%);
+
+	}
+
 }
 
 .twitter-feed {
@@ -279,6 +298,12 @@ nav {
 
 	}
 
+	@include mq($mob) {
+
+		padding-right: 0px;
+
+	}
+
 }
 
 .instagram-feed {
@@ -291,6 +316,13 @@ nav {
 
 		@include width(2, 4%);
 		float: left;
+
+		@include mq($mob) {
+
+			@include width(1, 0%);
+			margin-bottom: 15px;
+
+		}
 
 	}
 
@@ -331,6 +363,14 @@ footer {
 			border-right: 1px solid $primaryColour;
 			line-height: 15px;
 			padding: 0 10px;
+
+			@include mq($mob) {
+
+				border-right: none;
+				width: 100%;
+				margin-bottom: 10px;
+
+			}
 
 			a {
 

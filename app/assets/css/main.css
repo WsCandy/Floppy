@@ -30,6 +30,11 @@ h1 {
   font-size: 2.5em;
   line-height: 40px;
   margin-bottom: 30px; }
+  @media screen and (max-width: 580px) {
+    h1 {
+      font-size: 24px;
+      font-size: 1.5em;
+      line-height: 25px; } }
 
 h3 {
   font-family: "Montserrat";
@@ -143,9 +148,17 @@ nav {
     font-size: 18px;
     font-size: 1.125em;
     line-height: 25px; }
+    @media screen and (max-width: 580px) {
+      .main p {
+        font-size: 15px;
+        font-size: 0.9375em;
+        line-height: 20px; } }
   @media screen and (max-width: 985px) {
     .main {
       padding: 75px 100px; } }
+  @media screen and (max-width: 580px) {
+    .main {
+      padding: 75px 15px; } }
 
 .slider {
   width: 100%;
@@ -194,6 +207,14 @@ nav {
     margin-bottom: 15px;
     font-size: 18px;
     font-size: 1.125em; }
+  @media screen and (max-width: 580px) {
+    .social_sec {
+      width: 100%;
+      margin-right: 0%; }
+      .social_sec.last {
+        margin-right: 0; }
+      .social_sec:nth-of-type(1n+0) {
+        margin-right: 0; } }
 
 .twitter-feed {
   width: 100%;
@@ -206,6 +227,9 @@ nav {
     line-height: 23px; }
     .twitter-feed p.date {
       text-align: right; }
+  @media screen and (max-width: 580px) {
+    .twitter-feed {
+      padding-right: 0px; } }
 
 .instagram-feed {
   width: 100%;
@@ -219,6 +243,15 @@ nav {
       margin-right: 0; }
     .instagram-feed img:nth-of-type(2n+0) {
       margin-right: 0; }
+    @media screen and (max-width: 580px) {
+      .instagram-feed img {
+        width: 100%;
+        margin-right: 0%;
+        margin-bottom: 15px; }
+        .instagram-feed img.last {
+          margin-right: 0; }
+        .instagram-feed img:nth-of-type(1n+0) {
+          margin-right: 0; } }
 
 .social-wrap {
   width: 100%;
@@ -246,6 +279,11 @@ footer {
       border-right: 1px solid #FFFFFF;
       line-height: 15px;
       padding: 0 10px; }
+      @media screen and (max-width: 580px) {
+        footer ul li {
+          border-right: none;
+          width: 100%;
+          margin-bottom: 10px; } }
       footer ul li a {
         color: #FFFFFF; }
       footer ul li.icons {
@@ -300,6 +338,14 @@ footer {
   .square-cta--4 {
     background: url(../img/cta/4.jpg) center no-repeat;
     background-size: 100%; }
+  @media screen and (max-width: 580px) {
+    .square-cta {
+      width: 50%;
+      margin-right: 0%; }
+      .square-cta.last {
+        margin-right: 0; }
+      .square-cta:nth-of-type(2n+0) {
+        margin-right: 0; } }
 
 .button {
   font-family: "Montserrat";
@@ -326,6 +372,9 @@ footer {
 
 form {
   padding: 0 40px; }
+  @media screen and (max-width: 580px) {
+    form {
+      padding: 0 15px; } }
 
 input[type="text"], input[type="email"] {
   background: none;

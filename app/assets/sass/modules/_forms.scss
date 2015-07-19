@@ -11,6 +11,12 @@ form {
 
 	padding: 0 40px;
 
+	@include mq($mob) {
+
+		padding: 0 15px;
+
+	}
+
 }
 
 input[type="text"], input[type="email"] {
