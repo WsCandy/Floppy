@@ -1,7 +1,12 @@
-var instagram = require('./instagram.js');
+var instagram = require('./instagram.js'),
+	config = require(__dirname+'/../../config/site.json')[0];
 
 exports.init = function(app) {
 
-	instagram.init(app);
+	if(config.instagram) {
+
+		instagram.init(app, config['instagram']);
+
+	}
 
 }

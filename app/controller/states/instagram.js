@@ -4,8 +4,10 @@ var Q = require('q'),
 	fs = require('fs'),
 	cache;
 
-exports.init = function(app) {
+exports.init = function(app, token) {
 	
+	self.token = token;
+
 	app.use(instagram);
 
 }
@@ -38,13 +40,11 @@ var complete = function(data, process, time) {
 var getInstagram = function(process) {
 	
 	var deferred = Q.defer();
-		currentTime = new Date();
-
-	var accessToken = '414143281.467ede5.b2f838f87a0b418e9d1b7fa21a6d7135',
+		currentTime = new Date(),
 		options = {
 		
 			hostname: 'api.instagram.com',
-			path: '/v1/users/self/media/recent?access_token='+accessToken,
+			path: '/v1/users/self/media/recent?access_token='+self.token,
 			method: 'GET'
 
 		};
@@ -54,8 +54,6 @@ var getInstagram = function(process) {
 		fs.readFile(__dirname+'/../../cache/instagram.json', {encoding: 'utf8'}, function(err, data) {
 
 			var info = JSON.parse(data);
-
-			console.log('Using cached...');
 			deferred.resolve(complete(info, process, currentTime));
 
 		});
