@@ -317,10 +317,10 @@ nav {
 		@include width(2, 4%);
 		float: left;
 
-		@include mq($mob) {
+		@include mq($large-mob) {
 
-			@include width(1, 0%);
 			margin-bottom: 15px;
+			@include width(1, 0%);
 
 		}
 
