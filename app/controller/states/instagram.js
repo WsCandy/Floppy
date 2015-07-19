@@ -7,7 +7,6 @@ var Q = require('q'),
 exports.init = function(app, token) {
 	
 	self.token = token;
-
 	app.use(instagram);
 
 }
