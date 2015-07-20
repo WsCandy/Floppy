@@ -258,14 +258,6 @@ exports.init = function(app) {
 
 	});
 
-	// router.get('/*', function *(next) {
-
-	// 	console.log('sam')
-	// 	yield next;
-
-
-	// });
-
 	app
 		.use(router.routes())
 		.use(router.allowedMethods());

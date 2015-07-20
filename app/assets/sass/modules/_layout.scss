@@ -316,6 +316,7 @@ nav {
 
 		@include width(2, 4%);
 		float: left;
+		height: auto;
 
 		@include mq($large-mob) {
 

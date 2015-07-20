@@ -238,7 +238,8 @@ nav {
   .instagram-feed img {
     width: 48%;
     margin-right: 4%;
-    float: left; }
+    float: left;
+    height: auto; }
     .instagram-feed img.last {
       margin-right: 0; }
     .instagram-feed img:nth-of-type(2n+0) {
