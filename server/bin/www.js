@@ -1,5 +1,4 @@
 var koa = require('koa'),
-	static = require('koa-static'),
 	conditional = require('koa-conditional-get'),
 	staticCache = require('koa-static-cache'),
 	etag = require('koa-etag'),
@@ -34,21 +33,18 @@ var files = {};
 app.use(logger());
 
 app.use(conditional());
-app.use(static(__dirname + '/../../app'));
-app.use(staticCache(__dirname + '/../../app/assets', {
+app.use(staticCache(__dirname + '/../../app', {
 
-	maxAge: 24 * 60 * 60,
+	cacheControl: 'public, max-age='+ (1000 * 60 * 60),
 	buffer: true,
 	gzip: true
 
 }, files));
-
 app.use(etag());
 
 controller.init(app);
 states.init(app);
 routing.init(app);
-
 
 app.on('error', function(err, ctx){
 

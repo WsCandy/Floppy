@@ -60,6 +60,7 @@ exports.init = function(app) {
 
 	router.get('/', function *(next) {
 
+
 		try {
 
 			var controller = require('../app/controller/index');
@@ -256,6 +257,14 @@ exports.init = function(app) {
 		this.body = this.request.body;
 
 	});
+
+	// router.get('/*', function *(next) {
+
+	// 	console.log('sam')
+	// 	yield next;
+
+
+	// });
 
 	app
 		.use(router.routes())
