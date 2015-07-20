@@ -125,7 +125,7 @@ gulp.task('setup', function() {
 
 		}
 
-		jsFiles = [options.assetsPath+'js/src/*.js'];
+		jsFiles = [options.assetsPath+'js/lib/*.js', options.assetsPath+'js/src/*.js'];
 
 		fs.unlink(options.assetsPath+'js/main.min.js', function(err){});
 		fs.unlink(options.assetsPath+'css/main.css', function(err){});
