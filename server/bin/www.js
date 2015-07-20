@@ -32,13 +32,17 @@ app.use(function *(next) {
 var files = {};
 
 app.use(logger());
-app.use(staticCache(__dirname + '/../../app'), {
 
-	maxAge: 24 * 60 * 60
-
-});
-app.use(static(__dirname + '/../../app'));
 app.use(conditional());
+app.use(static(__dirname + '/../../app'));
+app.use(staticCache(__dirname + '/../../app/assets', {
+
+	maxAge: 24 * 60 * 60,
+	buffer: true,
+	gzip: true
+
+}, files));
+
 app.use(etag());
 
 controller.init(app);
