@@ -1,6 +1,6 @@
 window.propFuncs = {
 
-	sliders__ready : function() {
+	sliders__load : function() {
 
 		$('.slider').zRS({
 
@@ -11,7 +11,7 @@ window.propFuncs = {
 
 	},
 
-	images__ready : function() {
+	images__load : function() {
 
 		var images = $('img[data-src]');
 
