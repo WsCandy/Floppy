@@ -73,7 +73,7 @@
 				<div class="instagram-feed">
 					<% for(var i = 0; i < 2; i++) { %>
 
-						<img src="<%= instagram[i].images.standard_resolution.url %>" alt="<%= instagram[i].caption.text %>">
+						<img data-src="<%= instagram[i].images.standard_resolution.url %>" alt="<%= instagram[i].caption.text %>">
 
 					<% } %>
 
