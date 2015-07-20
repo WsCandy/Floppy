@@ -7,22 +7,22 @@
 		</section>
 
 		<section class="cta">
-			<a href="" class="square-cta square-cta--1">
+			<a href="" class="square-cta square-cta--1 js-bg" data-img="/assets/img/cta/1.jpg">
 				<span>
 					test
 				</span>
 			</a>
-			<a href="" class="square-cta square-cta--2">
+			<a href="" class="square-cta square-cta--2 js-bg" data-img="/assets/img/cta/2.jpg">
 				<span>
 					test
 				</span>
 			</a>
-			<a href="" class="square-cta square-cta--3">
+			<a href="" class="square-cta square-cta--3 js-bg" data-img="/assets/img/cta/3.jpg">
 				<span>
 					test
 				</span>
 			</a>
-			<a href="" class="square-cta square-cta--4">
+			<a href="" class="square-cta square-cta--4 js-bg" data-img="/assets/img/cta/4.jpg">
 				<span>
 					test
 				</span>
@@ -50,7 +50,7 @@
 	</div>
 </section>
 
-<section class="bottom">
+<section class="bottom js-bg" data-img="/assets/img/bottom-bg.jpg">
 	<div class="centre-wrap">
 
 		<div class="social-wrap">
@@ -73,7 +73,10 @@
 				<div class="instagram-feed">
 					<% for(var i = 0; i < 2; i++) { %>
 
-						<img data-src="<%= instagram[i].images.thumbnail.url %>" alt="<%= instagram[i].caption.text %>" height="<%= instagram[i].images.thumbnail.height%>" width="<%= instagram[i].images.thumbnail.width%>">
+						<div class="js-imager" data-class="scale-height" data-src="<%= instagram[i].images.thumbnail.url %>" data-alt="<%= instagram[i].caption.text %>" data-height="<%= instagram[i].images.thumbnail.height%>" data-width="<%= instagram[i].images.thumbnail.width%>"></div>
+						<noscript>
+							<img src="<%= instagram[i].images.thumbnail.url %>" alt="<%= instagram[i].caption.text %>" height="<%= instagram[i].images.thumbnail.height%>" width="<%= instagram[i].images.thumbnail.width%>">
+						</noscript>
 
 					<% } %>
 

@@ -50,7 +50,6 @@ h3 {
   padding: 0 15px; }
 
 .top {
-  background: url(../img/top-bg.jpg) top center no-repeat;
   width: 100%;
   padding-top: 155px;
   padding-bottom: 290px;
@@ -70,7 +69,6 @@ h3 {
 .bottom {
   width: 100%;
   clear: both;
-  background: url(../img/bottom-bg.jpg) bottom center no-repeat;
   overflow: hidden;
   padding-top: 350px; }
   @media screen and (max-width: 985px) {
@@ -328,16 +326,12 @@ footer {
   .square-cta:hover span {
     display: block; }
   .square-cta--1 {
-    background: url(../img/cta/1.jpg) center no-repeat;
     background-size: 100%; }
   .square-cta--2 {
-    background: url(../img/cta/2.jpg) center no-repeat;
     background-size: 100%; }
   .square-cta--3 {
-    background: url(../img/cta/3.jpg) center no-repeat;
     background-size: 100%; }
   .square-cta--4 {
-    background: url(../img/cta/4.jpg) center no-repeat;
     background-size: 100%; }
   @media screen and (max-width: 580px) {
     .square-cta {
