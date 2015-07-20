@@ -5,7 +5,7 @@ exports.init = function(app) {
 
 	if(config.instagram) {
 
-		instagram.cacheInsta(config['instagram']);
+		instagram.cacheInsta();
 		instagram.init(app);
 
 	}

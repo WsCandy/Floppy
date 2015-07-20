@@ -1,19 +1,20 @@
 var Q = require('q'),
 	https = require('https'),
-	self = this,
+	self = this,	
+	config = require(__dirname+'/../../config/site.json')[0],
 	fs = require('fs'),
 	cache,
-	currentTime;
+	currentTime,
 	cacheExpire = 15;
 
-exports.cacheInsta = function(token) {
+exports.cacheInsta = function() {
 
 	currentTime = new Date();
 	
 	var	options = {
 			
 			hostname: 'api.instagram.com',
-			path: '/v1/users/self/media/recent?access_token='+token,
+			path: '/v1/users/self/media/recent?access_token='+config['instagram'],
 			method: 'GET'
 
 		};
