@@ -35,8 +35,8 @@ app.use(logger());
 app.use(conditional());
 app.use(staticCache(__dirname + '/../../app', {
 
-	cacheControl: (app.env === 'development' ? 'public, max-age=0' : 'public, max-age='+ (1000 * 60 * 60)),
-	buffer: true,
+	cacheControl: (app.env === 'development' ? '' : 'public, max-age='+ (1000 * 60 * 60)),
+	buffer: app.env === 'development' ? false : true,
 	gzip: true
 
 }, files));
