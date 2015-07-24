@@ -165,9 +165,12 @@ nav {
   width: 100%;
   overflow: hidden;
   position: relative; }
+  .slider img {
+    opacity: 0; }
 
 .inner-slider {
-  z-index: 1; }
+  z-index: 1;
+  position: relative; }
 
 .pager {
   width: 100%;

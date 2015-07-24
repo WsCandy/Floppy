@@ -101,14 +101,17 @@
 				delay: 6000,
 				slideBy: 1,
 				slideSpacing: 0,
-				pager: $('.pager'),
+				pager: null,
 				visibleSlides: 1,
 				trans_callback: null,
 				pre_trans_callback: null
 
 			};
 		
-		var options = $.extend(ins.defaults, settings), objs = {}, elem = {};
+		var options = $.extend(ins.defaults, settings), objs = {}, elem = {},
+			cssPrefix = ['webkit', 'moz', 'o', 'ms', 'transition'],
+			cssSupport,
+			transEnd;
 
 		var setUp = {
 
@@ -135,6 +138,7 @@
 				}
 
 				objs['controls'].play();
+
 
 			},
 
@@ -210,13 +214,13 @@
 
 			next : function() {
 
-				objs['transition'][options.transition]['forward']();
+				objs['transition'].before(options.transition, 'forward');
 
 			},
 
 			prev: function() {
 
-				objs['transition'][options.transition]['back']();
+				objs['transition'].before(options.transition, 'back');
 
 			},
 
@@ -263,7 +267,8 @@
 
 					'posiition' : 'relative',
 					'width' : '100%',
-					'overflow' : 'hidden'
+					'overflow' : 'hidden',
+					'pointer-events' : 'none'
 
 				});
 
@@ -304,14 +309,20 @@
 
 			var transition = this;
 
+			transition.count = 0;
+
 			transition.setUp = function() {
+
+				cssSupport = elem['slides'][0].style['transition'] !== undefined;
 
 				objs['transition'][options.transition].setUp();
 				objs['transition'].procedural('initial');
 
+				objs['transition'].after();
+
 			}
 
-			transition.procedural = function(target, difference) {
+			transition.procedural = function(target, difference, direction) {
 
 				difference = !difference ? options.slideBy : difference;
 				target = !target ? objs['transition'].target(difference) : target;
@@ -328,15 +339,17 @@
 
 				}
 
+				transition.count = Math.abs(difference);
+
 				for(var i = 0; (difference < 0 ? i > difference : i < difference); (difference < 0 ? i-- : i++)) {
 
-					transition.swapImg(elem['slides'].eq((difference < 0 ? Math.abs(i) : (i + difference) - (options.visibleSlides === difference ? 0 : difference - options.visibleSlides))));
+					transition.swapImg(elem['slides'].eq((difference < 0 ? Math.abs(i) : (i + difference) - (options.visibleSlides === difference ? 0 : difference - options.visibleSlides))), direction, difference);
 
 				}
 				
 			}
 
-			transition.swapImg = function(slide) {
+			transition.swapImg = function(slide, direction, difference) {
 
 				var images = slide.is('img') ? slide : slide.find('img');
 
@@ -344,10 +357,26 @@
 
 					var image = $(images[i]);
 
-					if(!image.attr('zrs-src')) continue;
+					if(!image.attr('zrs-src') && direction != 'back') {
 
-					image.attr('src', image.attr('zrs-src'));
-					image.removeAttr('zrs-src');
+						objs['transition'][options.transition][direction](difference);
+
+						continue;
+
+					};
+
+					image.unbind('load').load(function(){
+
+						transition.count--;
+						image.removeAttr('zrs-src');
+
+						if(transition.count == 0 && direction != 'back') {
+
+							objs['transition'][options.transition][direction](difference);
+					           
+						}					
+
+					}).attr('src', image.attr('zrs-src'));
 
 				}
 
@@ -362,20 +391,37 @@
 
 				difference = (!difference ? (direction == 'back' ? -Math.abs(options.slideBy) : options.slideBy) : (direction == 'back' ? -Math.abs(difference) : difference));
 
-				objs['transition'][options.transition][direction](difference);
-				
-				objs['transition'].procedural(null, difference);				
 				objs['transition'].update(difference);
 
-				if(typeof options['pre_trans_callback'] === 'function') options['pre_trans_callback']();
+				if(direction === 'forward') objs['transition'].procedural(null, difference, direction);
+				if(direction === 'back') {
 
-				setTimeout(objs['transition'].after, options.speed);
+					objs['transition'][options.transition][direction](difference);
+					objs['transition'].procedural(null, difference, direction)
+
+				};
+
+				if(typeof options['pre_trans_callback'] === 'function') {
+
+					options['pre_trans_callback']({
+
+						current: elem['slides'].eq(direction == 'back' ? Math.abs(difference) : (cssSupport === true ? objs['slides'].count() -1 : 0)),
+						next: elem['slides'].eq(difference)
+
+					});				
+					
+				}
 
 			}
 
 			transition.after = function() {
 
-				if(typeof options['trans_callback'] === 'function')	options['trans_callback']();
+				if(typeof options['trans_callback'] === 'function')	options['trans_callback']({
+
+					current: elem['slides'].eq(0),
+					currentNo: objs['slides'].currentSlide
+
+				});
 
 			}
 
@@ -441,25 +487,69 @@
 
 					});
 
+					if(cssSupport === true) {
+
+						var rules = {};
+
+						for(var prefix in cssPrefix) {
+
+							rules[cssPrefix[prefix] === 'transition' ? 'transition' : '-'+cssPrefix[prefix]+'-transition'] = 'opacity ' + (options.speed / 1000) + 's';
+
+						}
+
+						rules['z-index'] = '0';
+						elem['slides'].css(rules);
+
+					}
+
 					for(var i = 0; i < objs['slides'].count(); i++) {
 
 						if(i == 0) {
 
-							elem['slides'].eq(i).css({
+							if(cssSupport === true) {
 
-								'position' : 'relative',
-								'z-index' : '1'
+								elem['slides'].eq(i).css({
 
-							});
+									'position' : 'relative',
+									'opacity' : '1'
+
+								});
+
+							} else {
+
+								elem['slides'].eq(i).css({
+
+									'position' : 'relative',
+									'z-index' : '1'
+
+								});								
+
+							}
+
 
 						} else {
 
-							elem['slides'].eq(i).css({
+							if(cssSupport === true) {
 
-								'position' : 'absolute',
-								'z-index' : '0'
+								elem['slides'].eq(i).css({
 
-							}).hide();
+									'position' : 'absolute',
+									'z-index' : '0',
+									'opacity' : '0'
+
+								});
+
+							} else {
+
+								elem['slides'].eq(i).css({
+
+									'position' : 'absolute',
+									'z-index' : '0'
+
+								}).hide();
+
+							}
+
 
 						}
 
@@ -469,71 +559,140 @@
 
 				method.forward = function(difference) {
 
-					elem['slides'].eq(difference).css({
+					if(cssSupport === true) {
 
-						'z-index' : '2'
-
-					}).fadeIn(options.speed, function() {
-					
 						elem['slides'].eq(difference).css({
 
-							'position' : 'relative'
+							'opacity' : '1',
+							'z-index' : '1'
 
 						});
-						
+
 						for(var i = 0; i < difference; i++) {
 
-							elem['slides'].eq(0).css({
-
-								'z-index' : '1',
-								'position' : 'absolute'
-
-							}).appendTo(elem['inner']).hide();
-							
+							elem['slides'].eq(0).insertAfter(elem['slides'].eq(objs['slides'].count() -1));							
 							objs['slides'].reIndex();
 
 						}
 
-					});
+						elem['slides'].eq(objs['slides'].count() -1).offset();
+						elem['slides'].not(':last-child').not(':first-child').css({
 
-				}
-
-				method.back = function(difference) {
-
-					for(var i = 0; i > difference; i--) {
-
-						elem['slides'].eq(objs['slides'].count() - 1).prependTo(elem['inner']);
-						objs['slides'].reIndex();
-
-					}
-
-					elem['slides'].css({
-
-						'z-index' : '0'
-
-					});
-
-					elem['slides'].eq(0).css({
-
-						'z-index' : '1',
-						'position' : 'absolute'
-
-					}).fadeIn(options.speed, function(){
-
-						elem['slides'].eq(0).css({
-
-							'position' : 'relative'
+							'opacity' : '0'
 
 						});
 
 						elem['slides'].not(':first-child').css({
 
-							'z-index' : '0',
+							'z-index' : '0'
+
+						});
+
+						clearTimeout(transEnd);
+						transEnd = setTimeout(objs['transition'].after, 100);
+
+					} else {
+
+						elem['slides'].eq(difference).css({
+
+							'z-index' : '2'
+
+						}).fadeIn(options.speed, function() {
+						
+							elem['slides'].eq(difference).css({
+
+								'position' : 'relative'
+
+							});
+							
+							for(var i = 0; i < difference; i++) {
+
+								elem['slides'].eq(0).css({
+
+									'z-index' : '1',
+									'position' : 'absolute'
+
+								}).appendTo(elem['inner']).hide();
+								
+								objs['slides'].reIndex();
+
+							}
+
+							objs['transition'].after();
+
+						});						
+
+					}
+
+				}
+
+				method.back = function(difference) {
+				
+					if(cssSupport === true) {
+
+						for(var i = 0; i > difference; i--) {
+
+							elem['slides'].eq(objs['slides'].count() - 1).prependTo(elem['inner']);
+
+							objs['slides'].reIndex();
+
+						}
+
+						elem['slides'].not(':first-child').css({
+
+							'opacity' : '0'
+
+						});
+
+						elem['slides'].eq(0).css({
+
+							'opacity' : '1'
+
+						});
+
+						clearTimeout(transEnd);
+						transEnd = setTimeout(objs['transition'].after, 100);
+
+					} else {
+
+						for(var i = 0; i > difference; i--) {
+
+							elem['slides'].eq(objs['slides'].count() - 1).prependTo(elem['inner']);
+							objs['slides'].reIndex();
+
+						}
+
+						elem['slides'].css({
+
+							'z-index' : '0'
+
+						});
+
+						elem['slides'].eq(0).css({
+
+							'z-index' : '1',
 							'position' : 'absolute'
 
-						}).hide();
+						}).fadeIn(options.speed, function(){
 
-					});
+							elem['slides'].eq(0).css({
+
+								'position' : 'relative'
+
+							});
+
+							elem['slides'].not(':first-child').css({
+
+								'z-index' : '0',
+								'position' : 'absolute'
+
+							}).hide();
+
+							objs['transition'].after();
+
+						});						
+
+					}
 
 				}
 

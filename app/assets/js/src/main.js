@@ -5,7 +5,10 @@ window.propFuncs = {
 		$('.slider').zRS({
 
 			transition: 'fade',
-			slideBy: 1
+			slideBy: 1,
+			pager: $('.pager'),
+			speed: 1000,
+			direction: 'back'
 
 		});
 
