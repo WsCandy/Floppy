@@ -73,9 +73,9 @@
 				<div class="instagram-feed">
 					<% for(var i = 0; i < 2; i++) { %>
 
-						<div class="js-imager" data-class="scale-height" data-src="<%= instagram[i].images.thumbnail.url %>" data-alt="<%= instagram[i].caption.text %>" data-height="<%= instagram[i].images.thumbnail.height%>" data-width="<%= instagram[i].images.thumbnail.width%>"></div>
+						<div class="js-imager" data-class="scale-height" data-src="<%= instagram[i].images.standard_resolution.url %>" data-alt="<%= instagram[i].caption.text %>" data-height="<%= instagram[i].images.standard_resolution.height%>" data-width="<%= instagram[i].images.standard_resolution.width%>"></div>
 						<noscript>
-							<img src="<%= instagram[i].images.thumbnail.url %>" alt="<%= instagram[i].caption.text %>" height="<%= instagram[i].images.thumbnail.height%>" width="<%= instagram[i].images.thumbnail.width%>">
+							<img src="<%= instagram[i].images.standard_resolution.url %>" alt="<%= instagram[i].caption.text %>" height="<%= instagram[i].images.standard_resolution.height%>" width="<%= instagram[i].images.standard_resolution.width%>">
 						</noscript>
 
 					<% } %>
