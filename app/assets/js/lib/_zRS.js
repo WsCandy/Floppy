@@ -12,7 +12,7 @@
 
 		};
 
-	$.fn.zRS = function(settings, params) {
+	$.fn.zRS3 = function(settings, params) {
 
 		if(!this[0] && settings == 'extend') {
 
@@ -96,6 +96,7 @@
 			ins.defaults = {
 
 				transition : 'fade',
+				textFade : false,
 				direction : 'forward',
 				speed : 1500,
 				delay: 6000,
@@ -109,9 +110,10 @@
 			};
 		
 		var options = $.extend(ins.defaults, settings), objs = {}, elem = {},
-			cssPrefix = ['webkit', 'moz', 'o', 'ms', 'transition'],
-			cssSupport,
 			transEnd;
+		
+		ins.cssPrefix = ['webkit', 'moz', 'o', 'ms', 'transition'];
+		ins.cssSupport = document.body.style['transition'] !== undefined;
 
 		var setUp = {
 
@@ -265,10 +267,9 @@
 				elem['inner'] = self.find('.inner-slider');
 				elem['inner'].css({
 
-					'posiition' : 'relative',
+					'position' : 'relative',
 					'width' : '100%',
-					'overflow' : 'hidden',
-					'pointer-events' : 'none'
+					'overflow' : 'hidden'
 
 				});
 
@@ -313,8 +314,6 @@
 
 			transition.setUp = function() {
 
-				cssSupport = elem['slides'][0].style['transition'] !== undefined;
-
 				objs['transition'][options.transition].setUp();
 				objs['transition'].procedural('initial');
 
@@ -331,7 +330,7 @@
 
 					for(var i = 0; i < options.visibleSlides; i++) {
 
-						transition.swapImg(elem['slides'].eq(i));
+						transition.swapImg(elem['slides'].eq(i), difference, direction, 'initial');
 
 					}
 
@@ -349,9 +348,17 @@
 				
 			}
 
-			transition.swapImg = function(slide, direction, difference) {
+			transition.swapImg = function(slide, direction, difference, initial) {
 
 				var images = slide.is('img') ? slide : slide.find('img');
+
+				if(images.length === 0 && !initial) {
+
+					objs['transition'][options.transition][direction](difference);
+
+					return;
+
+				}
 
 				for(var i = 0; i < images.length; i++) {
 
@@ -359,7 +366,13 @@
 
 					if(!image.attr('zrs-src') && direction != 'back') {
 
-						objs['transition'][options.transition][direction](difference);
+						transition.count--;						
+
+						if(transition.count == 0) {
+
+							objs['transition'][options.transition][direction](difference);
+							
+						}
 
 						continue;
 
@@ -371,6 +384,7 @@
 						image.removeAttr('zrs-src');
 
 						if(transition.count == 0 && direction != 'back') {
+
 
 							objs['transition'][options.transition][direction](difference);
 					           
@@ -405,7 +419,7 @@
 
 					options['pre_trans_callback']({
 
-						current: elem['slides'].eq(direction == 'back' ? Math.abs(difference) : (cssSupport === true ? objs['slides'].count() -1 : 0)),
+						current: elem['slides'].eq(direction == 'back' ? Math.abs(difference) : (ins.cssSupport === true ? objs['slides'].count() -1 : 0)),
 						next: elem['slides'].eq(difference)
 
 					});				
@@ -487,18 +501,24 @@
 
 					});
 
-					if(cssSupport === true) {
+					if(ins.cssSupport === true) {
 
 						var rules = {};
 
-						for(var prefix in cssPrefix) {
+						for(var prefix in ins.cssPrefix) {
 
-							rules[cssPrefix[prefix] === 'transition' ? 'transition' : '-'+cssPrefix[prefix]+'-transition'] = 'opacity ' + (options.speed / 1000) + 's';
+							rules[ins.cssPrefix[prefix] === 'transition' ? 'transition' : '-'+ins.cssPrefix[prefix]+'-transition'] = 'opacity ' + (options.speed / 1000) + 's';
 
 						}
 
 						rules['z-index'] = '0';
 						elem['slides'].css(rules);
+
+						elem['slides'].eq(0).css({
+
+							'z-index' : '1'
+
+						});
 
 					}
 
@@ -506,7 +526,7 @@
 
 						if(i == 0) {
 
-							if(cssSupport === true) {
+							if(ins.cssSupport === true) {
 
 								elem['slides'].eq(i).css({
 
@@ -529,7 +549,7 @@
 
 						} else {
 
-							if(cssSupport === true) {
+							if(ins.cssSupport === true) {
 
 								elem['slides'].eq(i).css({
 
@@ -550,7 +570,6 @@
 
 							}
 
-
 						}
 
 					}
@@ -559,7 +578,7 @@
 
 				method.forward = function(difference) {
 
-					if(cssSupport === true) {
+					if(ins.cssSupport === true) {
 
 						elem['slides'].eq(difference).css({
 
@@ -576,11 +595,24 @@
 						}
 
 						elem['slides'].eq(objs['slides'].count() -1).offset();
-						elem['slides'].not(':last-child').not(':first-child').css({
 
-							'opacity' : '0'
+						if(options['textFade'] === true) {
 
-						});
+							elem['slides'].not(':first-child').css({
+
+								'opacity' : '0'
+
+							});
+
+						} else {
+
+							elem['slides'].not(':last-child').not(':first-child').css({
+
+								'opacity' : '0'
+
+							});
+							
+						}
 
 						elem['slides'].not(':first-child').css({
 
@@ -628,7 +660,7 @@
 
 				method.back = function(difference) {
 				
-					if(cssSupport === true) {
+					if(ins.cssSupport === true) {
 
 						for(var i = 0; i > difference; i--) {
 
@@ -643,6 +675,12 @@
 							'opacity' : '0'
 
 						});
+
+						if(options['textFade'] === true) {
+
+							elem['slides'].eq(0).offset();
+							
+						}
 
 						elem['slides'].eq(0).css({
 

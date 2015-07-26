@@ -2,13 +2,14 @@ window.propFuncs = {
 
 	sliders__ready : function() {
 
-		$('.slider').zRS({
+		$('.slider').zRS3({
 
 			transition: 'fade',
 			slideBy: 1,
 			pager: $('.pager'),
 			speed: 1000,
-			direction: 'back'
+			visibleSlides: 1,
+			slideSpacing: 2
 
 		});
 

@@ -166,7 +166,9 @@ nav {
   overflow: hidden;
   position: relative; }
   .slider img {
-    opacity: 0; }
+    pointer-events: none; }
+    .slider img:last-child {
+      margin-right: 0 !important; }
 
 .inner-slider {
   z-index: 1;
