@@ -132,7 +132,12 @@ gulp.task('setup', function() {
 
 		gulp.start('sass');
 		gulp.start('scripts');
-		gulp.start('watch');
+
+		if(process.env.NODE_ENV !== 'production') {
+
+			gulp.start('watch');
+			
+		}
 
 	});
 
