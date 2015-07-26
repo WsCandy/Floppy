@@ -12,6 +12,7 @@ var options = {
 	concat = require('gulp-concat'),
 	uglify = require('gulp-uglify'),
 	gutil = require('gulp-util'),
+	minifyCss = require('gulp-minify-css'),
 	fs = require('fs'),
 	path = require('path'),
 	browserSync = require('browser-sync').create(),
@@ -83,6 +84,7 @@ var sassTask = function() {
 
 		}))
 		.pipe(sourcemaps.write('maps'))
+		.pipe(minifyCss({compatibility: 'ie8'}))
 		.pipe(gulp.dest(options.assetsPath+'css/'))
 		.on('error', gutil.log);
 }
