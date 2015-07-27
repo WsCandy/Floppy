@@ -210,8 +210,9 @@ nav {
 
 		// opacity: 0;
 		pointer-events: none;
+		height: auto;
 
-		&:last-child {
+		&:last-child, &:nth-last-child(2) {
 
 			margin-right: 0!important;
 

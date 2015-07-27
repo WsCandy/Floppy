@@ -342,7 +342,16 @@
 
 				for(var i = 0; (difference < 0 ? i > difference : i < difference); (difference < 0 ? i-- : i++)) {
 
-					transition.swapImg(elem['slides'].eq((difference < 0 ? Math.abs(i) : (i + difference) - (options.visibleSlides === difference ? 0 : difference - options.visibleSlides))), direction, difference);
+					if(options['transition'] === 'slide' && ins.cssSupport === true) {
+
+						transition.swapImg(elem['slides'].eq(objs['slides'].currentSlide + options['visibleSlides'] - (i + 1)), direction, difference);
+
+					} else {
+						
+						transition.swapImg(elem['slides'].eq((difference < 0 ? Math.abs(i) : (i + difference) - (options.visibleSlides === difference ? 0 : difference - options.visibleSlides))), direction, difference);
+
+					}
+
 
 				}
 				

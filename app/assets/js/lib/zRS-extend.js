@@ -7,7 +7,8 @@ $.fn.zRS3('extend', {
 
 		var transition = this,
 			spacing = core['options'].visibleSlides === 1 ? '0' : core['options'].slideSpacing,
-			events = ['webkitTransitionEnd', 'transitionend', 'msTransitionEnd', 'oTransitionEnd'];
+			events = ['webkitTransitionEnd', 'transitionend', 'msTransitionEnd', 'oTransitionEnd'],
+			currentPos = 0;
 
 		transition.setUp = function() {
 
@@ -16,29 +17,39 @@ $.fn.zRS3('extend', {
 			core['elem']['carousel'] = core['self'].find('.carousel');
 			core['elem']['carousel'].css({
 
-				'width' : ((100 * core.ins['publicF'].slideCount()) / core['options'].visibleSlides) + ((core.ins['publicF'].slideCount() -1) * spacing) + '%',
+				'width' : ((100 * core.ins['publicF'].slideCount()) / core['options'].visibleSlides) + '%',
 				'float' : 'left',
-				'position' : 'relative',
-				'transition' : core['options'].speed / 1000+'s transform',
+				'position' : 'relative'
 
 			});
 			
 			core['elem']['slides'].css({
 
-				'float' : 'left',
-				'width' : ((1 / core.ins['publicF'].slideCount()) * 100) - spacing + (spacing / core.ins['publicF'].slideCount()) + '%',
-				'margin-right' : spacing + '%',
-				'position' : 'relative',
+				'width' : ((1 / core.ins['publicF'].slideCount()) * 100) - spacing + '%',
 				'display' : 'block'
 
 			});
+
+			for(var i = 0; i < core['elem']['slides'].length; i++) {
+
+				var slide = core['elem']['slides'].eq(i);
+
+				slide.css({
+
+					'left' : ((100 / core.ins['publicF'].slideCount()) * i) + ((spacing * i) / (core['options'].visibleSlides - 1)) + '%',
+					'position' : (i === 0 ? 'relative' : 'absolute'),
+					'top' : '0px',
+					'float' : (i === 0 ? 'left' : 'none')
+
+				});
+
+			}
 
 			var start,
 				total,
 				currentPos,
 				percent,
-				startTime,
-				endTime;
+				maxPercentage = -Math.abs((((100 / core.ins['publicF'].slideCount()) + ((spacing) / (core['options'].visibleSlides - 1))) * core.ins['publicF'].slideCount()));
 
 			if(core['ins'].cssSupport === true) {
 
@@ -46,8 +57,6 @@ $.fn.zRS3('extend', {
 					
 					currentPos = parseInt(core['elem']['carousel'].css('transform').split(',')[4]);
 					start = e.pageX;
-
-					startTime = new Date().getTime();
 
 					core['elem']['carousel'].addClass('active');
 
@@ -57,15 +66,19 @@ $.fn.zRS3('extend', {
 
 					if(core['elem']['carousel'].hasClass('active')) {
 
-						total = (e.pageX - (start - (currentPos ? currentPos : 0) ));
-						percent = (total / core['elem']['carousel'].width()) * 100
+						total = (e.pageX - (start - (currentPos ? currentPos : 0)));
+						percent = (total / core['elem']['carousel'].width()) * 100;
 
-						core['elem']['carousel'].css({
+						if(Math.max(percent, maxPercentage) === maxPercentage) {
 
-							'transition' : '0s transform',
-							'transform' : 'translate3d('+percent+'%, 0, 0)'
+							start = e.pageX;
 
-						});
+							total = (e.pageX - start);
+							percent = (total / core['elem']['carousel'].width()) * 100;
+
+						}
+
+						transition.adjustments(percent);
 
 					}
 
@@ -75,18 +88,7 @@ $.fn.zRS3('extend', {
 
 					if(core['elem']['carousel'].hasClass('active')) {
 
-						endTime = new Date().getTime();
-
-						var speed = (startTime - endTime) / 1000,
-							target = Math.round((percent + speed) / 10);
-
-						core['elem']['carousel'].css({
-
-							'transition' : core['options'].speed / 1000+'s transform',
-							'transform' : 'translate3d('+target * 10+'%, 0, 0)'
-
-						});
-
+						// core['objs']['transition'].goTo(Math.abs(target));
 						core['elem']['carousel'].removeClass('active');
 						
 					}
@@ -99,35 +101,39 @@ $.fn.zRS3('extend', {
 
 		transition.forward = function(difference) {
 
+			var currentSlide = core.ins['publicF'].currentSlide(),
+				visibleSlides = core['options'].visibleSlides,
+				slideCount = core.ins['publicF'].slideCount(),
+				time;
+
 			if(core['ins'].cssSupport === true) {
 
-				core['elem']['carousel'].css({
+				var i = currentPos;
 
-					'transition' : core['options'].speed / 1000+'s transform',
-					'transform' : 'translate3d(-' + ((100 / core.ins['publicF'].slideCount()) + (spacing / core.ins['publicF'].slideCount())) + '%, 0, 0)'
+				var animate = function() {
 
-				});
+					i+= 0.5;
 
-				for(var i = 0; i < events.length; i++) {
+					currentPos = Math.min(i, (100 / slideCount) * currentSlide + ((spacing * currentSlide / (visibleSlides - 1))));
 
-					core['elem']['carousel'][0].addEventListener(events[i], function(){
+					core['elem']['carousel'].css({
 
-						core['elem']['carousel'].css({
+						'transform' : 'translate3d(-'+ currentPos +'%, 0, 0)'
 
-							'transition' : '0s transform',
-							'transform' : 'translate3d(0%, 0, 0)'
+					});											
 
-						});
+					if(i >= (100 / slideCount) * currentSlide + ((spacing * currentSlide / (visibleSlides - 1)))) {
 
-						for(var i = 0; i < difference; i++) {
+						core['ins'].animationFrame = cancelAnimationFrame(animate);
+						return;
 
-							core['elem']['slides'].eq(i).appendTo(core['elem']['carousel']);
+					}					
 
-						}
+					core['ins'].animationFrame = requestAnimationFrame(animate);
 
-					});		
-				
-				}				
+				}
+
+				core['ins'].animationFrame = requestAnimationFrame(animate);
 
 			} else {
 
@@ -149,7 +155,7 @@ $.fn.zRS3('extend', {
 
 				core['elem']['carousel'].animate({
 
-					'left' : '-' + ((100 * difference) + ((spacing * core.ins['publicF'].slideCount()) * difference)) / core['options'].visibleSlides + '%'
+					'left' : '-' + ((100 * difference) + ((spacing * slideCount * difference)) / visibleSlides) + '%'
 
 				}, core['options'].speed, callback);				
 
@@ -159,24 +165,85 @@ $.fn.zRS3('extend', {
 
 		transition.back = function(difference) {
 
-			for(var i = 0; i > difference; i--) {
+			if(core['ins'].cssSupport === true) {
 
-				core.ins['publicF'].reIndex();
-				core['elem']['slides'].eq(core.ins['publicF'].slideCount() -1).prependTo(core['elem']['carousel']);
+
+
+			} else {
+
+				for(var i = 0; i > difference; i--) {
+
+					core.ins['publicF'].reIndex();
+					core['elem']['slides'].eq(core.ins['publicF'].slideCount() -1).prependTo(core['elem']['carousel']);
+
+				}
+				
+				core['elem']['carousel'].css({
+
+					'left' : ((100 * difference) - ((spacing * core.ins['publicF'].slideCount()) * Math.abs(difference))) / core['options'].visibleSlides + '%'
+
+				});
+
+				core['elem']['carousel'].animate({
+
+					'left' : '0%'
+
+				}, core['options'].speed);
 
 			}
-			
+
+		}
+
+		transition.adjustments = function(pos) {
+
 			core['elem']['carousel'].css({
 
-				'left' : ((100 * difference) - ((spacing * core.ins['publicF'].slideCount()) * Math.abs(difference))) / core['options'].visibleSlides + '%'
+				'transform' : 'translate3d('+ transition.carouselPos(pos) +'%, 0, 0)'
 
 			});
+			transition.slidePos(pos)
 
-			core['elem']['carousel'].animate({
+		}
 
-				'left' : '0%'
+		transition.slidePos = function(pos) {
 
-			}, core['options'].speed);
+			for(var i = 0; i < core['elem']['slides'].length; i++) {
+
+				var slide = core['elem']['slides'].eq(i);
+
+				if(pos < -Math.abs(((100 / core.ins['publicF'].slideCount()) * (i + 1)) + ((spacing * (i + 1)) / (core['options'].visibleSlides - 1)))) {
+
+					var finalPos = ((100 / core.ins['publicF'].slideCount()) * (i + core.ins['publicF'].slideCount())) + ((spacing * (i + core.ins['publicF'].slideCount())) / (core['options'].visibleSlides - 1))
+
+				} else {
+
+					var finalPos = ((100 / core.ins['publicF'].slideCount()) * i) + ((spacing * i) / (core['options'].visibleSlides - 1))
+
+				}
+
+				slide.css({
+
+					'left' : finalPos + '%'
+
+				});
+
+			}
+
+
+		}
+
+		transition.carouselPos = function(pos) {
+
+			if(pos <= -Math.abs((((100 / core.ins['publicF'].slideCount()) + ((spacing) / (core['options'].visibleSlides - 1))) * core.ins['publicF'].slideCount()))) {
+
+				currentPos = 0;
+				return 0;
+
+			} else {
+
+				return pos;
+
+			}
 
 		}
 
