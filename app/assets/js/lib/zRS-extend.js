@@ -48,7 +48,7 @@ $.fn.zRS3('extend', {
 			var start,
 				total,
 				currentPos,
-				percent,
+				percent = 0,
 				maxPercentage = -Math.abs((((100 / core.ins['publicF'].slideCount()) + ((spacing) / (core['options'].visibleSlides - 1))) * core.ins['publicF'].slideCount()));
 
 			if(core['ins'].cssSupport === true) {
@@ -58,41 +58,50 @@ $.fn.zRS3('extend', {
 					currentPos = parseInt(core['elem']['carousel'].css('transform').split(',')[4]);
 					start = e.pageX;
 
+					$('body').addClass('no-select');
+
 					core['elem']['carousel'].addClass('active');
 
-				});
+					$(document).on('mousemove', function(e) {
 
-				core['elem']['inner'].on('mousemove', function(e) {
+						if(core['elem']['carousel'].hasClass('active')) {
 
-					if(core['elem']['carousel'].hasClass('active')) {
-
-						total = (e.pageX - (start - (currentPos ? currentPos : 0)));
-						percent = (total / core['elem']['carousel'].width()) * 100;
-
-						if(Math.max(percent, maxPercentage) === maxPercentage) {
-
-							start = e.pageX;
-
-							total = (e.pageX - start);
+							total = (e.pageX - (start - (currentPos ? currentPos : 0)));
 							percent = (total / core['elem']['carousel'].width()) * 100;
+
+							if(Math.max(percent, maxPercentage) === maxPercentage) {
+
+								percent = 0;
+
+							}
+
+							if(percent === 0) {
+
+								percent = ((total / core['elem']['carousel'].width()) * 100) - maxPercentage;
+
+							} else if(percent > 0) {
+
+								percent = ((total / core['elem']['carousel'].width()) * 100) + maxPercentage;
+
+							}
+
+							transition.adjustments(percent);
 
 						}
 
-						transition.adjustments(percent);
+					});
 
-					}
-
-				});
-
-				core['elem']['inner'].on('mouseup mouseleave', function(e) {
-
-					if(core['elem']['carousel'].hasClass('active')) {
-
-						// core['objs']['transition'].goTo(Math.abs(target));
-						core['elem']['carousel'].removeClass('active');
+					$(document).on('mouseup mouseleave', function(e) {
 						
-					}
+						$('body').removeClass('no-select');
 
+						if(core['elem']['carousel'].hasClass('active')) {
+
+							core['elem']['carousel'].removeClass('active');
+							
+						}
+
+					});
 				});
 
 			}
@@ -198,9 +207,10 @@ $.fn.zRS3('extend', {
 
 			core['elem']['carousel'].css({
 
-				'transform' : 'translate3d('+ transition.carouselPos(pos) +'%, 0, 0)'
+				'transform' : 'translate3d('+ pos +'%, 0, 0)'
 
 			});
+
 			transition.slidePos(pos)
 
 		}
@@ -211,7 +221,7 @@ $.fn.zRS3('extend', {
 
 				var slide = core['elem']['slides'].eq(i);
 
-				if(pos < -Math.abs(((100 / core.ins['publicF'].slideCount()) * (i + 1)) + ((spacing * (i + 1)) / (core['options'].visibleSlides - 1)))) {
+				if(pos < -Math.abs(((100 / core.ins['publicF'].slideCount()) * (i + 1)) + ((spacing * (i + 1)) / (core['options'].visibleSlides - 1))) && pos <= 0) {
 
 					var finalPos = ((100 / core.ins['publicF'].slideCount()) * (i + core.ins['publicF'].slideCount())) + ((spacing * (i + core.ins['publicF'].slideCount())) / (core['options'].visibleSlides - 1))
 
@@ -226,22 +236,6 @@ $.fn.zRS3('extend', {
 					'left' : finalPos + '%'
 
 				});
-
-			}
-
-
-		}
-
-		transition.carouselPos = function(pos) {
-
-			if(pos <= -Math.abs((((100 / core.ins['publicF'].slideCount()) + ((spacing) / (core['options'].visibleSlides - 1))) * core.ins['publicF'].slideCount()))) {
-
-				currentPos = 0;
-				return 0;
-
-			} else {
-
-				return pos;
 
 			}
 
