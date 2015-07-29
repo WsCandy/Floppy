@@ -8,9 +8,11 @@ $.fn.zRS3('extend', {
 		var transition = this,
 			spacing = core['options'].visibleSlides === 1 ? '0' : core['options'].slideSpacing,
 			events = ['webkitTransitionEnd', 'transitionend', 'msTransitionEnd', 'oTransitionEnd'],
-			currentPos = 0;
+			maxPercentage, start = 0, total, currentPos = 0, percent = 0, speedTimeout,	startMomentum = 0, restingPos = 0;
 
 		transition.setUp = function() {
+
+			maxPercentage = -Math.abs((((100 / core.ins['publicF'].slideCount()) + ((spacing) / (core['options'].visibleSlides - 1))) * core.ins['publicF'].slideCount()));
 
 			core['elem']['slides'].wrapAll('<div class="carousel" />');
 
@@ -19,7 +21,8 @@ $.fn.zRS3('extend', {
 
 				'width' : ((100 * core.ins['publicF'].slideCount()) / core['options'].visibleSlides) + '%',
 				'float' : 'left',
-				'position' : 'relative'
+				'position' : 'relative',
+				'transform' : 'translate3d(0%, 0, 0)'
 
 			});
 			
@@ -45,104 +48,126 @@ $.fn.zRS3('extend', {
 
 			}
 
-			var start,
-				total,
-				currentPos,
-				percent = 0,
-				maxPercentage = -Math.abs((((100 / core.ins['publicF'].slideCount()) + ((spacing) / (core['options'].visibleSlides - 1))) * core.ins['publicF'].slideCount()));
-
 			if(core['ins'].cssSupport === true) {
 
-				core['elem']['inner'].on('mousedown', function(e) {
+				core['elem']['inner'].on('touchstart mousedown', function(e) {
 					
-					currentPos = parseInt(core['elem']['carousel'].css('transform').split(',')[4]);
+					cancelAnimationFrame(transition.animate);
+					core.objs['controls'].pause();
+
+					restingPos = parseInt(core['elem']['carousel'].css('transform').split(',')[4]);
+					e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
+
 					start = e.pageX;
+					startMomentum = e.pageX;
 
 					$('body').addClass('no-select');
 
 					core['elem']['carousel'].addClass('active');
 
-					$(document).on('mousemove', function(e) {
+					$(document).on('touchmove mousemove', function(e) {
+
+						e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
 
 						if(core['elem']['carousel'].hasClass('active')) {
 
-							total = (e.pageX - (start - (currentPos ? currentPos : 0)));
-							percent = (total / core['elem']['carousel'].width()) * 100;
-
-							if(Math.max(percent, maxPercentage) === maxPercentage) {
-
-								percent = 0;
-
-							}
-
-							if(percent === 0) {
-
-								percent = ((total / core['elem']['carousel'].width()) * 100) - maxPercentage;
-
-							} else if(percent > 0) {
-
-								percent = ((total / core['elem']['carousel'].width()) * 100) + maxPercentage;
-
-							}
-
-							transition.adjustments(percent);
+							transition.coordinate(e.pageX);
 
 						}
 
 					});
 
-					$(document).on('mouseup mouseleave', function(e) {
+					$(document).on('touchend touchcancel mouseup', function(e) {
 						
-						$('body').removeClass('no-select');
+						e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
 
 						if(core['elem']['carousel'].hasClass('active')) {
 
+							restingPos = parseInt(core['elem']['carousel'].css('transform').split(',')[4]);
+							start = e.pageX;
+
 							core['elem']['carousel'].removeClass('active');
+							clearTimeout(speedTimeout);
+
+							var distance = Math.abs(e.pageX - startMomentum),
+								speed = Math.round((distance / 75) * 100) / 100;
+
+							$(document).unbind('touchmove mouseup touchend touchcancel');
+
+							$('body').removeClass('no-select');
 							
 						}
 
 					});
+
 				});
 
 			}
 
 		}
 
-		transition.forward = function(difference) {
+		transition.progress = function(pos, startTime, interval, snap) {
 
-			var currentSlide = core.ins['publicF'].currentSlide(),
-				visibleSlides = core['options'].visibleSlides,
-				slideCount = core.ins['publicF'].slideCount(),
-				time;
+			var now = Date.now(),
+				then = interval;
+       			delta = now - then,
+       			current = now - startTime;
 
-			if(core['ins'].cssSupport === true) {
+			percent = ((pos / core['elem']['carousel'].width()) * 100) * core['options'].visibleSlides;
+       	
+			var distance = ((core['elem']['carousel'].width() / core.ins['publicF'].slideCount()) + (core['elem']['carousel'].width() * ((spacing + (spacing / core.ins['publicF'].slideCount())) / 100))) / core['options'].visibleSlides,
+				speed = distance / core['options'].speed,
+				increment = (speed * delta);
 
-				var i = currentPos;
+       		pos -= increment;
 
-				var animate = function() {
+			transition.animate = requestAnimationFrame(function() {
 
-					i+= 0.5;
+				if(Math.min(current, core['options'].speed) === core['options'].speed) {
 
-					currentPos = Math.min(i, (100 / slideCount) * currentSlide + ((spacing * currentSlide / (visibleSlides - 1))));
+					console.log('done');
+					cancelAnimationFrame(transition.animate);
 
-					core['elem']['carousel'].css({
+					return;
+					
+				}			
 
-						'transform' : 'translate3d(-'+ currentPos +'%, 0, 0)'
+				if(Math.max(percent, maxPercentage) === maxPercentage) {
 
-					});											
-
-					if(i >= (100 / slideCount) * currentSlide + ((spacing * currentSlide / (visibleSlides - 1)))) {
-
-						core['ins'].animationFrame = cancelAnimationFrame(animate);
-						return;
-
-					}					
-
-					core['ins'].animationFrame = requestAnimationFrame(animate);
+					pos = 0;
 
 				}
 
-				core['ins'].animationFrame = requestAnimationFrame(animate);
+				if(percent > 0) {
+
+					pos = 0;
+
+				}
+
+				restingPos = pos;
+				then = now;
+
+				transition.coordinate(pos, snap);
+				transition.progress(pos, startTime, now, snap);
+
+			});
+
+
+		}
+
+		transition.forward = function(difference) {
+
+			var visibleSlides = core['options'].visibleSlides,
+				slideCount = core.ins['publicF'].slideCount();
+
+			if(core['ins'].cssSupport === true) {
+
+				transition.animate = requestAnimationFrame(function() {
+
+					cancelAnimationFrame(transition.animate);
+					transition.progress(restingPos, Date.now(), Date.now(), true);
+
+				});
 
 			} else {
 
@@ -203,11 +228,15 @@ $.fn.zRS3('extend', {
 
 		}
 
-		transition.adjustments = function(pos) {
+		transition.adjustments = function(pos, snap) {
+
+			var finalPos = -Math.abs((((100 / core.ins['publicF'].slideCount()) * 1) + ((spacing * 1) / (core['options'].visibleSlides - 1))) * core.ins['publicF'].currentSlide());
+
+			pos = (Math.round(pos * 100) / 100);
 
 			core['elem']['carousel'].css({
 
-				'transform' : 'translate3d('+ pos +'%, 0, 0)'
+				'transform' : 'translate3d('+ (snap === true && Math.max(pos, finalPos) != -0 ? (Math.max(pos, finalPos)) : pos) +'%, 0, 0)'
 
 			});
 
@@ -238,6 +267,46 @@ $.fn.zRS3('extend', {
 				});
 
 			}
+
+		}
+
+		transition.coordinate = function(posX, snap) {
+
+			total = (posX - (start - (restingPos ? restingPos : 0)));
+			percent = (total / core['elem']['carousel'].width()) * 100;
+
+			if(Math.max(percent, maxPercentage) === maxPercentage) {
+
+				percent = 0;
+
+			}
+
+			if(percent === 0) {
+
+				percent = ((total / core['elem']['carousel'].width()) * 100) - maxPercentage;
+
+			} else if(percent > 0) {
+
+				percent = ((total / core['elem']['carousel'].width()) * 100) + maxPercentage;
+
+			}
+
+			speedTimeout = setTimeout(function() {
+
+				startMomentum = posX;
+
+			}, 75);
+
+			transition.adjustments(percent, snap);
+
+			currentPos = parseInt(core['elem']['carousel'].css('transform').split(',')[4]);
+
+		}
+
+		transition.easeOut = function(t, b, c, d) {
+
+			t /= d;
+			return -c * t*(t-2) + b;
 
 		}
 
