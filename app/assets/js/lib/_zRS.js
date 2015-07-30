@@ -394,7 +394,6 @@
 
 						if(transition.count == 0 && direction != 'back') {
 
-
 							objs['transition'][options.transition][direction](difference);
 					           
 						}					
