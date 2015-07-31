@@ -10,7 +10,7 @@ window.propFuncs = {
 			speed: 1000,
 			visibleSlides: 3,
 			slideSpacing: 1,
-			delay: 2000
+			delay: 3000
 
 		});
 
