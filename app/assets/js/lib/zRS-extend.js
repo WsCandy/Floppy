@@ -9,7 +9,7 @@ $.fn.zRS3('extend', {
 			spacing = core['options'].slideSpacing,
 			visibleSlides = core['options'].visibleSlides,
 			publicF = core.ins['publicF'],
-			maxPercentage = -100, start = 0, total, percent = 0, speedTimeout, startMomentum = 0, restingPos = -0.0001, slideCount, startPos, remaining;
+			maxPercentage = -100, start = 0, total, percent = 0, speedTimeout, startMomentum = 0, restingPos = -0.0001, slideCount, startPos, remaining, distance, speed;
 
 		transition.setUp = function() {
 
@@ -26,6 +26,8 @@ $.fn.zRS3('extend', {
 				'transform' : 'translate3d(0%, 0, 0)'
 
 			});
+
+			distance = (core['elem']['carousel'].width() / slideCount);
 			
 			core['elem']['slides'].css({
 
@@ -116,12 +118,10 @@ $.fn.zRS3('extend', {
        			delta = now - then,
        			current = now - startTime;
 
-			var distance = (core['elem']['carousel'].width() / slideCount),
-				target = Math.round(Math.abs((startPos - distance) + (distance / 2))),
-				totalDistance = Math.round(((target + startPos) * 2) * 100) / 100,
-				speed = (totalDistance / (core['options'].speed * 2) * core['options'].slideBy),
-				increment = (transition.easeOut(current, 0, totalDistance, core['options'].speed) - inc) / 2;
-				inc = Math.round(transition.easeOut(current, 0, totalDistance, core['options'].speed) * 100) / 100;
+			var target = Math.round(Math.abs((startPos - distance) + (distance / 2))),
+				// totalDistance = Math.round(((target + startPos) * 2) * 100) / 100,
+				increment = (transition.easeOut(current, 0, distance, core['options'].speed) - inc) / 2;
+				inc = Math.round(transition.easeOut(current, 0, distance, core['options'].speed) * 100) / 100;
 				remaining = Math.floor((restingPos + target) * 100) / 100;
 
        		pos -= increment;
@@ -133,7 +133,7 @@ $.fn.zRS3('extend', {
 
 				transition.coordinate(restingPos);
 
-				if(Math.min(inc, totalDistance) === totalDistance) {
+				if(Math.min(inc, distance) === distance) {
 
 					cancelAnimationFrame(transition.animate);
 					return;
@@ -149,7 +149,9 @@ $.fn.zRS3('extend', {
 		transition.forward = function(difference) {
 
 			var visibleSlides = visibleSlides,
-				slideCount = slideCount;
+				slideCount = slideCount,
+				distance = (core['elem']['carousel'].width() / slideCount),
+				speed = (distance / (core['options'].speed * 2) * core['options'].slideBy);
 
 			if(core['ins'].cssSupport === true) {
 
