@@ -9,7 +9,7 @@ $.fn.zRS3('extend', {
 			spacing = core['options'].slideSpacing,
 			visibleSlides = core['options'].visibleSlides,
 			publicF = core.ins['publicF'],
-			maxPercentage = -100, start = 0, total, percent = 0, speedTimeout, startMomentum = 0, restingPos = -0.0001, slideCount, startPos, remaining, distance, speed;
+			maxPercentage = -100, start = 0, total, percent = 0, speedTimeout, startMomentum = 0, restingPos = 0, slideCount, startPos, remaining, distance, speed;
 
 		transition.setUp = function() {
 
@@ -126,9 +126,10 @@ $.fn.zRS3('extend', {
 
        		pos -= increment;
 
+			restingPos = Math.round(pos * 100) / 100;
+
 			transition.animate = requestAnimationFrame(function() {
 
-				restingPos = Math.round(pos * 100) / 100;
 				then = now;
 
 				transition.coordinate(restingPos);
@@ -154,8 +155,6 @@ $.fn.zRS3('extend', {
 				speed = (distance / (core['options'].speed * 2) * core['options'].slideBy);
 
 			if(core['ins'].cssSupport === true) {
-
-				if(publicF.currentSlide() === 1) restingPos = -0.001;
 
 				transition.animate = requestAnimationFrame(function() {
 
@@ -234,11 +233,11 @@ $.fn.zRS3('extend', {
 
 		transition.adjustments = function(pos) {
 
-			var posPer = (Math.round(pos * 100) / 100);
+			pos = (Math.round(pos * 1000) / 1000);
 
 			core['elem']['carousel'].css({
 
-				'transform' : 'translate3d('+ posPer +'%, 0, 0)'
+				'transform' : 'translate3d('+ pos +'%, 0, 0)'
 
 			});
 
@@ -294,10 +293,10 @@ $.fn.zRS3('extend', {
 
 		transition.easeOut = function(t, b, c, d) { 
 
-			var ts = (t /=d) * t,
+			var ts = (t /= d) * t,
 				tc = ts * t;
-			
-			return Math.round((b + c * (tc * ts + -5 * ts * ts + 10 * tc + -10 * ts + 5 *t) * 100) / 100);
+				
+			return Math.round((b + c * (tc + -3 * ts + 3 * t) * 100) / 100);
 
 		}
 
