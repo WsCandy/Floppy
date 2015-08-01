@@ -7,10 +7,10 @@ window.propFuncs = {
 			transition: 'slide',
 			slideBy: 1,
 			// pager: $('.pager'),
-			speed: 1000,
-			visibleSlides: 3,
+			speed: 3000,
+			visibleSlides: 2,
 			slideSpacing: 1,
-			delay: 3000
+			delay: 5000
 
 		});
 

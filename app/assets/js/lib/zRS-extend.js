@@ -231,18 +231,13 @@ $.fn.zRS3('extend', {
 
 		transition.adjustments = function(pos, snap) {
 
-			var finalPer = -Math.abs(((100 / slideCount) * 1)) * publicF.currentSlide();
-				posPer = (Math.round(pos * 100) / 100);
+			var posPer = (Math.round(pos * 100) / 100);
 
 			core['elem']['carousel'].css({
 
-				'transform' : 'translate3d('+ (finalPer === -0 ? pos : Math.max(finalPer, posPer)) +'%, 0, 0)'
+				'transform' : 'translate3d('+ posPer +'%, 0, 0)'
 
 			});
-
-			var test = -Math.abs(Math.min(core['elem']['carousel'].width() * (Math.abs(finalPer / 100)), core['elem']['carousel'].width() * (Math.abs(pos / 100))))
-
-			restingPos = test / 2;
 
 			transition.slidePos(pos);
 
@@ -276,9 +271,10 @@ $.fn.zRS3('extend', {
 
 		transition.coordinate = function(posX, snap) {
 
-
 			total = (posX - (start - (restingPos ? restingPos : 0)));
-			percent = (total / core['elem']['carousel'].width()) * 100;
+			percent = Math.round(((total / core['elem']['carousel'].width()) * 100) * 100) / 100;
+
+			console.log(percent);
 
 			if(Math.max(percent, maxPercentage) === maxPercentage) {
 

@@ -153,7 +153,6 @@ gulp.task('browser-sync', function() {
 
 		logFileChanges: false,
 		reloadOnRestart: true,
-		reloadDelay: 400,
 		logPrefix: 'Propeller Browser Sync',
     	proxy: {
 		
