@@ -118,20 +118,17 @@ $.fn.zRS3('extend', {
 
 			var distance = (core['elem']['carousel'].width() / slideCount),
 				target = Math.round(Math.abs((startPos - distance) + (distance / 2))),
-				totalDistance = (target + startPos) * 2,
+				totalDistance = Math.round(((target + startPos) * 2) * 100) / 100,
 				speed = (totalDistance / (core['options'].speed * 2) * core['options'].slideBy),
 				increment = (transition.easeOut(current, 0, totalDistance, core['options'].speed) - inc) / 2;
-				inc = transition.easeOut(current, 0, totalDistance, core['options'].speed);
+				inc = Math.round(transition.easeOut(current, 0, totalDistance, core['options'].speed) * 100) / 100;
 				remaining = Math.floor((restingPos + target) * 100) / 100;
 
-       		pos -= Math.round(increment * 100) / 100;
-
-       		// console.log(target);
-			
+       		pos -= increment;
 
 			transition.animate = requestAnimationFrame(function() {
 
-				restingPos = pos;
+				restingPos = Math.round(pos * 100) / 100;
 				then = now;
 
 				transition.coordinate(restingPos);
@@ -143,7 +140,7 @@ $.fn.zRS3('extend', {
 					
 				}
 
-				transition.progress(restingPos, startTime, now, Math.min(inc, totalDistance));
+				transition.progress(restingPos, startTime, now, inc);
 
 			});
 
@@ -157,8 +154,6 @@ $.fn.zRS3('extend', {
 			if(core['ins'].cssSupport === true) {
 
 				if(publicF.currentSlide() === 1) restingPos = -0.001;
-
-				transition.coordinate(restingPos);
 
 				transition.animate = requestAnimationFrame(function() {
 
@@ -278,7 +273,7 @@ $.fn.zRS3('extend', {
 		transition.coordinate = function(posX) {
 
 			total = (posX - (start - (restingPos ? restingPos : 0)));
-			percent = Math.round(((total / core['elem']['carousel'].width()) * 100) * 100) / 100;
+			percent = (total / core['elem']['carousel'].width()) * 100;
 
 			if(Math.max(percent, maxPercentage) === maxPercentage) {
 
@@ -300,10 +295,7 @@ $.fn.zRS3('extend', {
 			var ts = (t /=d) * t,
 				tc = ts * t;
 			
-			return b + c * (tc * ts + -5 * ts * ts + 10 * tc + -10 * ts + 5 *t);
-
-	// 			t/=d;
-	// return b+c*(t);
+			return Math.round((b + c * (tc * ts + -5 * ts * ts + 10 * tc + -10 * ts + 5 *t) * 100) / 100);
 
 		}
 
