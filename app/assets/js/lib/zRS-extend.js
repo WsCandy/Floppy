@@ -9,7 +9,7 @@ $.fn.zRS3('extend', {
 			spacing = core['options'].slideSpacing,
 			visibleSlides = core['options'].visibleSlides,
 			publicF = core.ins['publicF'],
-			maxPercentage = -100, start = 0, total, percent = 0, speedTimeout, startMomentum = 0, restingPos = 0, slideCount, startPos, remaining, distance, speed, remaining = 0;
+			maxPercentage = -100, start = 0, total, percent = 0, speedTimeout, startMomentum = 0, restingPos = 0, slideCount, startPos;
 
 		transition.setUp = function() {
 
@@ -111,15 +111,14 @@ $.fn.zRS3('extend', {
 
 		transition.progress = function(startTime, then) {
 
-			// inc = (inc ? inc : 0);
-
 			var now = Date.now(),
        			delta = now - then,
        			current = now - startTime;
 
-       		var distance = (100 / slideCount);
+       		var distance = Math.floor((100 / slideCount) * 100) / 100,
+       			increment = Math.floor(transition.easeOut(current, 0, distance, core['options'].speed) * 100) / 100;
 
-       		restingPos+=0.2;
+       		restingPos = -Math.abs(increment) + startPos;
 
        		transition.coordinate();
        		transition.slidePos();
@@ -130,24 +129,9 @@ $.fn.zRS3('extend', {
 
 			});
 
-
-			// var target = Math.round(Math.abs((startPos - distance) + (distance / 2))),
-			// 	target = (target > core['elem']['carousel'].width() / 2 ? (distance / 2) : target);
-			// 	increment = (transition.easeOut(current, 0, distance, core['options'].speed) - inc) / 2;
-			// 	inc = Math.round(transition.easeOut(current, 0, distance, core['options'].speed) * 1000) / 1000;
-			// 	remaining = Math.floor((restingPos + target) * 100) / 100;
-
-			// console.log(distance);
-
-       		// pos -= increment;
-
-			// restingPos = Math.round(pos * 100) / 100;
-
 			transition.animate = requestAnimationFrame(function() {
 
-				// transition.coordinate(restingPos);
-
-				if(remaining === 0.5) {
+				if(increment >= distance) {
 
 					cancelAnimationFrame(transition.animate);
 					return;
@@ -169,11 +153,11 @@ $.fn.zRS3('extend', {
 
 			if(core['ins'].cssSupport === true) {
 
+				cancelAnimationFrame(transition.animate);
+				
 				transition.animate = requestAnimationFrame(function() {
 
 					startPos = restingPos;
-
-					cancelAnimationFrame(transition.animate);
 					transition.progress(Date.now(), Date.now(), true);
 
 				});
@@ -288,7 +272,7 @@ $.fn.zRS3('extend', {
 
 			if(Math.max(restingPos, maxPercentage) === maxPercentage) {
 
-				restingPos = 0;
+				restingPos = restingPos - maxPercentage;
 
 			} else if(restingPos > 0) {
 
@@ -303,7 +287,7 @@ $.fn.zRS3('extend', {
 			var ts = (t /= d) * t,
 				tc = ts * t;
 				
-			return Math.round((b + c * (tc + -3 * ts + 3 * t) * 100) / 100);
+			return b + c * (tc + -3 * ts + 3 * t);
 
 		}
 
