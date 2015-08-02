@@ -115,8 +115,8 @@ $.fn.zRS3('extend', {
        			delta = now - then,
        			current = now - startTime;
 
-       		var distance = Math.floor((100 / slideCount) * 100) / 100,
-       			increment = Math.floor(transition.easeOut(current, 0, distance, core['options'].speed) * 100) / 100;
+       		var distance = Math.round((100 / slideCount) * 1000) / 1000,
+       			increment = Math.round(transition.easeOut(current, 0, distance, core['options'].speed) * 1000) / 1000;
 
        		restingPos = -Math.abs(increment) + startPos;
 
@@ -131,7 +131,7 @@ $.fn.zRS3('extend', {
 
 			transition.animate = requestAnimationFrame(function() {
 
-				if(increment >= distance) {
+				if(Math.min(increment, distance) === distance) {
 
 					cancelAnimationFrame(transition.animate);
 					return;
@@ -225,20 +225,6 @@ $.fn.zRS3('extend', {
 				}, core['options'].speed);
 
 			}
-
-		}
-
-		transition.adjustments = function(pos) {
-
-			pos = (Math.round(pos * 1000) / 1000);
-
-			core['elem']['carousel'].css({
-
-				'transform' : 'translate3d('+ pos +'%, 0, 0)'
-
-			});
-
-			transition.slidePos(pos);
 
 		}
 
