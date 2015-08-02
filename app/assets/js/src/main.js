@@ -10,9 +10,11 @@ window.propFuncs = {
 			speed: 2000,
 			visibleSlides: 2,
 			slideSpacing: 1,
-			delay: 5000
+			delay: 100000
 
 		});
+
+		$('.slider').zRS3('next');
 
 	},
 
