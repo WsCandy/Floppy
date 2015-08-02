@@ -119,14 +119,14 @@ $.fn.zRS3('extend', {
 
        		var distance = (100 / slideCount);
 
-       		restingPos-=0.2;
+       		restingPos+=0.2;
 
-       		transition.slidePos();
        		transition.coordinate();
+       		transition.slidePos();
 
        		core['elem']['carousel'].css({
 
-				'transform' : 'translate3d('+ restingPos +'%, 0, 0)'
+				'transform' : 'translate3d('+ Math.round(restingPos * 100) / 100 +'%, 0, 0)'
 
 			});
 
