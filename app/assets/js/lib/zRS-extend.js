@@ -58,11 +58,10 @@ $.fn.zRS3('extend', {
 					cancelAnimationFrame(transition.animate);
 					core.objs['controls'].pause();
 
-					restingPos = parseInt(core['elem']['carousel'].css('transform').split(',')[4]);
 					e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
 
-					start = e.pageX;
-					startMomentum = e.pageX;
+					start = (e.pageX / core['elem']['carousel'].width() * 100);
+					// startMomentum = e.pageX;
 
 					$('body').addClass('no-select');
 
@@ -74,7 +73,20 @@ $.fn.zRS3('extend', {
 
 						if(core['elem']['carousel'].hasClass('active')) {
 
-							transition.coordinate(e.pageX);
+							var increment = start - ((e.pageX / core['elem']['carousel'].width()) * 100);
+
+							restingPos-=increment;
+
+							transition.coordinate();
+							transition.slidePos();
+
+							core['elem']['carousel'].css({
+
+								'transform' : 'translate3d('+ Math.round(restingPos * 1000) / 1000 +'%, 0, 0)'
+
+							});
+							
+							start = start-=increment;
 
 						}
 
@@ -86,8 +98,7 @@ $.fn.zRS3('extend', {
 
 						if(core['elem']['carousel'].hasClass('active')) {
 
-							restingPos = parseInt(core['elem']['carousel'].css('transform').split(',')[4]);
-							start = e.pageX;
+							start = restingPos;
 
 							core['elem']['carousel'].removeClass('active');
 							clearTimeout(speedTimeout);
