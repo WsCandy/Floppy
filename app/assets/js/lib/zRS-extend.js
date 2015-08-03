@@ -115,8 +115,8 @@ $.fn.zRS3('extend', {
        			delta = now - then,
        			current = now - startTime;
 
-       		var distance = Math.round((100 / slideCount) * 1000) / 1000,
-       			increment = Math.round(transition.easeOut(current, 0, distance, core['options'].speed) * 1000) / 1000;
+       		var distance = Math.round((100 / slideCount) * 10000) / 10000,
+       			increment = Math.round(transition.easeOut(current, 0, distance, core['options'].speed) * 10000) / 10000;
 
        		restingPos = -Math.abs(increment) + startPos;
 
@@ -125,7 +125,7 @@ $.fn.zRS3('extend', {
 
        		core['elem']['carousel'].css({
 
-				'transform' : 'translate3d('+ Math.round(restingPos * 100) / 100 +'%, 0, 0)'
+				'transform' : 'translate3d('+ Math.round(restingPos * 1000) / 1000 +'%, 0, 0)'
 
 			});
 
