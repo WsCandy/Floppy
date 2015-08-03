@@ -8,7 +8,7 @@ window.propFuncs = {
 			slideBy: 1,
 			// pager: $('.pager'),
 			speed: 2000,
-			visibleSlides: 1,
+			visibleSlides: 2,
 			slideSpacing: 0,
 			delay: 4000
 
