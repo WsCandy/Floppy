@@ -9,7 +9,7 @@ $.fn.zRS3('extend', {
 			spacing = core['options'].slideSpacing,
 			visibleSlides = core['options'].visibleSlides,
 			publicF = core.ins['publicF'],
-			maxPercentage = -100, start = 0, total, percent = 0, speedTimeout, startMomentum = 0, restingPos = 0, slideCount, startPos, remaining = 0;
+			maxPercentage = -100, start = 0, total, percent = 0, speedTimeout, startMomentum = 0, restingPos = 0, slideCount, startPos, remaining = 0, currentDirection;
 
 		transition.setUp = function() {
 
@@ -109,7 +109,7 @@ $.fn.zRS3('extend', {
 
 		}
 
-		transition.progress = function(startTime, then, distance) {
+		transition.progress = function(startTime, then, distance, direction) {
 
 			var now = Date.now(),
        			delta = now - then,
@@ -117,9 +117,9 @@ $.fn.zRS3('extend', {
 
        		var	increment = Math.round(transition.easeOut(current, 0, distance, core['options'].speed) * 10000) / 10000;
        		
+       		currentDirection = direction;
        		remaining = distance - increment;
-
-       		restingPos = -Math.abs(increment) + startPos;
+       		restingPos = (direction === 'back' ? Math.abs(increment) + startPos : -Math.abs(increment) + startPos);
 
        		transition.coordinate();
        		transition.slidePos();
@@ -139,7 +139,7 @@ $.fn.zRS3('extend', {
 					
 				}
 
-				transition.progress(startTime, now, distance);
+				transition.progress(startTime, now, distance, direction);
 
 			});
 
@@ -150,7 +150,7 @@ $.fn.zRS3('extend', {
 			var visibleSlides = visibleSlides,
 				speed = (distance / (core['options'].speed * 2) * core['options'].slideBy);
 			
-			var distance = (Math.round(((100 / slideCount)) * 10000) / 10000) + remaining;
+			var distance = (currentDirection != 'forward' ? ((Math.round(((100 / slideCount)) * 10000) / 10000) - remaining) : ((Math.round(((100 / slideCount)) * 10000) / 10000) + remaining))
 
 			if(core['ins'].cssSupport === true) {
 
@@ -159,7 +159,7 @@ $.fn.zRS3('extend', {
 				transition.animate = requestAnimationFrame(function() {
 
 					startPos = restingPos;
-					transition.progress(Date.now(), Date.now(), distance);
+					transition.progress(Date.now(), Date.now(), distance, 'forward');
 
 				});
 
@@ -193,14 +193,16 @@ $.fn.zRS3('extend', {
 
 		transition.back = function(difference) {
 
+			var distance = (currentDirection != 'back' ? ((Math.round(((100 / slideCount)) * 10000) / 10000) - remaining) : ((Math.round(((100 / slideCount)) * 10000) / 10000) + remaining));
+
 			if(core['ins'].cssSupport === true) {
 
-				if(publicF.currentSlide() === (publicF.slideCount -1)) restingPos = 0.001;
-
+				cancelAnimationFrame(transition.animate);
+				
 				transition.animate = requestAnimationFrame(function() {
 
-					cancelAnimationFrame(transition.animate);
-					transition.progress(restingPos, Date.now(), Date.now());
+					startPos = restingPos;
+					transition.progress(Date.now(), Date.now(), distance, 'back');
 
 				});
 
@@ -263,7 +265,7 @@ $.fn.zRS3('extend', {
 
 			} else if(restingPos > 0) {
 
-				restingPos = maxPercentage;
+				restingPos = restingPos + maxPercentage;
 
 			}
 
