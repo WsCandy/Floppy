@@ -6,7 +6,7 @@ window.propFuncs = {
 
 			transition: 'slide',
 			slideBy: 1,
-			// pager: $('.pager'),
+			pager: $('.pager'),
 			speed: 1000,
 			visibleSlides: 1,
 			slideSpacing: 0,
