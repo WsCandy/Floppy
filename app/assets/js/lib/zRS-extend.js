@@ -209,7 +209,7 @@ $.fn.zRS3('extend', {
 			if(core['ins'].cssSupport === true) {
 
 				cancelAnimationFrame(transition.animate);
-				
+
 				transition.animate = requestAnimationFrame(function() {
 
 					startPos = restingPos;

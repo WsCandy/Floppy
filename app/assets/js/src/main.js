@@ -7,10 +7,22 @@ window.propFuncs = {
 			transition: 'slide',
 			slideBy: 1,
 			// pager: $('.pager'),
-			speed: 2000,
-			visibleSlides: 2,
+			speed: 1000,
+			visibleSlides: 1,
 			slideSpacing: 0,
-			delay: 4000
+			delay: 8000
+
+		});
+
+		$('.slider__nav--next').on('click', function() {
+
+			$('.slider').zRS3('next');
+
+		});
+
+		$('.slider__nav--prev').on('click', function() {
+
+			$('.slider').zRS3('prev');
 
 		});
 
