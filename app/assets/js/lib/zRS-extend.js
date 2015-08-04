@@ -236,110 +236,123 @@ $.fn.zRS3('extend', {
 
 		transition.dragBindings = function() {
 
-			if(core['ins'].cssSupport === true) {
+			var events = this;
 
-				core['elem']['inner'].on('touchstart mousedown', function(e) {
-					
-					e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
+			events.init = function() {
 
-					start = (e.pageX / core['elem']['carousel'].width() * 100);
-					startingSlide = publicF.currentSlide();
-					beginning = restingPos;
+				if(core['ins'].cssSupport === true) {
 
-					core.objs['controls'].pause();
-					cancelAnimationFrame(transition.animate);
-					$('body').addClass('no-select');
-					core['elem']['carousel'].addClass('active');
+					core['elem']['inner'].on('touchstart mousedown', events.start);
 
-					$(document).on('touchmove mousemove', function(e) {
-
-						e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
-
-						if(core['elem']['carousel'].hasClass('active')) {
-
-							var increment = start - ((e.pageX / core['elem']['carousel'].width()) * 100),
-								currentPos = Math.abs(Math.round(restingPos * 1000) / 1000),
-								slide = currentPos / slideWidth,						
-								moved = beginning - restingPos;
-
-							moved = (moved > slideWidth && restingPos != 0 ? moved + maxPercentage : moved);
-							restingPos-=increment;
-
-							transition.coordinate();
-							transition.slidePos();
-
-							if(moved < 0) {
-
-								core.objs['slides'].currentSlide = slide % 1 < 0.8 ? Math.floor(slide) : Math.ceil(slide);
-
-							} else if(moved > 0) {
-
-								core.objs['slides'].currentSlide = slide % 1 > 0.2 ? Math.ceil(slide) : Math.floor(slide);
-
-							}							
-
-							core.objs['transition'].update(0);
-
-							core['elem']['carousel'].css({
-
-								'transform' : 'translate3d('+ Math.round(restingPos * 1000) / 1000 +'%, 0, 0)'
-
-							});
-							
-							start = start-=increment;
-
-						}
-
-					});
-
-					$(document).on('touchend touchcancel mouseup', function(e) {
-						
-						e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
-
-						if(core['elem']['carousel'].hasClass('active')) {
-
-							core['elem']['carousel'].removeClass('active');
-							
-							var endPos = restingPos,
-								target = slideWidth * publicF.currentSlide(),
-								moved = Math.abs(beginning - endPos),
-								distance = slideWidth,
-								loop = (moved > (100 / slideCount)) ? true : false;
-
-							startPos = restingPos;
-							
-							moved = (moved > slideWidth ? Math.abs(moved + maxPercentage) : moved)
-
-							if(startingSlide == publicF.currentSlide()) {
-
-								direction = (beginning - endPos < 0 ? 'forward' : 'back');
-								direction = (loop === false ? direction : (beginning - endPos > 0 ? 'forward' : 'back'));
-
-								distance = (currentDirection === direction ? moved + remaining : moved - remaining);
-								transition.progress(Date.now(), Date.now(), distance, direction);
-
-							} else {
-
-								direction = (beginning - endPos > 0 ? 'forward' : 'back');
-								direction = (loop === false ? direction : (beginning - endPos < 0 ? 'forward' : 'back'));
-
-								distance = (currentDirection === direction ? (distance - moved) + remaining : (distance - moved) - remaining);
-
-								transition.progress(Date.now(), Date.now(), distance, direction);
-
-							}
-
-							$(document).unbind('touchmove mouseup touchend touchcancel');
-
-							$('body').removeClass('no-select');
-							
-						}
-
-					});
-
-				});
+				}
 
 			}
+
+			events.start = function(e) {
+
+				e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
+
+				start = (e.pageX / core['elem']['carousel'].width() * 100);
+				startingSlide = publicF.currentSlide();
+				beginning = restingPos;
+
+				core.objs['controls'].pause();
+				cancelAnimationFrame(transition.animate);
+				$('body').addClass('no-select');
+				core['elem']['carousel'].addClass('active');
+
+				$(document).on('touchmove mousemove', events.move);
+				$(document).on('touchend touchcancel mouseup', events.end);
+
+			}
+
+			events.move = function(e) {
+
+				e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
+
+				if(core['elem']['carousel'].hasClass('active')) {
+
+					var increment = start - ((e.pageX / core['elem']['carousel'].width()) * 100),
+						currentPos = Math.abs(Math.round(restingPos * 1000) / 1000),
+						slide = currentPos / slideWidth,						
+						moved = beginning - restingPos;
+
+					moved = (moved > slideWidth && restingPos != 0 ? moved + maxPercentage : moved);
+					restingPos-=increment;
+
+					transition.coordinate();
+					transition.slidePos();
+
+					if(moved < 0) {
+
+						core.objs['slides'].currentSlide = slide % 1 < 0.8 ? Math.floor(slide) : Math.ceil(slide);
+
+					} else if(moved > 0) {
+
+						core.objs['slides'].currentSlide = slide % 1 > 0.2 ? Math.ceil(slide) : Math.floor(slide);
+
+					}							
+
+					core.objs['transition'].update(0);
+
+					core['elem']['carousel'].css({
+
+						'transform' : 'translate3d('+ Math.round(restingPos * 1000) / 1000 +'%, 0, 0)'
+
+					});
+					
+					start = start-=increment;
+
+				}
+
+
+			}
+
+			events.end = function(e) {
+
+				e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
+
+				if(core['elem']['carousel'].hasClass('active')) {
+
+					core['elem']['carousel'].removeClass('active');
+					
+					var endPos = restingPos,
+						target = slideWidth * publicF.currentSlide(),
+						moved = Math.abs(beginning - endPos),
+						distance = slideWidth,
+						loop = (moved > (100 / slideCount)) ? true : false;
+
+					startPos = restingPos;
+					
+					moved = (moved > slideWidth ? Math.abs(moved + maxPercentage) : moved)
+
+					if(startingSlide === publicF.currentSlide()) {
+
+						direction = (beginning - endPos < 0 ? 'forward' : 'back');
+						direction = (loop === false ? direction : (beginning - endPos > 0 ? 'forward' : 'back'));
+
+						distance = (currentDirection === direction ? moved + remaining : moved - remaining);
+						transition.progress(Date.now(), Date.now(), distance, direction);
+
+					} else {
+
+						direction = (beginning - endPos > 0 ? 'forward' : 'back');
+						direction = (loop === false ? direction : (beginning - endPos < 0 ? 'forward' : 'back'));
+
+						distance = (currentDirection === direction ? (distance - moved) + remaining : (distance - moved) - remaining);
+
+						transition.progress(Date.now(), Date.now(), distance, direction);
+
+					}
+
+					$(document).unbind('touchmove mouseup touchend touchcancel');
+					$('body').removeClass('no-select');
+					
+				}
+
+			}
+
+			events.init();
 
 		}
 
