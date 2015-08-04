@@ -74,16 +74,27 @@ $.fn.zRS3('extend', {
 
 						if(core['elem']['carousel'].hasClass('active')) {
 
-							var increment = start - ((e.pageX / core['elem']['carousel'].width()) * 100);
-
+							var increment = start - ((e.pageX / core['elem']['carousel'].width()) * 100),
+								currentPos = Math.abs(Math.round(restingPos * 1000) / 1000),
+								slide = currentPos / (100 / slideCount),						
+								moved = beginning - restingPos;
+							
+							moved = (moved > (100 / slideCount) ? moved + maxPercentage : moved);
 							restingPos-=increment;
 
 							transition.coordinate();
 							transition.slidePos();
 
-							var currentPos = Math.abs(Math.round(restingPos * 1000) / 1000);
+							if(moved < 0) {
 
-							core.objs['slides'].currentSlide = Math.round(currentPos / (100 / slideCount));
+								core.objs['slides'].currentSlide = slide % 1 < 0.8 ? Math.floor(slide) : Math.ceil(slide);
+
+							} else if(moved > 0) {
+
+								core.objs['slides'].currentSlide = slide % 1 > 0.2 ? Math.ceil(slide) : Math.floor(slide);
+
+							}							
+
 							core.objs['transition'].update(0);
 
 							core['elem']['carousel'].css({
