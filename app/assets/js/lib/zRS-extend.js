@@ -105,23 +105,34 @@ $.fn.zRS3('extend', {
 
 						if(core['elem']['carousel'].hasClass('active')) {
 
-
 							core['elem']['carousel'].removeClass('active');
 							
-							var target = (100 / slideCount) * publicF.currentSlide(),
-								moved = Math.abs(beginning - restingPos),
-								distance = (100 / slideCount);
+							var endPos = restingPos,
+								target = (100 / slideCount) * publicF.currentSlide(),
+								moved = Math.abs(beginning - endPos),
+								distance = (100 / slideCount),
+								loop = (moved > (100 / slideCount)) ? true : false;
 
-							distance = (distance - moved);
 							startPos = restingPos;
+							
+							moved = (moved > (100 / slideCount) ? Math.abs(moved + maxPercentage) : moved)
 
 							if(startingSlide == publicF.currentSlide()) {
 
-								console.log('revert')
+								direction = (beginning - endPos < 0 ? 'forward' : 'back');
+								direction = (loop === false ? direction : (beginning - endPos > 0 ? 'forward' : 'back'));
+
+								distance = (currentDirection === direction ? moved + remaining : moved - remaining);
+								transition.progress(Date.now(), Date.now(), distance, direction);
 
 							} else {
 
-								console.log('change')
+								direction = (beginning - endPos > 0 ? 'forward' : 'back');
+								direction = (loop === false ? direction : (beginning - endPos < 0 ? 'forward' : 'back'));
+
+								distance = (currentDirection === direction ? (distance - moved) + remaining : (distance - moved) - remaining);
+
+								transition.progress(Date.now(), Date.now(), distance, direction);
 
 							}
 
@@ -153,8 +164,6 @@ $.fn.zRS3('extend', {
 
        		transition.coordinate();
        		transition.slidePos();
-
-       		console.log(increment);
 
        		core['elem']['carousel'].css({
 
