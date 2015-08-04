@@ -158,10 +158,9 @@ $.fn.zRS3('extend', {
 
 		transition.forward = function(difference) {
 
-			var visibleSlides = visibleSlides,
-				speed = (distance / (core['options'].speed * 2) * core['options'].slideBy);
+			var visibleSlides = visibleSlides;
 			
-			var distance = (currentDirection != 'forward' ? ((Math.round(((100 / slideCount)) * 10000) / 10000) - remaining) : ((Math.round(((100 / slideCount)) * 10000) / 10000) + remaining))
+			var distance = (currentDirection != 'forward' ? ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) - remaining) : ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) + remaining))
 
 			if(core['ins'].cssSupport === true) {
 
@@ -204,7 +203,9 @@ $.fn.zRS3('extend', {
 
 		transition.back = function(difference) {
 
-			var distance = (currentDirection != 'back' ? ((Math.round(((100 / slideCount)) * 10000) / 10000) - remaining) : ((Math.round(((100 / slideCount)) * 10000) / 10000) + remaining));
+			difference = Math.abs(difference);
+
+			var distance = (currentDirection != 'back' ? ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) - remaining) : ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) + remaining));
 
 			if(core['ins'].cssSupport === true) {
 
