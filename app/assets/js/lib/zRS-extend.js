@@ -9,7 +9,7 @@ $.fn.zRS3('extend', {
 			spacing = core['options'].slideSpacing,
 			visibleSlides = core['options'].visibleSlides,
 			publicF = core.ins['publicF'],
-			maxPercentage = -100, start = 0, beginning = 0, end = 0, startingSlide = 0, total, percent = 0, speedTimeout, startMomentum = 0, restingPos = 0, slideCount, startPos, remaining = 0, currentDirection;
+			maxPercentage = -100, start = 0, beginning = 0, end = 0, startingSlide = 0, total, percent = 0, speedTimeout, startMomentum = 0, restingPos = 0, slideCount, startPos, remaining = 0, currentDirection, slideWidth;
 
 		transition.setUp = function() {
 
@@ -28,13 +28,15 @@ $.fn.zRS3('extend', {
 			});
 
 			distance = (core['elem']['carousel'].width() / slideCount);
+			slideWidth = ((100 / slideCount) + (spacing / visibleSlides));
 			
 			core['elem']['slides'].css({
 
-				'width' : (100 / slideCount) - spacing + '%',
+				'width' : slideWidth - spacing + '%',
 				'display' : 'block'
 
 			});
+
 
 			for(var i = 0; i < core['elem']['slides'].length; i++) {
 
@@ -42,7 +44,7 @@ $.fn.zRS3('extend', {
 
 				slide.css({
 
-					'left' : (100 / slideCount) * i + '%',
+					'left' : (slideWidth) * i + '%',
 					'position' : (i === 0 ? 'relative' : 'absolute'),
 					'top' : '0px',
 					'float' : (i === 0 ? 'left' : 'none')
@@ -76,10 +78,10 @@ $.fn.zRS3('extend', {
 
 							var increment = start - ((e.pageX / core['elem']['carousel'].width()) * 100),
 								currentPos = Math.abs(Math.round(restingPos * 1000) / 1000),
-								slide = currentPos / (100 / slideCount),						
+								slide = currentPos / slideWidth,						
 								moved = beginning - restingPos;
-							
-							moved = (moved > (100 / slideCount) ? moved + maxPercentage : moved);
+
+							moved = (moved > slideWidth && restingPos != 0 ? moved + maxPercentage : moved);
 							restingPos-=increment;
 
 							transition.coordinate();
@@ -119,14 +121,14 @@ $.fn.zRS3('extend', {
 							core['elem']['carousel'].removeClass('active');
 							
 							var endPos = restingPos,
-								target = (100 / slideCount) * publicF.currentSlide(),
+								target = slideWidth * publicF.currentSlide(),
 								moved = Math.abs(beginning - endPos),
-								distance = (100 / slideCount),
+								distance = slideWidth,
 								loop = (moved > (100 / slideCount)) ? true : false;
 
 							startPos = restingPos;
 							
-							moved = (moved > (100 / slideCount) ? Math.abs(moved + maxPercentage) : moved)
+							moved = (moved > slideWidth ? Math.abs(moved + maxPercentage) : moved)
 
 							if(startingSlide == publicF.currentSlide()) {
 
@@ -200,7 +202,7 @@ $.fn.zRS3('extend', {
 		transition.forward = function(difference) {
 
 			var visibleSlides = visibleSlides,
-				distance = (currentDirection != 'forward' ? ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) - remaining) : ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) + remaining));
+				distance = (currentDirection != 'forward' ? ((Math.round((slideWidth * difference) * 10000) / 10000) - remaining) : ((Math.round((slideWidth * difference) * 10000) / 10000) + remaining));
 
 			if(core['ins'].cssSupport === true) {
 
@@ -245,7 +247,7 @@ $.fn.zRS3('extend', {
 
 			difference = Math.abs(difference);
 
-			var distance = (currentDirection != 'back' ? ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) - remaining) : ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) + remaining));
+			var distance = (currentDirection != 'back' ? ((Math.round((slideWidth * difference) * 10000) / 10000) - remaining) : ((Math.round((slideWidth * difference) * 10000) / 10000) + remaining));
 
 			if(core['ins'].cssSupport === true) {
 
@@ -289,13 +291,13 @@ $.fn.zRS3('extend', {
 
 				var slide = core['elem']['slides'].eq(i);
 
-				if(restingPos < -Math.abs((100 / slideCount) * (i + 1)) && restingPos <= 0) {
+				if(restingPos < -Math.abs(slideWidth * (i + 1)) && restingPos <= 0) {
 
-					var finalPos = ((100 / slideCount) * i) - maxPercentage;
+					var finalPos = ((slideWidth * i) - maxPercentage) + ((spacing / visibleSlides) * slideCount);
 
 				} else {
 
-					var finalPos = (100 / slideCount) * i;
+					var finalPos = slideWidth * i;
 
 				}
 
@@ -317,13 +319,13 @@ $.fn.zRS3('extend', {
 
 			for(var i = 0; i < slideCount; i++) {
 
-				if(restingPos < maxPercentage) {
+				if(restingPos < (maxPercentage - ((spacing / visibleSlides) * slideCount))) {
 
-					restingPos-=maxPercentage;
+					restingPos-=(maxPercentage - ((spacing / visibleSlides) * slideCount));
 
 				} else if(restingPos > 0) {
 
-					restingPos+=maxPercentage;
+					restingPos+=(maxPercentage - ((spacing / visibleSlides) * slideCount));
 
 				}				
 
