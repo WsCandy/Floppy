@@ -158,9 +158,8 @@ $.fn.zRS3('extend', {
 
 		transition.forward = function(difference) {
 
-			var visibleSlides = visibleSlides;
-			
-			var distance = (currentDirection != 'forward' ? ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) - remaining) : ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) + remaining))
+			var visibleSlides = visibleSlides,
+				distance = (currentDirection != 'forward' ? ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) - remaining) : ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) + remaining))
 
 			if(core['ins'].cssSupport === true) {
 
@@ -271,13 +270,17 @@ $.fn.zRS3('extend', {
 
 		transition.coordinate = function() {
 
-			if(Math.max(restingPos, maxPercentage) === maxPercentage) {
+			for(var i = 0; i < core['options'].slideBy; i++) {
 
-				restingPos = restingPos - maxPercentage;
+				if(restingPos < maxPercentage) {
 
-			} else if(restingPos > 0) {
+					restingPos-=maxPercentage;
 
-				restingPos = restingPos + maxPercentage;
+				} else if(restingPos > 0) {
+
+					restingPos+=maxPercentage;
+
+				}				
 
 			}
 
