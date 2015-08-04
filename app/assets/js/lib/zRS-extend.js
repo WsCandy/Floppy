@@ -258,11 +258,15 @@ $.fn.zRS3('extend', {
 
 				}
 
-				slide.css({
+				if(Math.floor((parseInt(slide.css('left')) / core['elem']['carousel'].width()) * 100) != Math.floor(finalPos)) {
 
-					'left' : finalPos + '%'
+					slide.css({
 
-				});
+						'left' : finalPos + '%'
+
+					});
+					
+				}
 
 			}
 
