@@ -9,7 +9,7 @@ $.fn.zRS3('extend', {
 			spacing = core['options'].slideSpacing,
 			visibleSlides = core['options'].visibleSlides,
 			publicF = core.ins['publicF'],
-			maxPercentage = -100, start = 0, total, percent = 0, speedTimeout, startMomentum = 0, restingPos = 0, slideCount, startPos, remaining = 0, currentDirection;
+			maxPercentage = -100, start = 0, beginning = 0, end = 0, startingSlide = 0, total, percent = 0, speedTimeout, startMomentum = 0, restingPos = 0, slideCount, startPos, remaining = 0, currentDirection;
 
 		transition.setUp = function() {
 
@@ -61,7 +61,8 @@ $.fn.zRS3('extend', {
 					e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
 
 					start = (e.pageX / core['elem']['carousel'].width() * 100);
-					// startMomentum = e.pageX;
+					startingSlide = publicF.currentSlide();
+					beginning = restingPos;
 
 					$('body').addClass('no-select');
 
@@ -80,6 +81,11 @@ $.fn.zRS3('extend', {
 							transition.coordinate();
 							transition.slidePos();
 
+							var currentPos = Math.abs(Math.round(restingPos * 1000) / 1000);
+
+							core.objs['slides'].currentSlide = Math.round(currentPos / (100 / slideCount));
+							core.objs['transition'].update(0);
+
 							core['elem']['carousel'].css({
 
 								'transform' : 'translate3d('+ Math.round(restingPos * 1000) / 1000 +'%, 0, 0)'
@@ -87,6 +93,7 @@ $.fn.zRS3('extend', {
 							});
 							
 							start = start-=increment;
+							end = (e.pageX / core['elem']['carousel'].width() * 100);
 
 						}
 
@@ -98,13 +105,25 @@ $.fn.zRS3('extend', {
 
 						if(core['elem']['carousel'].hasClass('active')) {
 
-							start = restingPos;
 
 							core['elem']['carousel'].removeClass('active');
-							clearTimeout(speedTimeout);
+							
+							var target = (100 / slideCount) * publicF.currentSlide(),
+								moved = Math.abs(beginning - restingPos),
+								distance = (100 / slideCount);
 
-							var distance = Math.abs(e.pageX - startMomentum),
-								speed = Math.round((distance / 75) * 100) / 100;
+							distance = (distance - moved);
+							startPos = restingPos;
+
+							if(startingSlide == publicF.currentSlide()) {
+
+								console.log('revert')
+
+							} else {
+
+								console.log('change')
+
+							}
 
 							$(document).unbind('touchmove mouseup touchend touchcancel');
 
@@ -135,6 +154,8 @@ $.fn.zRS3('extend', {
        		transition.coordinate();
        		transition.slidePos();
 
+       		console.log(increment);
+
        		core['elem']['carousel'].css({
 
 				'transform' : 'translate3d('+ Math.round(restingPos * 1000) / 1000 +'%, 0, 0)'
@@ -159,7 +180,7 @@ $.fn.zRS3('extend', {
 		transition.forward = function(difference) {
 
 			var visibleSlides = visibleSlides,
-				distance = (currentDirection != 'forward' ? ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) - remaining) : ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) + remaining))
+				distance = (currentDirection != 'forward' ? ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) - remaining) : ((Math.round(((100 / slideCount) * difference) * 10000) / 10000) + remaining));
 
 			if(core['ins'].cssSupport === true) {
 
@@ -274,7 +295,7 @@ $.fn.zRS3('extend', {
 
 		transition.coordinate = function() {
 
-			for(var i = 0; i < core['options'].slideBy; i++) {
+			for(var i = 0; i < slideCount; i++) {
 
 				if(restingPos < maxPercentage) {
 

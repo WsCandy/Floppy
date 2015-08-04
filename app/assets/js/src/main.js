@@ -5,10 +5,10 @@ window.propFuncs = {
 		$('.slider').zRS3({
 
 			transition: 'slide',
-			slideBy: 2,
+			slideBy: 1,
 			pager: $('.pager'),
 			speed: 1500,
-			visibleSlides: 2,
+			visibleSlides: 1,
 			slideSpacing: 0,
 			delay: 8000
 
