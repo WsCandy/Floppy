@@ -16,6 +16,7 @@ var options = {
 	fs = require('fs'),
 	path = require('path'),
 	browserSync = require('browser-sync').create(),
+	opn = require('opn'),
 	jsFiles;
 
 var scriptsTask = function() {
@@ -160,13 +161,18 @@ gulp.task('browser-sync', function() {
 		    middleware: function(req, res, next) {
 		    	
 		    	next();
-
 		    }
 
-		}
+		},
+		open: false
 
     });
 
+    setTimeout(function() {
+
+    	opn('http://project.node')
+
+    }, 400);
 
 });
 
