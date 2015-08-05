@@ -304,8 +304,7 @@ $.fn.zRS3('extend', {
 					start = start-=increment;
 
 				}
-
-
+				
 			}
 
 			events.end = function(e) {
@@ -320,11 +319,12 @@ $.fn.zRS3('extend', {
 						target = slideWidth * publicF.currentSlide(),
 						moved = Math.abs(beginning - endPos),
 						distance = slideWidth,
+						difference = publicF.currentSlide() - startingSlide,
 						loop = (moved > (100 / slideCount)) ? true : false;
 
-					startPos = restingPos;
-					
-					moved = (moved > slideWidth ? Math.abs(moved + maxPercentage) : moved)
+					startPos = restingPos;		
+
+					moved = (moved > (slideWidth * visibleSlides) ? Math.abs(moved + maxPercentage) : moved);
 
 					if(startingSlide === publicF.currentSlide()) {
 

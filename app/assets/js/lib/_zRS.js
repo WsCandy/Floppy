@@ -139,8 +139,11 @@
 
 				}
 
-				objs['controls'].play();
+				if(objs['slides'].count() > 1) {
 
+					objs['controls'].play();
+
+				}
 
 			},
 
