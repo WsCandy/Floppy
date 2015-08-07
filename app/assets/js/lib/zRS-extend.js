@@ -253,6 +253,7 @@ $.fn.zRS3('extend', {
 				e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
 
 				start = (e.pageX / core['elem']['carousel'].width() * 100);
+				startingPos = (e.pageX / core['elem']['carousel'].width() * 100);
 				startingSlide = publicF.currentSlide();
 				beginning = restingPos;
 
@@ -277,23 +278,32 @@ $.fn.zRS3('extend', {
 						slide = currentPos / slideWidth,						
 						moved = beginning - restingPos;
 
-					moved = (moved > slideWidth && restingPos != 0 ? moved + maxPercentage : moved);
+					var slideValue = Math.round(slide);
+
+					moved = (moved > (slideWidth * visibleSlides) && restingPos != 0 ? moved + maxPercentage : moved);
 					restingPos-=increment;
 
 					transition.coordinate();
-					transition.slidePos();
+					transition.slidePos();;
 
 					if(moved < 0) {
 
-						core.objs['slides'].currentSlide = slide % 1 < 0.8 ? Math.floor(slide) : Math.ceil(slide);
+						var slideNo = slideValue -1; 
+
+						core.objs['slides'].currentSlide = slide % 1 < 0.95 ? Math.floor(slide) : Math.ceil(slide);
 
 					} else if(moved > 0) {
 
-						core.objs['slides'].currentSlide = slide % 1 > 0.2 ? Math.ceil(slide) : Math.floor(slide);
+						var slideNo = slideValue + visibleSlides;
+							slideNo = (slideNo >= slideCount ? slideNo - slideCount : slideNo);
+
+						core.objs['slides'].currentSlide = slide % 1 > 0.05 ? Math.ceil(slide) : Math.floor(slide);
 
 					}							
 
+
 					core.objs['transition'].update(0);
+					core.objs['transition'].swapImg(core['elem']['slides'].eq(slideNo), null, 1, true);
 
 					core['elem']['carousel'].css({
 
@@ -315,35 +325,40 @@ $.fn.zRS3('extend', {
 
 					core['elem']['carousel'].removeClass('active');
 					
-					var endPos = restingPos,
+					var endingPos = (e.pageX / core['elem']['carousel'].width() * 100),
+						endPos = restingPos,
 						target = slideWidth * publicF.currentSlide(),
-						moved = Math.abs(beginning - endPos),
+						moved = endingPos - startingPos,
+						traveled = beginning - endPos,
 						distance = slideWidth,
 						difference = publicF.currentSlide() - startingSlide,
 						loop = (moved > (100 / slideCount)) ? true : false;
 
-					startPos = restingPos;		
+					startPos = restingPos;
 
-					moved = (moved > (slideWidth * visibleSlides) ? Math.abs(moved + maxPercentage) : moved);
+					distance = (target - traveled) + beginning;
+					direction = (moved > 0 ? 'back' : 'forward');
 
-					if(startingSlide === publicF.currentSlide()) {
+					
+					// if(startingSlide == publicF.currentSlide()) {
 
-						direction = (beginning - endPos < 0 ? 'forward' : 'back');
-						direction = (loop === false ? direction : (beginning - endPos > 0 ? 'forward' : 'back'));
+					// 	direction = (moved < 0 ? 'back' : 'forward');
+					// 	distance = (direction === 'back' ? (distance - remaining) : (publicF.currentSlide() === 0 ? (distance + 100) : distance) + remaining);
 
-						distance = (currentDirection === direction ? moved + remaining : moved - remaining);
-						transition.progress(Date.now(), Date.now(), distance, direction);
+					// 	console.log(distance);
 
-					} else {
+					// } else {
 
-						direction = (beginning - endPos > 0 ? 'forward' : 'back');
-						direction = (loop === false ? direction : (beginning - endPos < 0 ? 'forward' : 'back'));
+						if(distance < -Math.abs(slideWidth * (slideCount -1))) {
 
-						distance = (currentDirection === direction ? (distance - moved) + remaining : (distance - moved) - remaining);
+							distance+= (slideWidth * (slideCount));
 
-						transition.progress(Date.now(), Date.now(), distance, direction);
+							transition.progress(Date.now(), Date.now(), Math.abs(distance), direction);
 
-					}
+						};
+					// }
+
+					transition.progress(Date.now(), Date.now(), Math.abs(distance), direction);
 
 					$(document).unbind('touchmove mouseup touchend touchcancel');
 					$('body').removeClass('no-select');

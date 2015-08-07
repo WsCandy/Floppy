@@ -272,7 +272,8 @@
 
 					'position' : 'relative',
 					'width' : '100%',
-					'overflow' : 'hidden'
+					'overflow' : 'hidden',
+					'height' : 'auto'
 
 				});
 
@@ -347,14 +348,24 @@
 
 					if(options['transition'] === 'slide' && ins.cssSupport === true) {
 
-						transition.swapImg(elem['slides'].eq(objs['slides'].currentSlide + options['visibleSlides'] - (i + 1)), direction, difference);
+						if(direction !== 'back') {
+
+							var slide = objs['slides'].currentSlide + options['visibleSlides'] - (i + 1);
+								slide = (slide >= objs['slides'].count()) ? slide - objs['slides'].count() : slide;
+
+						} else {
+
+							var slide = objs['slides'].currentSlide + i;
+
+						}
+
+						transition.swapImg(elem['slides'].eq(slide), direction, difference);
 
 					} else {
 						
 						transition.swapImg(elem['slides'].eq((difference < 0 ? Math.abs(i) : (i + difference) - (options.visibleSlides === difference ? 0 : difference - options.visibleSlides))), direction, difference);
 
 					}
-
 
 				}
 				
@@ -376,7 +387,7 @@
 
 					var image = $(images[i]);
 
-					if(!image.attr('zrs-src') && direction != 'back') {
+					if(!image.attr('zrs-src')) {
 
 						transition.count--;						
 
@@ -395,7 +406,7 @@
 						transition.count--;
 						image.removeAttr('zrs-src');
 
-						if(transition.count == 0 && direction != 'back') {
+						if(transition.count == 0 && !initial) {
 
 							objs['transition'][options.transition][direction](difference);
 					           
@@ -417,14 +428,7 @@
 				difference = (!difference ? (direction == 'back' ? -Math.abs(options.slideBy) : options.slideBy) : (direction == 'back' ? -Math.abs(difference) : difference));
 
 				objs['transition'].update(difference);
-
-				if(direction === 'forward') objs['transition'].procedural(null, difference, direction);
-				if(direction === 'back') {
-
-					objs['transition'][options.transition][direction](difference);
-					objs['transition'].procedural(null, difference, direction)
-
-				};
+				objs['transition'].procedural(null, difference, direction)
 
 				if(typeof options['pre_trans_callback'] === 'function') {
 
