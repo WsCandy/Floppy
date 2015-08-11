@@ -5,13 +5,6 @@ $.fn.zRS3('extend', {
 
 	extend : function(core) {
 
-		// Blure Experiment
-
-		var filters = document.querySelector('.filters'),
-			defs = filters.querySelector('defs'),
-			blur = defs.querySelector('#blur'), 
-			blurFilter = blur.firstElementChild;
-
 		var transition = this,
 			spacing = core['options'].slideSpacing,
 			visibleSlides = core['options'].visibleSlides,
@@ -69,8 +62,6 @@ $.fn.zRS3('extend', {
        			current = now - startTime;
 
        		var	increment = Math.round(transition.easeOut(current, 0, distance, core['options'].speed) * 10000) / 10000;
-       		
-       		blurFilter.setAttribute('stdDeviation', (remaining / 2) + ',0');
 
        		currentDirection = direction;
        		remaining = distance - increment;
@@ -317,7 +308,6 @@ $.fn.zRS3('extend', {
 
 					core.objs['transition'].update(0);
 					core.objs['transition'].swapImg(core['elem']['slides'].eq(slideNo), null, 1, true);
-					blurFilter.setAttribute('stdDeviation', Math.abs(increment) + ',0');
 
 					core['elem']['carousel'].css({
 
