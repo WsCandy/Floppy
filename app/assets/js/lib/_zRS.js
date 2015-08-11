@@ -145,6 +145,17 @@
 
 				}
 
+				$(window).on('load', function() {
+
+					elem['inner'].css({
+
+						'height' : 'auto'
+
+					});
+
+				});
+
+
 			},
 
 			defineModules: function() {
@@ -272,8 +283,7 @@
 
 					'position' : 'relative',
 					'width' : '100%',
-					'overflow' : 'hidden',
-					'height' : 'auto'
+					'overflow' : 'hidden'
 
 				});
 

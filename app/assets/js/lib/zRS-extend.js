@@ -5,6 +5,13 @@ $.fn.zRS3('extend', {
 
 	extend : function(core) {
 
+		// Blure Experiment
+
+		var filters = document.querySelector('.filters'),
+			defs = filters.querySelector('defs'),
+			blur = defs.querySelector('#blur'), 
+			blurFilter = blur.firstElementChild;
+
 		var transition = this,
 			spacing = core['options'].slideSpacing,
 			visibleSlides = core['options'].visibleSlides,
@@ -63,6 +70,8 @@ $.fn.zRS3('extend', {
 
        		var	increment = Math.round(transition.easeOut(current, 0, distance, core['options'].speed) * 10000) / 10000;
        		
+       		blurFilter.setAttribute('stdDeviation', (remaining / 2) + ',0');
+
        		currentDirection = direction;
        		remaining = distance - increment;
        		restingPos = (direction === 'back' ? Math.abs(increment) + startPos : -Math.abs(increment) + startPos);
@@ -250,6 +259,8 @@ $.fn.zRS3('extend', {
 
 			events.start = function(e) {
 
+				e.preventDefault();
+
 				e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
 
 				start = (e.pageX / core['elem']['carousel'].width() * 100);
@@ -259,7 +270,6 @@ $.fn.zRS3('extend', {
 
 				core.objs['controls'].pause();
 				cancelAnimationFrame(transition.animate);
-				$('body').addClass('no-select');
 				core['elem']['carousel'].addClass('active');
 
 				$(document).on('touchmove mousemove', events.move);
@@ -268,6 +278,9 @@ $.fn.zRS3('extend', {
 			}
 
 			events.move = function(e) {
+
+				e.cancelBubble=true;
+				e.stopPropagation();
 
 				e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
 
@@ -304,6 +317,7 @@ $.fn.zRS3('extend', {
 
 					core.objs['transition'].update(0);
 					core.objs['transition'].swapImg(core['elem']['slides'].eq(slideNo), null, 1, true);
+					blurFilter.setAttribute('stdDeviation', Math.abs(increment) + ',0');
 
 					core['elem']['carousel'].css({
 
@@ -318,6 +332,9 @@ $.fn.zRS3('extend', {
 			}
 
 			events.end = function(e) {
+
+				e.cancelBubble=true;
+				e.stopPropagation();
 
 				e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
 
@@ -353,15 +370,12 @@ $.fn.zRS3('extend', {
 
 							distance+= (slideWidth * (slideCount));
 
-							transition.progress(Date.now(), Date.now(), Math.abs(distance), direction);
-
 						};
 					// }
 
 					transition.progress(Date.now(), Date.now(), Math.abs(distance), direction);
 
 					$(document).unbind('touchmove mouseup touchend touchcancel');
-					$('body').removeClass('no-select');
 					
 				}
 
