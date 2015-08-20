@@ -9,7 +9,8 @@ $.fn.zRS3('extend', {
 			spacing = core['options'].slideSpacing,
 			visibleSlides = core['options'].visibleSlides,
 			publicF = core.ins['publicF'],
-			maxPercentage = -100, start = 0, beginning = 0, startingSlide = 0, restingPos = 0, slideCount, startPos, remaining = 0, currentDirection, slideWidth;
+			maxPercentage = -100, start = 0, beginning = 0, startingSlide = 0, restingPos = 0, slideCount, startPos, remaining = 0, currentDirection, slideWidth,
+			dragging = false;
 
 		transition.setUp = function() {
 
@@ -265,6 +266,17 @@ $.fn.zRS3('extend', {
 
 				$(document).on('touchmove mousemove', events.move);
 				$(document).on('touchend touchcancel mouseup', events.end);
+				core.elem['carousel'].find('a').on('click', function(e) {
+
+					if(dragging === true) {
+
+						e.preventDefault();
+						dragging = false;
+						return false;
+
+					}
+					
+				});
 
 			}
 
@@ -346,7 +358,14 @@ $.fn.zRS3('extend', {
 					distance = (target - traveled) + beginning;
 					direction = (moved > 0 ? 'back' : 'forward');
 
-					
+					if(Math.abs(moved) > 0.2) {
+
+						dragging = true;						
+
+					}
+
+					console.log(dragging)
+
 					// if(startingSlide == publicF.currentSlide()) {
 
 					// 	direction = (moved < 0 ? 'back' : 'forward');

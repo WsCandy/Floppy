@@ -1,33 +1,5 @@
 window.propFuncs = {
 
-	sliders__ready : function() {
-
-		$('.slider').zRS3({
-
-			transition: 'slide',
-			slideBy: 2,
-			pager: $('.pager'),
-			speed: 1000,
-			visibleSlides: 2,
-			slideSpacing: 0.5,
-			delay: 10000
-
-		});
-
-		$('.slider__nav--next').on('click', function() {
-
-			$('.slider').zRS3('next');
-
-		});
-
-		$('.slider__nav--prev').on('click', function() {
-
-			$('.slider').zRS3('prev');
-
-		});
-
-	},
-
 	isVisible__ready : function() {
 
 		var self = this;
@@ -49,31 +21,77 @@ window.propFuncs = {
 
 	},
 
-	bg__ready__scroll : function() {
+	slider_lazy__scroll__ready: function() {
+		
+		this.scroll = function() {
 
-		var bgImg = document.querySelectorAll('.js-bg');
+			if(propCore['isVisible'].init($('.slider')[0]) && $('.slider').data('ins') === undefined) {
 
-		for(var i = 0; i < bgImg.length; i++) {
+				$('.slider').zRS3({
 
-			var img = $(bgImg[i]);
+					transition: 'slide',
+					slideBy: 1,
+					pager: $('.pager'),
+					speed: 1000,
+					visibleSlides: 1,
+					slideSpacing: 0,
+					delay: 10000
 
-			if(propCore['isVisible'].init(bgImg[i])) {
+				});
+				
+				$('.slider__nav--next').on('click', function() {
 
-				if(!img.data('img')) continue;
+					$('.slider').zRS3('next');
 
-				img.css({
+				});
 
-					'background-image' : 'url("' + img.data('img') + '")'
+				$('.slider__nav--prev').on('click', function() {
 
-				}).attr('data-img', '');
+					$('.slider').zRS3('prev');
 
-				if(img.attr('data-img') == '') {
-					img.removeAttr('data-img');
-				}
+				});
 
-			}
+			}		
 
 		}
+
+		this.scroll();
+
+	},
+
+	bg__ready__scroll : function() {
+
+		var self = this;
+
+		self.scroll = function() {
+
+			var bgImg = document.querySelectorAll('.js-bg');
+
+			for(var i = 0; i < bgImg.length; i++) {
+
+				var img = $(bgImg[i]);
+
+				if(propCore['isVisible'].init(bgImg[i])) {
+
+					if(!img.data('img')) continue;
+
+					img.css({
+
+						'background-image' : 'url("' + img.data('img') + '")'
+
+					}).attr('data-img', '');
+
+					if(img.attr('data-img') == '') {
+						img.removeAttr('data-img');
+					}
+
+				}
+
+			}			
+
+		}
+
+		self.scroll();
 
 	},
 
@@ -88,5 +106,3 @@ window.propFuncs = {
 	}
 
 }
-
-window.dispatchEvent(loaded);
