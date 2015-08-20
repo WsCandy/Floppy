@@ -34,6 +34,8 @@ exports.init = function(app) {
 
 	app.use(function *(next) {
 	
+		this.set('Vary', 'Accept-Encoding');
+	
 		if(app.env === 'development') {
 
 			delete require.cache[require.resolve(__dirname+'/../app/config/page.json')];
@@ -55,11 +57,9 @@ exports.init = function(app) {
 
 		}		
 
-	});
-	
+	});	
 
 	router.get('/', function *(next) {
-
 
 		try {
 
