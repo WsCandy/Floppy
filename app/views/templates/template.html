@@ -6,6 +6,7 @@
 	    <link rel="dns-prefetch" href="//ajax.googleapis.com/">
 	    <link rel="dns-prefetch" href="//google-analytics.com/">
 	    <link rel="preload" href="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+	    <link rel="preload" href="//www.google-analytics.com/analytics.js">
 
 		<title><%- site.name %> - <%- view.title %></title>
 		<meta name="description" content="<%- view.desc %>">
@@ -22,10 +23,13 @@
 		</script>
 	</head>
 	<body id="<%- page %>">		
-		<section class="top">			
+		<section class="top js-bg" data-img="/assets/img/top-bg.jpg">
 			<div class="centre-wrap">
 				<a href="/" class="logo">
-					<img src="/assets/img/logo.png" alt="Propeller Build Test" height="280" width="280">
+					<div class="js-imager" data-src="/assets/img/logo.png" data-alt="Propeller Build Test" data-height="280" data-width="280"></div>
+					<noscript>
+						<img src="/assets/img/logo.png" alt="Propeller Build Test" height="280" width="280">						
+					</noscript>
 				</a>
 				<nav>
 					<ul>
