@@ -39,10 +39,14 @@ app.use(staticCache(__dirname + '/../../app', {
 	buffer: app.env === 'development' ? false : true,
 	gzip: true,
 	dynamic: true,
+	alias: {
+
+
+
+	},
 	usePrecompiledGzip: true
 
 }, files));
-
 
 app.use(etag());
 controller.init(app);
