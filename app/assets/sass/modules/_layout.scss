@@ -428,6 +428,19 @@ footer {
 				border: none;
 				font-family: "icons";
 
+				@include mq($mob) {
+
+					padding-top: 30px;
+
+					a {
+
+						@include font-size(30);
+						margin: 0 10px;
+
+					}
+					
+				}
+
 			}
 
 		}
