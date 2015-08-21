@@ -22,8 +22,7 @@
     "koa-static": "^1.4.9",
     "output-cache": "^1.0.0",
     "q": "^1.4.1",
-    "redis": "^0.12.1",
-    "requestify": "^0.1.17"
+    "koa-favicon": "^1.2.0"
   },
   "author": "Samuel Woodbridge",
   "license": "ISC",

@@ -4,6 +4,7 @@ var koa = require('koa'),
 	etag = require('koa-etag'),
 	controller = require('../controller'),
 	routing = require('../routing'),
+	favicon = require('koa-favicon'),
 	states = require(__dirname+'/../../app/controller/states/states.js')
 	logger = require('koa-logger');
 
@@ -33,6 +34,7 @@ var files = {};
 app.use(logger());
 
 app.use(conditional());
+app.use(favicon(__dirname + '/../../favicon.ico'));
 app.use(staticCache(__dirname + '/../../app', {
 
 	cacheControl: (app.env === 'development' ? '' : 'public, max-age='+ (1000 * 60 * 60)),
