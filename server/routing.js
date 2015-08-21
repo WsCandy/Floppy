@@ -57,7 +57,12 @@ exports.init = function(app) {
 
 		}		
 
-	});	
+	});
+
+
+
+	router.redirect('/assets/js/main.min.:time.js', '/assets/js/main.min.js');
+	router.redirect('/assets/css/main.:time.css', '/assets/css/main.css');
 
 	router.get('/', function *(next) {
 

@@ -43,6 +43,7 @@ app.use(staticCache(__dirname + '/../../app', {
 
 }, files));
 
+
 app.use(etag());
 controller.init(app);
 states.init(app);
