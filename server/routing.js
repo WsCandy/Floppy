@@ -60,20 +60,6 @@ exports.init = function(app) {
 
 	});
 
-	router.get('/assets/js/main.min.:time.js', function *(next) {
-
-		this.set('content-type', 'text/javascript');
-		this.body = fs.readFileSync(__dirname + '/../app/assets/js/main.min.js');
-		yield next;
-
-	}).get('/assets/css/main.:time.css', function *(next) {
-
-		this.set('content-type', 'text/css');
-		this.body = fs.readFileSync(__dirname + '/../app/assets/css/main.css');
-		yield next;
-
-	});
-
 	router.get('/', function *(next) {
 
 		try {
