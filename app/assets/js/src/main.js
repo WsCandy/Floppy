@@ -61,13 +61,12 @@ window.propFuncs = {
 
 	bg__ready__scroll : function() {
 
-		var self = this;
+		var self = this,
+			bgImg = document.querySelectorAll('.js-bg');
 
 		self.scroll = function() {
 
-			var bgImg = document.querySelectorAll('.js-bg');
-
-			for(var i = 0; i < bgImg.length; i++) {
+			for(var i = 0, l = bgImg.length; i < l; i++) {
 
 				var img = $(bgImg[i]);
 
@@ -79,11 +78,7 @@ window.propFuncs = {
 
 						'background-image' : 'url("' + img.data('img') + '")'
 
-					}).attr('data-img', '');
-
-					if(img.attr('data-img') == '') {
-						img.removeAttr('data-img');
-					}
+					}).removeAttr('data-img');
 
 				}
 
