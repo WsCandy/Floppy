@@ -190,7 +190,7 @@ gulp.task('critical', function () {
         src: options.viewsPath+'templates/template.html',
         styleTarget: options.assetsPath+'css/critical.css',
         ignore: ['@font-face'],
-        miniy: true,
+        minify: true,
         width: 1920,
         height: 985
 
