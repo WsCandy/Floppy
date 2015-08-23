@@ -3,12 +3,11 @@ var router = require('koa-router')(),
 	fs = require('fs'),
 	page = require(__dirname+'/../app/config/page.json')[0];
 
-var testModule = function(module, param) {
+var testModule = function(module) {
 
 	try {
-
-		require(module);
-		return true;
+		
+		return require(module);
 
 	} catch(err) {
 
@@ -62,35 +61,13 @@ exports.init = function(app) {
 
 	router.get('/', function *(next) {
 
-		try {
+		var controller = testModule('../app/controller/index');
+		
+		if(controller.params) {
 
-			var controller = require('../app/controller/index');
-				
-			try {
+			yield this.render('index', controller.params(page, 'index'));			
 
-				yield this.render('index', controller.params(page, 'index'));
-
-			}
-
-			catch(err) {
-
-				console.log(err);
-
-				if(err.syscall === 'open') {
-
-					this.body = err.message;
-					
-				} else {
-
-					this.status = 404;
-
-				}
-				
-			}
-
-		}
-
-		catch(err) {
+		} else {
 
 			try {
 
@@ -115,10 +92,9 @@ exports.init = function(app) {
 
 				}
 
-			}
+			}		
 
 		}
-
 		
 		router.post('/', koaBody, function *(next) {
 
@@ -138,35 +114,13 @@ exports.init = function(app) {
 
 	router.get('/:page', function *(next) {
 
-		try {
+		var controller = testModule('../app/controller/'+this.params['page']);
 
-			var controller = require('../app/controller/'+this.params['page']);
-				
-			try {
+		if(controller.params) {
 
-				yield this.render(this.params['page'], controller.params(page, this.params['page']));
+			yield this.render(this.params['page'], controller.params(page, this.params['page']));
 
-			}
-
-			catch(err) {
-
-				console.log(err);
-
-				if(err.syscall === 'open') {
-
-					this.body = err.message;
-					
-				} else {
-
-					this.status = 404;
-
-				}
-				
-			}
-
-		} 
-
-		catch(err) {
+		} else {
 
 			try {
 
@@ -191,7 +145,7 @@ exports.init = function(app) {
 
 				}
 
-			}
+			}			
 
 		}
 
@@ -208,54 +162,6 @@ exports.init = function(app) {
 			yield next;
 
 		});
-
-	});
-
-	router.get('/:dir/:page', function *(next) {
-
-		var pageArray = [this.params['dir'], this.params['page']],
-			pageString = pageArray.join('-');
-
-		try {
-
-			var controller = require('../app/controller/'+this.params['dir'] + '/' + this.params['page']);
-				
-			yield this.render(this.params['dir'] + '/' + this.params['page'], controller.params(page, this.params['page'], pageString));
-
-
-		} catch(err) {
-
-			try {
-			 
-			 	yield this.render(this.params['dir'] + '/' + this.params['page'], {
-
-			 		view: page[pageString] ? page[pageString] : page['default'],
-			 		page: pageString
-
-			 	});
-
-			}
-
-			catch(err) {
-
-				if(err.syscall === 'open') {
-
-					this.body = err.message;
-					
-				} else {
-
-					this.status = 404;
-
-				}
-
-			}			
-
-		}
-
-	})
-	.post('/:dir/:page', koaBody, function *(next) {
-
-		this.body = this.request.body;
 
 	});
 
