@@ -1,3 +1,25 @@
+.svg-logo {
+
+	fill: #FFF;
+
+	.letter {
+
+		transition: 0.25s;
+		
+	}
+
+	&:hover {
+
+		.letter {
+
+			fill: #4BC0C0;
+			
+		}
+
+	}
+
+}
+
 .top {
 
 	width: 100%;
