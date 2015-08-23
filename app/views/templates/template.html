@@ -11,7 +11,10 @@
 		<title><%- site.name %> - <%- view.title %></title>
 		<meta name="description" content="<%- view.desc %>">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
-
+		<style type="text/css">
+			html {background: #000;}
+			body {display: none;}
+		</style>
 		<link rel="stylesheet" href="/assets/css/main.css?<%= lastModified('assets/css/main.css') %>" media="none" onload="if(media!='all')media='all'">
 		
 		<script>
