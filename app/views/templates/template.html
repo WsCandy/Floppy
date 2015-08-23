@@ -11,9 +11,11 @@
 		<title><%- site.name %> - <%- view.title %></title>
 		<meta name="description" content="<%- view.desc %>">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+		<!-- build:css -->
+        <link rel="stylesheet" href="app/assets/css/main.css">
+        <!-- endbuild -->
 		<style type="text/css">
-			html {background: #000;}
-			body {display: none;}
+			<%- include ../../assets/css/critical.css %>
 		</style>		
 		<script>
 			<% include ../../assets/js/vendor/modernizr.custom.js %>

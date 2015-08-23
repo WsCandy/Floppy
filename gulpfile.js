@@ -17,6 +17,7 @@ var options = {
 	path = require('path'),
 	browserSync = require('browser-sync').create(),
 	opn = require('opn'),
+	critical = require('critical'),
 	jsFiles;
 
 var scriptsTask = function() {
@@ -180,5 +181,21 @@ gulp.task('browser-sync', function() {
 gulp.task('sass', sassTask);
 gulp.task('scripts', scriptsTask);
 gulp.task('watch', watchTask);
+
+gulp.task('critical', function () {
+
+	critical.generateInline({
+
+        base: process.env.PWD,
+        src: options.viewsPath+'templates/template.html',
+        styleTarget: options.assetsPath+'css/critical.css',
+        ignore: ['@font-face'],
+        miniy: true,
+        width: 1920,
+        height: 985
+
+    });
+
+});
 
 gulp.task('default', ['setup', 'browser-sync']);
