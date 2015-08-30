@@ -10,7 +10,8 @@ $.fn.zRS3('extend', {
 			visibleSlides = core['options'].visibleSlides,
 			publicF = core.ins['publicF'],
 			maxPercentage = -100, start = 0, beginning = 0, startingSlide = 0, restingPos = 0, slideCount, startPos, remaining = 0, currentDirection, slideWidth,
-			dragging = false;
+			dragging = false,
+			isTouch = window.isTouch = ("ontouchstart" in document.documentElement);
 
 		transition.setUp = function() {
 
@@ -97,7 +98,7 @@ $.fn.zRS3('extend', {
 			var visibleSlides = visibleSlides,
 				distance = (currentDirection != 'forward' ? ((Math.round((slideWidth * difference) * 10000) / 10000) - remaining) : ((Math.round((slideWidth * difference) * 10000) / 10000) + remaining));
 
-			if(core['ins'].cssSupport === true) {
+			if(core['ins'].animationFrameSupport === true) {
 
 				cancelAnimationFrame(transition.animate);
 				
@@ -142,7 +143,7 @@ $.fn.zRS3('extend', {
 
 			var distance = (currentDirection != 'back' ? ((Math.round((slideWidth * difference) * 10000) / 10000) - remaining) : ((Math.round((slideWidth * difference) * 10000) / 10000) + remaining));
 
-			if(core['ins'].cssSupport === true) {
+			if(core['ins'].animationFrameSupport === true) {
 
 				cancelAnimationFrame(transition.animate);
 
@@ -241,7 +242,7 @@ $.fn.zRS3('extend', {
 
 			events.init = function() {
 
-				if(core['ins'].cssSupport === true) {
+				if(core['ins'].animationFrameSupport === true) {
 
 					core['elem']['inner'].on('touchstart mousedown', events.start);
 
@@ -251,7 +252,11 @@ $.fn.zRS3('extend', {
 
 			events.start = function(e) {
 
-				e.preventDefault();
+				if(!isTouch) {
+
+					e.preventDefault();
+					
+				}
 
 				e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
 
@@ -280,10 +285,14 @@ $.fn.zRS3('extend', {
 
 			}
 
-			events.move = function(e) {
+			events.move = function(e) {				
 
-				e.cancelBubble=true;
-				e.stopPropagation();
+				if(!isTouch) {
+
+					e.cancelBubble=true;
+					e.stopPropagation();					
+
+				}
 
 				e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
 
@@ -315,7 +324,7 @@ $.fn.zRS3('extend', {
 
 						core.objs['slides'].currentSlide = slide % 1 > 0.05 ? Math.ceil(slide) : Math.floor(slide);
 
-					}							
+					}				
 
 
 					core.objs['transition'].update(0);
@@ -364,7 +373,6 @@ $.fn.zRS3('extend', {
 
 					}
 
-					console.log(dragging)
 
 					// if(startingSlide == publicF.currentSlide()) {
 
