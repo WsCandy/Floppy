@@ -26,7 +26,7 @@
 	padding-top: 155px;
 	padding-bottom: 290px;
 	text-align: center;
-	background-position: center top;
+    background: url(../img/top-bg.jpg) center top;
 
 
 	@include mq($tab) {

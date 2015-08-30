@@ -7,6 +7,7 @@
 	    <link rel="dns-prefetch" href="//google-analytics.com/">
 	    <link rel="preload" href="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
 	    <link rel="preload" href="//google-analytics.com/analytics.js">
+	    <link rel="preload" href="/assets/css/main.css">
 
 		<title><%- site.name %> - <%- view.title %></title>
 		<meta name="description" content="<%- view.desc %>">
@@ -24,7 +25,7 @@
 		</script>
 	</head>
 	<body id="<%- page %>">		
-		<section class="top js-bg" data-img="/assets/img/top-bg.jpg">
+		<section class="top">
 			<div class="centre-wrap">
 				<a href="/" class="logo">
 					 <!--[if gte IE 9]>
@@ -40,22 +41,22 @@
 				<nav>
 					<ul>
 						<li>
-							<a href="/" title="About">About</a>
+							<a href="/about" title="About">About</a>
 						</li>
 						<li>
-							<a href="/" title="Menus">Menus</a>
+							<a href="/menus" title="Menus">Menus</a>
 						</li>
 						<li>
-							<a href="/" title="Locations">Locations</a>
+							<a href="/locations" title="Locations">Locations</a>
 						</li>
 						<li>
-							<a href="/" title="Bookings">Bookings</a>
+							<a href="/bookings" title="Bookings">Bookings</a>
 						</li>
 						<li>
-							<a href="/" title="Gallery">Gallery</a>
+							<a href="/gallery" title="Gallery">Gallery</a>
 						</li>
 						<li>
-							<a href="/" title="Contact">Contact</a>
+							<a href="/contact" title="Contact">Contact</a>
 						</li>
 					</ul>
 				</nav>
@@ -65,7 +66,79 @@
 					<a href="http://www.instagram.com/" target="_blank" title="Instagram" class="social__link social__link--instagram">b</a>
 				</div>
 			</div>
-		</section>		
-		<%- body %>
+		</section>
+		
+        <section class="middle">
+            <div class="centre-wrap">
+                <%- body %>                    
+            </div>
+        </section>
+						
+		<section class="bottom js-bg" data-img="/assets/img/bottom-bg.jpg">
+            <div class="centre-wrap">
+
+                <div class="social-wrap">
+                    <div class="social_sec">
+                        <h3>Twitter</h3>
+                        <p>@PBT_propeller</p>
+                        <a href="" class="button" title="Follow">Follow</a>
+
+                        <div class="twitter-feed">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <p class="date">an hour ago</p>
+                        </div>
+
+                    </div>
+                    <div class="social_sec">
+                        <h3>Instagram</h3>
+                        <p>PBT_propeller</p>
+                        <a href="" class="button" title="Follow">Follow</a>
+
+                        <div class="instagram-feed">
+                            <% for(var i = 0; i < 2; i++) { %>
+
+                                <div class="js-imager" data-src="<%= instagram[i].images.standard_resolution.url %>" data-alt="<%= instagram[i].caption.text %>" data-height="<%= instagram[i].images.standard_resolution.height%>" data-width="<%= instagram[i].images.standard_resolution.width%>"></div>
+                                <noscript>
+                                    <img src="<%= instagram[i].images.standard_resolution.url %>" alt="<%= instagram[i].caption.text %>" height="<%= instagram[i].images.standard_resolution.height%>" width="<%= instagram[i].images.standard_resolution.width%>">
+                                </noscript>
+
+                            <% } %>
+
+                        </div>
+
+                    </div>
+                    <div class="social_sec">
+                        <h3>Sign Up</h3>
+                        <p>
+                            Subscribe our newsletter and never miss out<br />
+                            our exclusive offers!
+                        </p>
+
+                        <% include ../inc/form.html %>
+
+                    </div>
+                </div>
+
+                <footer>
+
+                    <ul>
+                        <li>PBT Propeller</li>
+                        <li>1-3 Windsor court</li>
+                        <li>Rugby</li>
+                        <li>Warwickshire</li>
+                        <li>CV21 3BH</li>
+                        <li><a href="mailto:pbt@propcom.co.uk" title="pbt@propcom.co.uk">pbt@propcom.co.uk</a></li>
+                        <li><a href="tel:01788 566270" title="01788 566270">01788 566270</a></li>
+                        <li class="icons">
+                            <a href="http://www.facebook.com/" target="_blank" title="Facebook">c</a>
+                            <a href="http://www.twitter.com/" target="_blank" title="Twitter">a</a>
+                            <a href="http://www.instagram.com/" target="_blank" title="Instagram">b</a>
+                        </li>
+                    </ul>
+
+                </footer>
+
+            </div>
+        </section>
 	</body>
 </html>

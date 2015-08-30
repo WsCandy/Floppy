@@ -1,117 +1,23 @@
-<section class="middle">
-	<div class="centre-wrap">
-
-		<section class="main">
-			<h1>Welcome to PBT,<br /> Propeller!</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-		</section>
-
-		<section class="cta">
-			<a href="" class="square-cta square-cta--1 js-bg" data-img="/assets/img/cta/1.jpg">
-				<span>
-					test
-				</span>
-			</a>
-			<a href="" class="square-cta square-cta--2 js-bg" data-img="/assets/img/cta/2.jpg">
-				<span>
-					test
-				</span>
-			</a>
-			<a href="" class="square-cta square-cta--3 js-bg" data-img="/assets/img/cta/3.jpg">
-				<span>
-					test
-				</span>
-			</a>
-			<a href="" class="square-cta square-cta--4 js-bg" data-img="/assets/img/cta/4.jpg">
-				<span>
-					test
-				</span>
-			</a>
-		</section>
-
-		<section class="slider">
-			<div class="inner-slider">
-
-				<% var hero = images('assets/img/hero/'+page) %>
-
-				<% for(var i = 0; i < hero.length; i++) { %>
-
-					<img zRS-src="<%= hero[i]%>" alt="Propeller Build Test" height="490" width="1240">
-
-				<% } %>
-
-			</div>
-
-			<div class="pager"></div>
-
-		</section>
-
-	</div>
+<section class="main">
+    <h1>Welcome to PBT,<br /> Propeller!</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 </section>
 
-<section class="bottom js-bg" data-img="/assets/img/bottom-bg.jpg">
-	<div class="centre-wrap">
+<% include inc/cta.html %>
 
-		<div class="social-wrap">
-			<div class="social_sec">
-				<h3>Twitter</h3>
-				<p>@PBT_propeller</p>
-				<a href="" class="button" title="Follow">Follow</a>
+<section class="slider">
+    <div class="inner-slider">
 
-				<div class="twitter-feed">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-					<p class="date">an hour ago</p>
-				</div>
+        <% var hero = images('assets/img/hero/'+page) %>
 
-			</div>
-			<div class="social_sec">
-				<h3>Instagram</h3>
-				<p>PBT_propeller</p>
-				<a href="" class="button" title="Follow">Follow</a>
+        <% for(var i = 0; i < hero.length; i++) { %>
 
-				<div class="instagram-feed">
-					<% for(var i = 0; i < 2; i++) { %>
+            <img zRS-src="<%= hero[i]%>" alt="Propeller Build Test" height="490" width="1240">
 
-						<div class="js-imager" data-src="<%= instagram[i].images.standard_resolution.url %>" data-alt="<%= instagram[i].caption.text %>" data-height="<%= instagram[i].images.standard_resolution.height%>" data-width="<%= instagram[i].images.standard_resolution.width%>"></div>
-						<noscript>
-							<img src="<%= instagram[i].images.standard_resolution.url %>" alt="<%= instagram[i].caption.text %>" height="<%= instagram[i].images.standard_resolution.height%>" width="<%= instagram[i].images.standard_resolution.width%>">
-						</noscript>
+        <% } %>
 
-					<% } %>
+    </div>
 
-				</div>
+    <div class="pager"></div>
 
-			</div>
-			<div class="social_sec">
-				<h3>Sign Up</h3>
-				<p>
-					Subscribe our newsletter and never miss out<br />
-					our exclusive offers!
-				</p>
-
-				<% include inc/form.html %>
-
-			</div>
-		</div>
-
-		<footer>
-
-			<ul>
-				<li>PBT Propeller</li>
-				<li>1-3 Windsor court</li>
-				<li>Rugby</li>
-				<li>Warwickshire</li>
-				<li>CV21 3BH</li>
-				<li><a href="mailto:pbt@propcom.co.uk" title="pbt@propcom.co.uk">pbt@propcom.co.uk</a></li>
-				<li><a href="tel:01788 566270" title="01788 566270">01788 566270</a></li>
-				<li class="icons">
-					<a href="http://www.facebook.com/" target="_blank" title="Facebook">c</a>
-					<a href="http://www.twitter.com/" target="_blank" title="Twitter">a</a>
-					<a href="http://www.instagram.com/" target="_blank" title="Instagram">b</a>
-				</li>
-			</ul>
-
-		</footer>
-		
-	</div>
 </section>
