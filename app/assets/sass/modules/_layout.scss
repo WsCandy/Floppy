@@ -1,6 +1,6 @@
 .svg-logo {
 
-	fill: #FFF;
+	fill: #ffffff;
 
 	.letter {
 
@@ -41,7 +41,6 @@
 
 	width: 100%;
 	clear: both;
-	max-height: 825px;
 
 	@include mq($tab) {
 
@@ -56,15 +55,10 @@
 	width: 100%;
 	clear: both;
 	overflow: hidden;
-	padding-top: 350px;
+	padding-top: 220px;
 	background-position: center bottom;
 	background-repeat: no-repeat;
-
-	@include mq($tab) {
-
-		padding-top: 5%;
-
-	}
+    margin-top: -175px;
 
 }
 
