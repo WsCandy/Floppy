@@ -183,7 +183,8 @@ gulp.task('html', function() {
   var opts = {
       
     conditionals: true,
-    cdata: true
+    cdata: true,
+    loose: true
       
   };
  
