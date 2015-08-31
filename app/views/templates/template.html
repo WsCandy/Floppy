@@ -50,22 +50,22 @@
 				<nav>
 					<ul>
 						<li>
-							<a href="/about" title="About">About</a>
+							<a href="/about" title="About"<?= page === 'about' ? ' class=active' : '' ?>>About</a>
 						</li>
 						<li>
-							<a href="/menus" title="Menus">Menus</a>
+							<a href="/menus" title="Menus"<?= page === 'menus' ? ' class=active' : '' ?>>Menus</a>
 						</li>
 						<li>
-							<a href="/locations" title="Locations">Locations</a>
+							<a href="/locations" title="Locations"<?= page === 'locations' ? ' class=active' : '' ?>>Locations</a>
 						</li>
 						<li>
-							<a href="/bookings" title="Bookings">Bookings</a>
+							<a href="/bookings" title="Bookings"<?= page === 'bookings' ? ' class=active' : '' ?>>Bookings</a>
 						</li>
 						<li>
-							<a href="/gallery" title="Gallery">Gallery</a>
+							<a href="/gallery" title="Gallery"<?= page === 'gallery' ? ' class=active' : '' ?>>Gallery</a>
 						</li>
 						<li>
-							<a href="/contact" title="Contact">Contact</a>
+							<a href="/contact" title="Contact"<?= page === 'contact' ? ' class=active' : '' ?>>Contact</a>
 						</li>
 					</ul>
 				</nav>

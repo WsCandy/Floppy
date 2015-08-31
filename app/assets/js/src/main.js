@@ -1,33 +1,39 @@
 window.propFuncs = {
 
-	isVisible__ready : function() {
+	isVisible__ready: function() {
+        
+        this.init = function(element, tolerance) {
+          
+            if(!element || 1 !== element.nodeType) {
+                
+                return false;
+                
+            }
 
-		var self = this;
+            tolerance = tolerance || 0;
 
-		self.init = function(element) {
+            var html = document.documentElement,
+                r = element.getBoundingClientRect(),
+                h = html.clientHeight,
+                w = html.clientWidth;
 
-			if (!element || 1 !== element.nodeType) return false;
+            if(!!r && (r.bottom - tolerance) >= 0 && r.right >= 0 && (r.top - tolerance) <= h && r.left <= w) {
+                
+                return true;
+                
+            }
+            
+        };
 
-			var html = document.documentElement,
-				r = element.getBoundingClientRect(),
-				h = html.clientHeight,
-				w = html.clientWidth;
-
-			if (!!r && r.bottom >= 0 && r.right >= 0 && r.top <= h && r.left <= w) return true;
-
-		};
-
-		self.init();
-
-	},
+    },
     
     zRS__ready: function() {
       
         $('.top-bg').zRS3({
 
             transition: 'fade',
-            speed: 1000,
-            delay: 10000
+            speed: 700,
+            delay: 7000
 
         });
         
@@ -37,7 +43,7 @@ window.propFuncs = {
 		
 		this.scroll = function() {
 
-			if(propCore['isVisible'].init($('.slider')[0]) && $('.slider').data('ins') === undefined) {
+			if(propCore.isVisible.init($('.slider')[0], 200) && $('.slider').data('ins') === undefined) {
 
 				$('.slider').zRS3({
 
@@ -65,7 +71,7 @@ window.propFuncs = {
 
 			}		
 
-		}
+		};
 
 		this.scroll();
 
@@ -82,9 +88,13 @@ window.propFuncs = {
 
 				var img = $(bgImg[i]);
 
-				if(propCore['isVisible'].init(bgImg[i])) {
+				if(propCore.isVisible.init(bgImg[i], 100)) {
 
-					if(!img.data('img')) continue;
+					if(!img.data('img')) {
+                        
+                        continue;
+                        
+                    }
 
 					img.css({
 
@@ -96,7 +106,7 @@ window.propFuncs = {
 
 			}			
 
-		}
+		};
 
 		self.scroll();
 
@@ -106,10 +116,11 @@ window.propFuncs = {
 
 		return new Imager('.js-imager', {
 
-			lazyload: true
+			lazyload: true,
+            lazyloadOffset : 300
 
 		});
 
 	}
 
-}
+};

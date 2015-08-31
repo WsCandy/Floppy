@@ -12,19 +12,43 @@
 	float: left;
 	position: relative;
 
-	span {
+	.overlay {
 
 		position: absolute;
 		top: 0;
 		left: 0;
 		right: 0;
 		bottom: 0;
+        opacity: 0;
 
 		width: 100%;
 		height: 100%;
-		display: none;
+        text-align: center;        
 
 		background: rgba(0, 0, 0, 0.7);
+        transition: 0.25s;
+        
+        p {
+                
+            font-family: "Montserrat";
+            text-transform: uppercase;
+            font-style: normal;
+            font-weight: bold;
+            padding-top: 50px;
+            color: $primaryColour;
+            
+        }
+        
+        span {
+            
+            color: $primaryColour;
+            @include font-size(18);
+            width: 100%;
+            position: absolute;
+            left: 0;
+            bottom: 50px;
+            
+        }
 
 	}
 
@@ -38,11 +62,25 @@
 
 	&:hover {
 
-		span {
+		.overlay {
 
-			display: block;
+			opacity: 1;
 
 		}
+        
+        .left {
+            
+            transform: translate3d(0%, 0%, 0);
+            opacity: 1;
+            
+        }
+        
+        .right {
+            
+            transform: translate3d(0%, 0%, 0);
+            opacity: 1;
+            
+        }
 
 	}
 
@@ -56,12 +94,51 @@
 
 	}
 
-	@include mq($mob) {
+	@include mq($tab) {
 
 		@include width(2, 0%);
 
 	}
+    
+    @include mq(560px) {
+        
+        @include width(1, 0%);
+        
+    }
 
+}
+
+.hover-svg {
+    
+    width: 30%;
+    height: 30%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    
+    path,  polygon {
+            
+        fill: #FFF;
+        
+    }
+    
+    .left {
+        
+        transition: 0.5s;
+        transform: translate3d(-100%, 100%, 0);
+        opacity: 0;
+        
+    }
+    
+    .right {
+        
+        transition: 0.5s;
+        opacity: 0;
+        transform: translate3d(100%, 100%, 0);
+        
+    }
+    
 }
 
 .button {

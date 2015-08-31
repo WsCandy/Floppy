@@ -17,6 +17,7 @@
 		}
 
 	}
+    
 
 }
 
@@ -32,6 +33,7 @@
 	@include mq($tab) {
 
 		padding-bottom: 230px;
+        padding-top: 70px;
 
 	}
     
@@ -76,6 +78,13 @@
 	display: block;
 	height: 280px;
 	width: 280px;
+    
+    @include mq($mob) {
+        
+        width: 200px;
+        height: 200px;
+        
+    }
 
 }
 
@@ -103,6 +112,14 @@ nav {
 
 		color: $primaryColour;
 		text-transform: uppercase;
+        position: relative;
+        transition: 0.25s;
+        
+        &:hover, &.active {
+            
+            color: #4bc0c0;
+            
+        }
 
 	}
 
@@ -148,6 +165,7 @@ nav {
 		color: $primaryColour;
 		font-style: normal;
 
+        transition: 0.25s;
 		@include font-size(20);
 		line-height: 36px;
 
