@@ -386,11 +386,17 @@ nav {
 		float: left;
 		height: auto;
 
-		@include mq($large-mob) {
+		@include mq($tab) {
 
 			margin-bottom: 15px;
 			@include width(1, 0%);
+                
+            &:nth-of-type(2n) {
 
+                display: none;
+
+            }
+            
 		}
 
 	}
