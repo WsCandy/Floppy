@@ -10,13 +10,7 @@ var koa = require('koa'),
 	logger = require('koa-logger');
 
 var app = module.exports = koa(),
-    files = {},
-    cssTime = fs.statSync(__dirname + '/../../app/assets/css/main.css').mtime.getTime(),
-    jsTime = fs.statSync(__dirname + '/../../app/assets/js/main.min.js').mtime.getTime(),
-    alias = {};
-
-alias['/assets/css/main.'+cssTime+'.css'] = '/assets/css/main.css';
-alias['/assets/js/main.min.'+jsTime+'.js'] = '/assets/js/main.min.js';
+    files = {};
 
 app.use(function *(next) {
 
@@ -47,8 +41,7 @@ app.use(staticCache(__dirname + '/../../app', {
 	buffer: app.env === 'development' ? false : true,
 	gzip: true,
 	usePrecompiledGzip: true,
-    dynamic: true,
-    alias: alias
+    dynamic: true
 
 }, files));
 
