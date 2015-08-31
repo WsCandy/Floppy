@@ -34,6 +34,8 @@ exports.init = function(app) {
 
 	app.use(function *(next) {
 	
+        var now = new Date();        
+        
 		this.set('Vary', 'Accept-Encoding');
 	
 		if(app.env === 'development') {
@@ -42,9 +44,10 @@ exports.init = function(app) {
 			page = require(__dirname+'/../app/config/page.json')[0];
 
 		}
-
+        
+        this.state.cookies = this.cookies;
+        
 		yield next;
-
 
 		if(this.response.status == 404) {
 
