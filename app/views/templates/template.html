@@ -142,5 +142,7 @@
             </div>
         </section>
 	</body>
-	<% cookies.set('css', 'true');%>
+	<% if(!cookies.get('css')) {	
+        cookies.set('css', 'true');
+    } %>
 </html>
