@@ -106,7 +106,8 @@
 				pager: null,
 				visibleSlides: 1,
 				trans_callback: null,
-				pre_trans_callback: null
+				pre_trans_callback: null,
+                allowScrolling: false
 
 			};
 		

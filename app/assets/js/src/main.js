@@ -53,7 +53,8 @@ window.propFuncs = {
 					speed: 1000,
 					visibleSlides: 1,
 					slideSpacing: 0,
-					delay: 6000
+					delay: 6000,
+                    allowScrolling: false
 
 				});
 				

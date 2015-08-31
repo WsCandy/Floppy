@@ -251,8 +251,12 @@ $.fn.zRS3('extend', {
 			}
 
 			events.start = function(e) {
+                
+                if(!isTouch || core.options.allowScrolling === false) {
+                        
+					  e.preventDefault();			
 
-				e.preventDefault();
+				}
 
 				e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
 
@@ -283,8 +287,12 @@ $.fn.zRS3('extend', {
 
 			events.move = function(e) {				
 
-				e.cancelBubble=true;
-				e.stopPropagation();					
+				if(!isTouch || core.options.allowScrolling === false) {
+                        
+					   e.cancelBubble=true;
+					   e.stopPropagation();					
+
+				}
 
 				e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
 
