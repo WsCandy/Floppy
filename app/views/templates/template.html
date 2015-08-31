@@ -1,36 +1,36 @@
 <!doctype html>
 <html>
 	<head>
-		<link rel="dns-prefetch" href="http://<%- site.url %>/">
+		<link rel="dns-prefetch" href="http://<?- site.url ?>/">
 		<link rel="dns-prefetch" href="//scontent.cdninstagram.com/">
 	    <link rel="dns-prefetch" href="//ajax.googleapis.com/">
 	    <link rel="dns-prefetch" href="//google-analytics.com/">
 	    <link rel="preload" href="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
 	    <link rel="preload" href="//google-analytics.com/analytics.js">
 
-		<title><%- site.name %> - <%- view.title %></title>
-		<meta name="description" content="<%- view.desc %>">
+		<title><?- site.name ?> - <?- view.title ?></title>
+		<meta name="description" content="<?- view.desc ?>">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
-        <% if(cookies.get('css')) { %>
-            <link rel="stylesheet" href="/assets/css/main.<% if(env !== 'development') {%><%= lastModified('assets/css/main.css')%>.<% } %>css" type="text/css">    
-        <% } else { %> 
-        <style><%- include ../../assets/css/critical.css %></style>
-        <% } %>
+        <? if(cookies.get('css')) { ?>
+            <link rel="stylesheet" href="/assets/css/main.<? if(env !== 'development') {?><?= lastModified('assets/css/main.css')?>.<? } ?>css" type="text/css">    
+        <? } else { ?> 
+        <style><?- include ../../assets/css/critical.css ?></style>
+        <? } ?>
 		<script>
-			<% include ../../assets/js/vendor/modernizr.custom.js %>
-            <% if(!cookies.get('css')) { %>
-            Modernizr.load('/assets/css/main.<% if(env !== 'development') {%><%= lastModified("assets/css/main.css")%>.<% } %>css');
-            <% } %>
-			Modernizr.load([{load: '//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js'},{load: '/assets/js/main.min.<% if(env !== 'development') {%><%= lastModified("assets/js/main.min.js") %>.<% } %>js',complete: function(){window.init()}}]);
-			// (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create","<%- site.analytics %>","auto");ga("send","pageview"<%- page === 'not-found' ?",'/404/?url='+document.location.pathname+document.location.search+'&ref='+document.referrer":""%>);
+			<? include ../../assets/js/vendor/modernizr.custom.js ?>
+            <? if(!cookies.get('css')) { ?>
+            Modernizr.load('/assets/css/main.<? if(env !== 'development') {?><?= lastModified("assets/css/main.css")?>.<? } ?>css');
+            <? } ?>
+			Modernizr.load([{load: '//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js'},{load: '/assets/js/main.min.<? if(env !== 'development') {?><?= lastModified("assets/js/main.min.js") ?>.<? } ?>js',complete: function(){window.init()}}]);
+			// (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create","<?- site.analytics ?>","auto");ga("send","pageview"<?- page === 'not-found' ?",'/404/?url='+document.location.pathname+document.location.search+'&ref='+document.referrer":""?>);
 		</script>
 	</head>
-	<body id="<%- page %>">		
+	<body id="<?- page ?>">		
 		<section class="top">
 			<div class="centre-wrap">
 				<a href="/" class="logo">
 					 <!--[if gte IE 9]>
-					 		<% include ../../assets/svg/logo.svg %>
+					 		<? include ../../assets/svg/logo.svg ?>
 					 <![endif]-->
 					  <!--[if lte IE 8]>
 					<div class="js-imager" data-src="/assets/img/logo.png" data-alt="Propeller Build Test" data-height="280" data-width="280"></div>
@@ -71,7 +71,7 @@
 		
         <section class="middle">
             <div class="centre-wrap">
-                <%- body %>                    
+                <?- body ?>                    
             </div>
         </section>
 						
@@ -96,14 +96,14 @@
                         <a href="" class="button" title="Follow">Follow</a>
 
                         <div class="instagram-feed">
-                            <% for(var i = 0; i < 2; i++) { %>
+                            <? for(var i = 0; i < 2; i++) { ?>
 
-                                <div class="js-imager" data-src="<%= instagram[i].images.standard_resolution.url %>" data-alt="<%= instagram[i].caption.text %>" data-height="<%= instagram[i].images.standard_resolution.height%>" data-width="<%= instagram[i].images.standard_resolution.width%>"></div>
+                                <div class="js-imager" data-src="<?= instagram[i].images.standard_resolution.url ?>" data-alt="<?= instagram[i].caption.text ?>" data-height="<?= instagram[i].images.standard_resolution.height?>" data-width="<?= instagram[i].images.standard_resolution.width?>"></div>
                                 <noscript>
-                                    <img src="<%= instagram[i].images.standard_resolution.url %>" alt="<%= instagram[i].caption.text %>" height="<%= instagram[i].images.standard_resolution.height%>" width="<%= instagram[i].images.standard_resolution.width%>">
+                                    <img src="<?= instagram[i].images.standard_resolution.url ?>" alt="<?= instagram[i].caption.text ?>" height="<?= instagram[i].images.standard_resolution.height?>" width="<?= instagram[i].images.standard_resolution.width?>">
                                 </noscript>
 
-                            <% } %>
+                            <? } ?>
 
                         </div>
 
@@ -115,7 +115,7 @@
                             our exclusive offers!
                         </p>
 
-                        <% include ../inc/form.html %>
+                        <? include ../inc/form.html ?>
 
                     </div>
                 </div>
@@ -142,7 +142,7 @@
             </div>
         </section>
 	</body>
-	<% if(!cookies.get('css')) {	
+	<? if(!cookies.get('css')) {	
         cookies.set('css', 'true');
-    } %>
+    } ?>
 </html>

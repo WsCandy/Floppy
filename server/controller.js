@@ -5,9 +5,11 @@ exports.init = function(app) {
 
 	render(app, {
 
-	  root: 'app/views',
-	  layout: 'templates/template',
-	  cache: (app.env === 'development' ? false : true)
+    root: 'app/views',
+    layout: 'templates/template',
+    cache: (app.env === 'development' ? false : true),
+    open: '<?',
+    close: '?>'
 
 	});
 
