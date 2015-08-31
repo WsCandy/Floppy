@@ -20,6 +20,18 @@ window.propFuncs = {
 		self.init();
 
 	},
+    
+    zRS__ready: function() {
+      
+        $('.top-bg').zRS3({
+
+            transition: 'fade',
+            speed: 1000,
+            delay: 10000
+
+        });
+        
+    },
 
 	slider_lazy__scroll__ready: function() {
 		
@@ -29,7 +41,7 @@ window.propFuncs = {
 
 				$('.slider').zRS3({
 
-					transition: 'fade',
+					transition: 'slide',
 					slideBy: 1,
 					pager: $('.pager'),
 					speed: 1000,

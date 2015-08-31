@@ -21,6 +21,19 @@
 		</script>
 	</head>
 	<body id="<?- page ?>">		
+        <div class="top-bg">
+             <div class="inner-slider">
+
+                <? var topBG = images('assets/img/top-bg/') ?>
+
+                <? for(var i = 0; i < topBG.length; i++) { ?>
+
+                    <img <?- (i === 0) ? 'src' : 'zRS-src'?>="<?= topBG[i]?>" alt="Propeller Build Test" height="960" width="2000">
+
+                <? } ?>
+
+            </div>
+        </div>
 		<section class="top">
 			<div class="centre-wrap">
 				<a href="/" class="logo">

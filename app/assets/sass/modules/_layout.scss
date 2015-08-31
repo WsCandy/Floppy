@@ -22,11 +22,12 @@
 
 .top {
 
-    background: url(../img/top-bg.jpg) center top;
 	width: 100%;
 	padding-top: 155px;
-	padding-bottom: 290px;
+	padding-bottom: 299px;
 	text-align: center;
+    position: relative;
+    z-index: 1;
 
 	@include mq($tab) {
 
@@ -46,6 +47,8 @@
 
 	width: 100%;
 	clear: both;
+    position: relative;
+    z-index: 1;
 
 	@include mq($tab) {
 
@@ -235,14 +238,7 @@ nav {
 		// opacity: 0;
 		pointer-events: none;
 		height: auto;
-        min-width: 900px;
-        
-        //Keep the images centered
-        
-        left: 50%!important;
-        
-        -webkit-transform: translate3d(-50%, 0, 0);
-                transform: translate3d(-50%, 0, 0);
+    
 
 	}
 
@@ -486,4 +482,30 @@ footer {
 
 	@include font-size(35);
 
+}
+.top-bg {
+    
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+    
+    img {
+        
+        // Centre the image
+        
+        min-width: 2000px;
+        left: 50%!important;
+        margin-left: -1000px;
+        position: absolute;
+        opacity: 0;
+        
+        &:first-child {
+                
+           opacity: 1;
+            
+        }
+        
+    }
+    
 }
