@@ -14,7 +14,7 @@
         <% if(cookies.get('css')) { %>
         <link rel="stylesheet" href="/assets/css/main.css?<%= lastModified('assets/css/main.css')%>" type="text/css">
         <% } else { %> 
-        <style>body {display: none;}</style>
+        <style><%- include ../../assets/css/critical.css %></style>
         <% } %>        
 		<script>
 			<% include ../../assets/js/vendor/modernizr.custom.js %>
