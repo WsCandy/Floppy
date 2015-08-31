@@ -8,7 +8,8 @@ var koa = require('koa'),
 	states = require(__dirname+'/../../app/controller/states/states.js')
 	logger = require('koa-logger');
 
-var app = module.exports = koa();
+var app = module.exports = koa(),
+    files = {};
 
 app.use(function *(next) {
 
@@ -29,21 +30,20 @@ app.use(function *(next) {
 
 });
 
-var files = {};
-
 app.use(logger());
 
 app.use(conditional());
 app.use(favicon(__dirname + '/../../favicon.ico'));
 app.use(staticCache(__dirname + '/../../app', {
 
-	cacheControl: (app.env === 'development' ? '' : 'public, max-age='+ (1000 * 60 * 60)),
+	maxAge: (1000 * 60 * 60),
 	buffer: app.env === 'development' ? false : true,
 	gzip: true,
-	dynamic: true,
-	usePrecompiledGzip: true
+	usePrecompiledGzip: true,
+    dynamic: true
 
 }, files));
+
 app.use(etag());
 controller.init(app);
 states.init(app);
