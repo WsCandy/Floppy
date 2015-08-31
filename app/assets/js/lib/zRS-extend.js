@@ -252,11 +252,7 @@ $.fn.zRS3('extend', {
 
 			events.start = function(e) {
 
-				if(!isTouch) {
-
-					e.preventDefault();
-					
-				}
+				e.preventDefault();
 
 				e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
 
@@ -287,12 +283,8 @@ $.fn.zRS3('extend', {
 
 			events.move = function(e) {				
 
-				if(!isTouch) {
-
-					e.cancelBubble=true;
-					e.stopPropagation();					
-
-				}
+				e.cancelBubble=true;
+				e.stopPropagation();					
 
 				e = ("ontouchstart" in document.documentElement) ? e.originalEvent : e;
 
