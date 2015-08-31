@@ -5,11 +5,18 @@ var koa = require('koa'),
 	controller = require('../controller'),
 	routing = require('../routing'),
 	favicon = require('koa-favicon'),
-	states = require(__dirname+'/../../app/controller/states/states.js')
+	states = require(__dirname+'/../../app/controller/states/states.js'),
+    fs = require('fs'),
 	logger = require('koa-logger');
 
 var app = module.exports = koa(),
-    files = {};
+    files = {},
+    cssTime = fs.statSync(__dirname + '/../../app/assets/css/main.css').mtime.getTime(),
+    jsTime = fs.statSync(__dirname + '/../../app/assets/js/main.min.js').mtime.getTime(),
+    alias = {};
+
+alias['/assets/css/main.'+cssTime+'.css'] = '/assets/css/main.css';
+alias['/assets/js/main.min.'+jsTime+'.js'] = '/assets/js/main.min.js';
 
 app.use(function *(next) {
 
@@ -40,7 +47,8 @@ app.use(staticCache(__dirname + '/../../app', {
 	buffer: app.env === 'development' ? false : true,
 	gzip: true,
 	usePrecompiledGzip: true,
-    dynamic: true
+    dynamic: true,
+    alias: alias
 
 }, files));
 

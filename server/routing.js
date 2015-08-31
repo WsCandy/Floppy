@@ -46,6 +46,7 @@ exports.init = function(app) {
 		}
         
         this.state.cookies = this.cookies;
+        this.state.env = app.env;
         
 		yield next;
 
