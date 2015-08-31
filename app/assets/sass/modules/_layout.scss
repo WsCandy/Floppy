@@ -33,6 +33,12 @@
 		padding-bottom: 230px;
 
 	}
+    
+    @include mq($mob) {
+        
+        padding-top: 60px;     
+        
+    }
 
 }
 
