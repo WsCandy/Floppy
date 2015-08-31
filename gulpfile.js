@@ -184,7 +184,8 @@ gulp.task('html', function() {
       
     conditionals: true,
     cdata: true,
-    loose: true
+    loose: true,
+    quotes: true
       
   };
  
