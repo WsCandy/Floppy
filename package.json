@@ -11,18 +11,19 @@
     "url": "https://github.com/WsCandy/build-test.git"
   },
   "dependencies": {
+    "gulp-minify-html": "^1.0.4",
     "koa": "^0.3.0",
     "koa-body": "^1.2.1",
     "koa-conditional-get": "^1.0.3",
     "koa-ejs": "^2.0.1",
     "koa-etag": "^2.0.0",
+    "koa-favicon": "^1.2.0",
     "koa-logger": "^1.2.2",
     "koa-request": "^1.0.0",
     "koa-router": "^5.1.2",
     "koa-static": "^1.4.9",
     "output-cache": "^1.0.0",
-    "q": "^1.4.1",
-    "koa-favicon": "^1.2.0"
+    "q": "^1.4.1"
   },
   "author": "Samuel Woodbridge",
   "license": "ISC",

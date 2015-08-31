@@ -18,6 +18,7 @@ var options = {
 	browserSync = require('browser-sync').create(),
 	opn = require('opn'),
 	critical = require('critical'),
+    minifyHTML = require('gulp-minify-html'),
 	jsFiles;
 
 var scriptsTask = function() {
@@ -175,6 +176,22 @@ gulp.task('browser-sync', function() {
 
     }, 400);
 
+});
+
+gulp.task('html', function() {
+    
+  var opts = {
+      
+    conditionals: true,
+    spare:true
+      
+  };
+ 
+  return gulp.src(options.viewsPath+'*/*.html')
+  
+    .pipe(minifyHTML(opts))  
+    .pipe(gulp.dest(options.viewsPath));
+    
 });
 
 
