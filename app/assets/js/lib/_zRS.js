@@ -516,6 +516,8 @@
 			transition.goTo = function(target) {
 
 				var difference = target - objs['slides'].currentSlide;
+                
+                objs['controls'].pause();
 
 				if(target < objs['slides'].currentSlide) {
 
@@ -539,8 +541,8 @@
 
 					elem['slides'].css({
 
-						'top' : '0px',
-						'left' : '0px',
+                        'top' : '0',
+                        'left' : '0',
 						'float' : 'left',
 						'width' : '100%'
 

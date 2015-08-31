@@ -29,13 +29,13 @@ window.propFuncs = {
 
 				$('.slider').zRS3({
 
-					transition: 'slide',
+					transition: 'fade',
 					slideBy: 1,
 					pager: $('.pager'),
 					speed: 1000,
 					visibleSlides: 1,
 					slideSpacing: 0,
-					delay: 10000
+					delay: 6000
 
 				});
 				

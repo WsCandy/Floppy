@@ -235,12 +235,14 @@ nav {
 		// opacity: 0;
 		pointer-events: none;
 		height: auto;
-
-		&:last-child, &:nth-last-child(2) {
-
-			margin-right: 0!important;
-
-		}
+        min-width: 900px;
+        
+        //Keep the images centered
+        
+        left: 50%!important;
+        
+        -webkit-transform: translate3d(-50%, 0, 0);
+                transform: translate3d(-50%, 0, 0);
 
 	}
 
