@@ -121,6 +121,32 @@ window.propFuncs = {
 
 		});
 
-	}
+	},
+    
+    touch__ready : function() {
+        
+        var self = this,
+            cta = $('.square-cta');
+        
+        self.handler = function() {
+            
+            var touched = $(this);
+            
+            if(touched.hasClass('active')) {
+                
+                touched.removeClass('active');
+                
+            } else {
+                
+                touched.addClass('active');
+                
+            }
+            
+        }
+        
+        cta.on('touchend', self.handler);
+        cta.on('touchstart', self.handler);
+        
+    }
 
 };

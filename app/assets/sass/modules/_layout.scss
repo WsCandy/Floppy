@@ -351,6 +351,20 @@ nav {
 		@include font-size(18);
 
 	}
+    
+    @include mq($tab) {
+     
+        width: 47%;
+        margin-right: 4%;
+        
+        &:first-child {
+            
+            width: 100%;
+            margin-right: 0;
+            
+        }        
+        
+    }
 
 	@include mq($mob) {
 
@@ -379,8 +393,9 @@ nav {
 		}
 
 	}
+    
 
-	@include mq($mob) {
+	@include mq($tab) {
 
 		padding-right: 0px;
 
