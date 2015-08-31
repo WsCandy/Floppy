@@ -183,11 +183,11 @@ gulp.task('html', function() {
   var opts = {
       
     conditionals: true,
-    spare:true
+    cdata: true
       
   };
  
-  return gulp.src(options.viewsPath+'*/*.html')
+  return gulp.src(options.viewsPath+'**/*.html')
   
     .pipe(minifyHTML(opts))  
     .pipe(gulp.dest(options.viewsPath));
