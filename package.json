@@ -11,7 +11,6 @@
     "url": "https://github.com/WsCandy/build-test.git"
   },
   "dependencies": {
-    "gulp-minify-html": "^1.0.4",
     "koa": "^1.0.0",
     "koa-body": "^1.2.1",
     "koa-conditional-get": "^1.0.3",
@@ -22,7 +21,7 @@
     "koa-request": "^1.0.0",
     "koa-router": "^5.1.2",
     "koa-static": "^1.4.9",
-    "output-cache": "^1.0.0",
+    "koa-static-cache": "^3.1.2",
     "q": "^1.4.1"
   },
   "author": "Samuel Woodbridge",
@@ -32,8 +31,13 @@
   },
   "homepage": "https://github.com/WsCandy/build-test",
   "devDependencies": {
-    "critical": "^0.6.0",
-    "gulp-minify-css": "^1.2.0",
-    "gulp-rename": "^1.2.2"
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-minify-css": "^1.2.1",
+    "gulp-minify-html": "^1.0.4",
+    "gulp-sass": "^2.0.4",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.4.0",
+    "gulp-util": "^3.0.6"
   }
 }
