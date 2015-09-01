@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "gulp-minify-html": "^1.0.4",
-    "koa": "^0.3.0",
+    "koa": "^1.0.0",
     "koa-body": "^1.2.1",
     "koa-conditional-get": "^1.0.3",
     "koa-ejs": "^2.0.1",
