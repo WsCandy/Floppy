@@ -1,0 +1,109 @@
+$primaryColor: #333;
+$secondaryColor: #80bd01;
+
+body {
+    
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    color: $primaryColor;
+    padding-bottom: 42px;
+    
+}
+
+.centre-wrap {
+    
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+    max-width: 1280px;
+    
+}
+
+.template {
+    
+    &__header {
+        
+        background: $primaryColor;
+        padding: 20px 0;
+        margin-bottom: 15px;
+        
+    }
+    
+    &__logo {
+        
+        width: 200px;
+        margin: 0 auto;
+        display: block;
+        
+    }
+    
+    &__footer {
+        
+        background: $primaryColor;
+        @include font-size(12);
+        color: $secondaryColor;
+        position: fixed;
+        padding: 10px 0;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: right;
+        
+        p {
+            
+            margin: 0;
+            
+        }
+        
+    }
+    
+}
+
+h1 {
+    
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid $secondaryColor;
+    
+}
+
+h2, h3 {
+    
+    margin-bottom: 10px;
+    
+}
+
+a {
+    
+    color: $secondaryColor;
+    
+}
+
+ul, ol {
+    
+    padding: 0 0 0 40px;
+    margin-bottom: 20px;
+    
+    span {
+        
+        color: $secondaryColor;
+        font-weight: bold;
+        
+    }
+    
+}
+
+p {
+    
+    margin-bottom: 20px;
+    
+}
+
+.koa {
+    
+    font-family: 'Italiana', sans-serif;
+    font-size: 150%;
+    color: white;
+    margin-left: 5px;
+    text-decoration: none;
+    
+}

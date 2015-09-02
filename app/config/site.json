@@ -3,8 +3,11 @@
 
 		"name"		: "Node Template",
 		"url"		: "gameplayed.net",
+        "email"     : "foo@bar.co.uk",
 		"analytics"	: "UA-111111-1",
-		"instagram"	: null
+		"instagram"	: null,
+        "twitter"	: null,
+        "facebook"	: null
 		
 	}
 
