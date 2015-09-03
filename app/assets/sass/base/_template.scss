@@ -1,11 +1,24 @@
-$primaryColor: #333;
-$secondaryColor: #80bd01;
+$primaryColor: #353C40;
+$secondaryColor: #D4F0FF;
+$tertiaryColor: #AAC0CC;
+
+html {
+    
+    background: #fff;
+    
+}
 
 body {
     
-    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-family: 'Lato', sans-serif;
     color: $primaryColor;
     padding-bottom: 42px;
+    
+}
+
+.secondary {
+    
+    fill: $secondaryColor;
     
 }
 
@@ -81,7 +94,8 @@ h2, h3 {
 
 a {
     
-    color: $secondaryColor;
+    color: $tertiaryColor;
+    font-weight: bold;
     
 }
 
@@ -90,13 +104,21 @@ ul, ol {
     padding: 0 0 0 40px;
     margin-bottom: 20px;
     
-    span {
-        
-        color: $secondaryColor;
-        font-weight: bold;
-        
-    }
     
+}
+
+li {
+    
+    margin-bottom: 5px;
+    @include font-size(14);
+    
+}
+
+span {
+
+    color: $tertiaryColor;
+    font-weight: bold;
+
 }
 
 p {
