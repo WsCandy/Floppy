@@ -66,28 +66,26 @@ var sassTask = function() {
 		.pipe(sourcemaps.init())
 		.pipe(sass({
 		
-			includePaths : [options.assetsPath+'css/'],
-			onSuccess: function(data) {
+			includePaths : [+options.assetsPath+'css/'],
 
-				gutil.log(gutil.colors.green('SASS successfully written! Amazing!'));
-				browserSync.reload(options.assetsPath+'css/main.css');
+		}).on('end', function() {
 
-			},
-			onError: function(err) {
+			gutil.log(gutil.colors.green('SASS successfully written! Amazing!'));
+			browserSync.reload(options.assetsPath+'css/main.css');
 
-				var filePath = err.file.split('/');
+		})
+		.on('error', function(err) {
+			
+			var filePath = err.file.split('/');
 
-				gutil.log(gutil.colors.red(err.file))
-				gutil.log(gutil.colors.red('Line: ' + err.line, 'Col: ' + err.column + ' - ' + err.message))
-				gutil.log(gutil.colors.red('SASS not compiled...!'))
+			gutil.log(gutil.colors.red(err.file))
+			gutil.log(gutil.colors.red('Line: ' + err.line, 'Col: ' + err.column + ' - ' + err.message))
+			gutil.log(gutil.colors.red('SASS not compiled...!'))
 
-				browserSync.notify('You appear to have a CSS error, try line: ' + err.line + ' of ' + filePath[filePath.length -2] + '/' + filePath[filePath.length -1] + '. Check your terminal for full details.', 60000);
-
-			}
+			browserSync.notify('You appear to have a CSS error, try line: ' + err.line + ' of ' + filePath[filePath.length -2] + '/' + filePath[filePath.length -1] + '. Check your terminal for full details.', 60000);
 
 		}))
 		.pipe(sourcemaps.write('maps'))
-		.pipe(minifyCss({compatibility: 'ie8'}))
 		.pipe(gulp.dest(options.assetsPath+'css/'))
 		.on('error', gutil.log);
 }
