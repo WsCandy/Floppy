@@ -20,6 +20,8 @@ alias['/assets/js/main.min.'+jsTime+'.js'] = '/assets/js/main.min.js';
 
 app.use(function *(next) {
 
+    this.state = {};
+    
 	try {
 
 		yield next;

@@ -1,8 +1,8 @@
 var Q = require('q'),
 	https = require('https'),
-	self = this,	
-	config = require(__dirname+'/../../config/site.json')[0],
+	self = this,
 	fs = require('fs'),
+    config = require(__dirname+'/../../config/site.json')[0],
 	cache,
 	currentTime,
 	cacheExpire = 15;
@@ -50,14 +50,13 @@ var cacheInsta = function() {
 }
 
 exports.init = function(app) {
-	
-    cacheInsta();
+    
 	app.use(instagram);
 
 }
 
 var instagram = function *(next) {
-	
+    
 	yield getInstagram(this);
 	yield next;
 
@@ -102,4 +101,5 @@ var getInstagram = function(process) {
 
 }
 
-setInterval(exports.cacheInsta, 1000 * 60 * cacheExpire);
+cacheInsta();
+setInterval(cacheInsta, 1000 * 60 * cacheExpire);

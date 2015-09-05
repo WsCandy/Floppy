@@ -5,11 +5,11 @@ exports.init = function(app) {
 
 	render(app, {
 
-    root: 'app/views',
-    layout: 'templates/template',
-    cache: (app.env === 'development' ? false : true),
-    open: '<?',
-    close: '?>'
+        root: 'app/views',
+        layout: 'templates/template',
+        cache: (app.env === 'development' ? false : true),
+        open: '<?',
+        close: '?>'
 
 	});
 
@@ -22,9 +22,7 @@ exports.init = function(app) {
 
 		}
 
-		this.state = this.state || {};
   		this.state.site = config;
-
 		yield next;
 
 	});
