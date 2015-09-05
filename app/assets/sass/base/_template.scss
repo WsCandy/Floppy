@@ -107,7 +107,7 @@ ul, ol {
     
 }
 
-li {
+li, p {
     
     margin-bottom: 5px;
     @include font-size(14);
