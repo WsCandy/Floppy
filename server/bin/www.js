@@ -5,7 +5,7 @@ var koa = require('koa'),
 	controller = require('../controller'),
 	routing = require('../routing'),
 	favicon = require('koa-favicon'),
-	states = require(__dirname+'/../../app/controller/states/states.js'),
+	modules = require(__dirname+'/../../app/modules/index.js'),
     fs = require('fs'),
 	logger = require('koa-logger');
 
@@ -54,7 +54,7 @@ app.use(staticCache(__dirname + '/../../app', {
 
 app.use(etag());
 controller.init(app);
-states.init(app);
+modules.init(app);
 routing.init(app);
 
 app.on('error', function(err, ctx){
@@ -63,4 +63,4 @@ app.on('error', function(err, ctx){
 
 });
 
-app.listen(4201);
+app.listen(4200);

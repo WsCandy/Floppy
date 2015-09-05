@@ -7,7 +7,7 @@ var Q = require('q'),
 	currentTime,
 	cacheExpire = 15;
 
-exports.cacheInsta = function() {
+var cacheInsta = function() {
 
 	currentTime = new Date();
 	
@@ -51,6 +51,7 @@ exports.cacheInsta = function() {
 
 exports.init = function(app) {
 	
+    cacheInsta();
 	app.use(instagram);
 
 }
