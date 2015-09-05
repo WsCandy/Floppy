@@ -57,8 +57,13 @@ exports.init = function(app) {
 
 var instagram = function *(next) {
     
-	yield getInstagram(this);
-	yield next;
+    if(config.instagram !== null) {
+        
+	   yield getInstagram(this);
+        
+    }   
+
+    yield next;
 
 }
 
