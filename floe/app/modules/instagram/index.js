@@ -96,7 +96,7 @@ var getInstagram = function(process) {
 	var deferred = Q.defer();
 
 	fs.readFile(__dirname+'/../../cache/instagram.json', {encoding: 'utf8'}, function(err, data) {
-
+        
 		var info = JSON.parse(data);
 		deferred.resolve(complete(info, process, currentTime));
 

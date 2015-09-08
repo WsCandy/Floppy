@@ -1,7 +1,7 @@
 var router = require('koa-router')(),
 	koaBody = require('koa-body')(),
 	fs = require('fs'),
-	page = require(__dirname+'/../app/config/page.json')[0];
+	page = require(__dirname+'/../floe/app/config/page.json')[0];
 
 var testModule = function(module) {
 
@@ -21,7 +21,7 @@ exports.init = function(app) {
 
 	try {
 
-		var baseController = require('../app/controller/base');
+		var baseController = require('../floe/app/controller/base');
 			baseController.init(app, router, koaBody);
 
 	}
@@ -40,8 +40,8 @@ exports.init = function(app) {
 	
 		if(app.env === 'development') {
 
-			delete require.cache[require.resolve(__dirname+'/../app/config/page.json')];
-			page = require(__dirname+'/../app/config/page.json')[0];
+			delete require.cache[require.resolve(__dirname+'/../floe/app/config/page.json')];
+			page = require(__dirname+'/../floe/app/config/page.json')[0];
 
 		}
         
@@ -65,7 +65,7 @@ exports.init = function(app) {
 
 	router.get('/', function *(next) {
 
-		var controller = testModule('../app/controller/index');
+		var controller = testModule('../floe/app/controller/index');
 		
 		if(controller.params) {
 
@@ -105,7 +105,7 @@ exports.init = function(app) {
 			this.page = page;
 			yield next;
 
-		}, testModule('../app/controller/index') && require('../app/controller/index').post ? require('../app/controller/index').post : function *(next) {
+		}, testModule('../floe/app/controller/index') && require('../floe/app/controller/index').post ? require('../floe/app/controller/index').post : function *(next) {
 
 			this.status = 403;
 			this.body = this.status + ' ' + this.message + ' - Naughty';
@@ -118,7 +118,7 @@ exports.init = function(app) {
 
 	router.get('/:page', function *(next) {
 
-		var controller = testModule('../app/controller/'+this.params['page']);
+		var controller = testModule('../floe/app/controller/'+this.params['page']);
 
 		if(controller.params) {
 
@@ -158,7 +158,7 @@ exports.init = function(app) {
 			this.page = page;
 			yield next;
 
-		}, testModule('../app/controller/'+this.params['page']) && require('../app/controller/'+this.params['page']).post ? require('../app/controller/'+this.params['page']).post : function *(next) {
+		}, testModule('../floe/app/controller/'+this.params['page']) && require('../floe/app/controller/'+this.params['page']).post ? require('../floe/app/controller/'+this.params['page']).post : function *(next) {
 
 			this.status = 403;
 			this.body = this.status + ' ' + this.message + ' - Naughty';
