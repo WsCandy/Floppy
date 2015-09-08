@@ -62,7 +62,7 @@ var lastModified = function() {
 			
 			try {
 
-				var data = fs.statSync(__dirname + '/../../../../httpdocs/'+path);
+				var data = fs.statSync(process.PWD + '/httpdocs/'+path);
 				return data.mtime.getTime();
 
 			}
