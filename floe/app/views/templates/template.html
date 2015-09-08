@@ -17,12 +17,12 @@
         <? /* End Remove */ ?>
        
         <? if(cookies.get('css')) { ?>
-            <link rel="stylesheet" href="/assets/css/main.<? if(env !== 'development') {?><?= lastModified('assets/css/main.css')?>.<? } ?>css" type="text/css">    
+            <link rel="stylesheet" href="/assets/css/main.<? if(env !== 'development') {?><?= lastModified('httpdocs/assets/css/main.css')?>.<? } ?>css" type="text/css">    
         <? } else { ?> 
         <style><? include ../../../../httpdocs/assets/css/critical.css ?></style>
         <? } ?>
 		<script>			
-            <? include ../../../../httpdocs/assets/js/vendor/modernizr.custom.js ?><? if(!cookies.get('css')) { ?>Modernizr.load('/assets/css/main.<? if(env !== 'development') {?><?= lastModified("assets/css/main.css")?>.<? } ?>css');<? } ?>Modernizr.load([{load: '//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'},{load: '/assets/js/main.min.<? if(env !== 'development') {?><?= lastModified("assets/js/main.min.js") ?>.<? } ?>js',complete: function(){window.init()}}]);
+            <? include ../../../../httpdocs/assets/js/vendor/modernizr.custom.js ?><? if(!cookies.get('css')) { ?>Modernizr.load('/assets/css/main.<? if(env !== 'development') {?><?= lastModified("httpdocs/assets/css/main.css")?>.<? } ?>css');<? } ?>Modernizr.load([{load: '//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'},{load: '/assets/js/main.min.<? if(env !== 'development') {?><?= lastModified("httpdocs/assets/js/main.min.js") ?>.<? } ?>js',complete: function(){window.init()}}]);
 		</script>
 	</head>
 	<body id="<?- page ?>">

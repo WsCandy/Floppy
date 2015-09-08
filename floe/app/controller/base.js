@@ -16,7 +16,7 @@ var images = function() {
 
 			try {
 
-				var data = fs.readdirSync(__dirname + '/../'+ path),
+				var data = fs.statSync(process.env.PWD + '/' + path);
 					finalImages = [];
 
 				for (var image in data) {
@@ -62,7 +62,7 @@ var lastModified = function() {
 			
 			try {
 
-				var data = fs.statSync(process.PWD + '/httpdocs/'+path);
+				var data = fs.statSync(process.env.PWD + '/' + path);
 				return data.mtime.getTime();
 
 			}
