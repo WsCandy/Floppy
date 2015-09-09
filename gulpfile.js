@@ -16,8 +16,6 @@ var options = {
 	fs = require('fs'),
 	path = require('path'),
 	browserSync = require('browser-sync').create(),
-	opn = require('opn'),
-	critical = require('critical'),
     minifyHTML = require('gulp-minify-html'),
 	jsFiles;
 
@@ -168,12 +166,6 @@ gulp.task('browser-sync', function() {
 
     });
 
-    setTimeout(function() {
-
-    	opn('http://project.node')
-
-    }, 400);
-
 });
 
 gulp.task('html', function() {
@@ -198,21 +190,5 @@ gulp.task('html', function() {
 gulp.task('sass', sassTask);
 gulp.task('scripts', scriptsTask);
 gulp.task('watch', watchTask);
-
-gulp.task('critical', function () {
-
-	critical.generateInline({
-
-        base: process.env.PWD,
-        src: options.viewsPath+'templates/template.html',
-        styleTarget: options.assetsPath+'css/critical.css',
-        ignore: ['@font-face'],
-        minify: true,
-        width: 1920,
-        height: 985
-
-    });
-
-});
 
 gulp.task('default', ['setup', 'browser-sync']);
