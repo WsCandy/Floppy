@@ -11,16 +11,19 @@ var images = function() {
 	self.app.use(function *(next){
 
 		var error;
+        
 
 		this.state.images = function(path) {
 
 			try {
 
-				var data = fs.statSync(process.env.PWD + '/' + path);
+				var data = fs.readdirSync(process.env.PWD + '/' + path);
 					finalImages = [];
 
 				for (var image in data) {
-
+                    
+                    path = path.replace('httpdocs/', '');
+                    
 					finalImages.push('/' + path + '/' + data[image]);
 
 				}
