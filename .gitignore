@@ -27,12 +27,12 @@ build/Release
 node_modules
 
 # cache
-app/cache
+floe/app/cache
 
 # gulp generated files
 
-app/assets/css/main.css
-app/assets/css/maps/main.css.map
-app/assets/js/main.min.js
-app/assets/js/maps/main.min.js.map
+httpdocs/assets/css/main.css
+httpdocs/assets/css/maps/main.css.map
+httpdocs/assets/js/main.min.js
+httpdocs/assets/js/maps/main.min.js.map
 resources/
