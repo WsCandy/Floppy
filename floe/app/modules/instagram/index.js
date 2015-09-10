@@ -13,11 +13,11 @@ var cacheInsta = function() {
 	
 	var	options = {
 			
-			hostname: 'api.instagram.com',
-			path: '/v1/users/self/media/recent?access_token='+config['instagram'],
-			method: 'GET'
+        hostname: 'api.instagram.com',
+        path: '/v1/users/self/media/recent?access_token='+config['instagram'],
+        method: 'GET'
 
-		};
+    };
 
 	var request = https.request(options, function(response) {
 				
@@ -84,7 +84,7 @@ var writeCache = function(data) {
 	fs.writeFile(__dirname+'/../../cache/instagram.json', JSON.stringify(data), function() {
 
 		cache = new Date();
-		cache.setMinutes(cache.getMinutes() + 15);
+		cache.setMinutes(cache.getMinutes() + cacheExpire);
 		console.log('Instagram cache set, expires ' + cache)
 
 	});
@@ -96,7 +96,7 @@ var getInstagram = function(process) {
 	var deferred = Q.defer();
 
 	fs.readFile(__dirname+'/../../cache/instagram.json', {encoding: 'utf8'}, function(err, data) {
-        
+
 		var info = JSON.parse(data);
 		deferred.resolve(complete(info, process, currentTime));
 
