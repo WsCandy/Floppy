@@ -137,5 +137,9 @@ var parseData = function(data) {
     
 }
 
-cacheTwitter();
-setInterval(cacheTwitter, 1000 * 60 * cacheExpire);
+if(config.twitter !== null) {
+    
+    cacheTwitter();
+    setInterval(cacheTwitter, 1000 * 60 * cacheExpire);
+
+}

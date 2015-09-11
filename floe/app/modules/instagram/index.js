@@ -106,5 +106,9 @@ var getInstagram = function(process) {
 
 }
 
-cacheInsta();
-setInterval(cacheInsta, 1000 * 60 * cacheExpire);
+if(config.instagram !== null) {
+
+    cacheInsta();
+    setInterval(cacheInsta, 1000 * 60 * cacheExpire);
+    
+}

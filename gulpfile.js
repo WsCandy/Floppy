@@ -1,8 +1,8 @@
 // Use the config!!!
 var options = {
 
-		'assetsPath' : 'app/assets/',
-		'viewsPath' : 'app/views/'
+		'assetsPath' : 'httpdocs/assets/',
+		'viewsPath' : 'floe/app/views/'
 
 	},
 	legacy,
