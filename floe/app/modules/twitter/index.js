@@ -127,7 +127,7 @@ var parseData = function(data) {
     
     for(var tweet in data) {
         
-        data[tweet].text = data[tweet].text.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i, '<a href="$1" target=_blank" rel="nofollow">$1</a>');
+        data[tweet].text = data[tweet].text.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i, '<a href="$1" target="_blank" rel="nofollow">$1</a>');
         data[tweet].text = data[tweet].text.replace(/(^|\s)#(\w+)/g, '$1<a href="https://twitter.com/hashtag/$2" target="_blank" rel="nofollow">#$2</a>');
         data[tweet].text = data[tweet].text.replace(/(^|\s)@(\w+)/g, '$1<a href="http://www.twitter.com/$2" target="_blank" rel="nofollow">@$2</a>');
         
