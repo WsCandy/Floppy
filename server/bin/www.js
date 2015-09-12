@@ -14,29 +14,7 @@ var app = module.exports = koa();
 
 rewrite.init(app);
 
-app.use(function *(next) {
-
-    this.state = {};
-    
-	try {
-
-		yield next;
-
-	}
-
-	catch(err) {
-
-		this.status = err.status || 500;
-		this.body = this.status + " - Internal Server Error, ooops :(\n\n" + err;
-
-		console.log(err);
-
-	}
-
-});
-
 app.use(logger());
-
 app.use(conditional());
 app.use(favicon(__dirname + '/../../favicon.ico'));
 app.use(staticCache(__dirname + '/../../httpdocs', {
@@ -48,11 +26,10 @@ app.use(staticCache(__dirname + '/../../httpdocs', {
     dynamic: true
 
 }));
-
 app.use(etag());
+
 controller.init(app);
 modules.init(app);
-
 routing.init(app);
 
 app.on('error', function(err, ctx){
