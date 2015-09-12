@@ -62,6 +62,13 @@ exports.init = function(app) {
 		}		
 
 	});
+    
+    router.all('/index', function *() {
+
+        this.redirect('/');
+        this.status = 301;
+
+    });
 
 	router.get('/', function *(next) {
 
