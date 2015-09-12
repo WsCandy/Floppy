@@ -7,7 +7,8 @@ var koa = require('koa'),
 	favicon = require('koa-favicon'),
 	modules = require(__dirname+'/../../floe/app/modules/index.js'),
     fs = require('fs'),
-	logger = require('koa-logger');
+	logger = require('koa-logger'),
+    rewrite = require('koa-rewrite');
 
 var app = module.exports = koa(),
     files = {},
@@ -15,9 +16,7 @@ var app = module.exports = koa(),
     jsTime = fs.statSync(__dirname + '/../../httpdocs/assets/js/main.min.js').mtime.getTime(),
     alias = {};
 
-alias['/assets/css/main.'+cssTime+'.css'] = '/assets/css/main.css';
-alias['/assets/js/main.min.'+jsTime+'.js'] = '/assets/js/main.min.js';
-
+app.use(rewrite(/(\/.+)\.(\d+)\.([^.\/]+)/, '$1.$3'));
 app.use(function *(next) {
 
     this.state = {};
@@ -49,14 +48,14 @@ app.use(staticCache(__dirname + '/../../httpdocs', {
 	buffer: app.env === 'development' ? false : true,
 	gzip: true,
 	usePrecompiledGzip: true,
-    dynamic: true,
-    alias: alias
+    dynamic: true
 
 }, files));
 
 app.use(etag());
 controller.init(app);
 modules.init(app);
+
 routing.init(app);
 
 app.on('error', function(err, ctx){

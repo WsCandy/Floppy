@@ -19,6 +19,7 @@
     "koa-favicon": "^1.2.0",
     "koa-logger": "^1.2.2",
     "koa-request": "^1.0.0",
+    "koa-rewrite": "^1.1.0",
     "koa-router": "^5.1.2",
     "koa-static-cache": "^3.1.2",
     "oauth": "^0.9.13",
