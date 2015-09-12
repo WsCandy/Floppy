@@ -1,5 +1,4 @@
-var fs = require('fs'),
-	Q = require('q');
+var fs = require('fs');
 
 var self = this;
 	self.app;

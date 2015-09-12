@@ -1,7 +1,8 @@
 var router = require('koa-router')(),
 	koaBody = require('koa-body')(),
 	fs = require('fs'),
-	page = require(__dirname+'/../floe/app/config/page.json')[0];
+	page = require(__dirname+'/../floe/app/config/page.json')[0],
+    redirects = require(__dirname+'/../floe/app/config/routes/redirects.json')[0];
 
 var testModule = function(module) {
 
@@ -63,12 +64,11 @@ exports.init = function(app) {
 
 	});
     
-    router.all('/index', function *() {
-
-        this.redirect('/');
-        this.status = 301;
-
-    });
+    for(var redirect in redirects) {
+    
+        router.redirect(redirect, redirects[redirect]);
+        
+    }
 
 	router.get('/', function *(next) {
 

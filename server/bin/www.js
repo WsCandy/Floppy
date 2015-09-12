@@ -8,15 +8,12 @@ var koa = require('koa'),
 	modules = require(__dirname+'/../../floe/app/modules/index.js'),
     fs = require('fs'),
 	logger = require('koa-logger'),
-    rewrite = require('koa-rewrite');
+    rewrite = require(__dirname+'/../../floe/app/config/routes/rewrite.js');
 
-var app = module.exports = koa(),
-    files = {},
-    cssTime = fs.statSync(__dirname + '/../../httpdocs/assets/css/main.css').mtime.getTime(),
-    jsTime = fs.statSync(__dirname + '/../../httpdocs/assets/js/main.min.js').mtime.getTime(),
-    alias = {};
+var app = module.exports = koa();
 
-app.use(rewrite(/(\/.+)\.(\d+)\.([^.\/]+)/, '$1.$3'));
+rewrite.init(app);
+
 app.use(function *(next) {
 
     this.state = {};
@@ -50,7 +47,7 @@ app.use(staticCache(__dirname + '/../../httpdocs', {
 	usePrecompiledGzip: true,
     dynamic: true
 
-}, files));
+}));
 
 app.use(etag());
 controller.init(app);
