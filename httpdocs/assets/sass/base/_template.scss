@@ -54,6 +54,13 @@ body {
         background: $primaryColor;
         padding: 15px 0;
         margin-bottom: 25px;
+        text-align: center;
+        
+        a {
+            
+            display: inline-block;
+            
+        }
         
     }
     
@@ -80,7 +87,7 @@ body {
         @include mq(600px) {
             
             position: static;
-            margin-top: 30px;
+            margin-top: 3 0px;
             
         }
         

@@ -34,7 +34,10 @@ body {
 .template__header {
   background: #353c40;
   padding: 15px 0;
-  margin-bottom: 25px; }
+  margin-bottom: 25px;
+  text-align: center; }
+  .template__header a {
+    display: inline-block; }
 
 .template__logo {
   width: 150px;
@@ -55,7 +58,7 @@ body {
   @media screen and (max-width: 600px) {
     .template__footer {
       position: static;
-      margin-top: 30px; } }
+      margin-top: 3 0px; } }
   .template__footer p {
     margin: 0; }
   .template__footer span {
