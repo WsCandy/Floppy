@@ -4,24 +4,6 @@ var router = require('koa-router')(),
 	page = require(__dirname+'/../floe/app/config/page.json')[0],
     redirects = require(__dirname+'/../floe/app/config/routes/redirects.json')[0];
 
-var errorHandle = function(self, err) {
-    
-    self.body = err.name + ': ' + err.message;
-    
-    if(err.code === 'ENOENT' && err.syscall !== 'open') {
-        
-        self.status = 404;
-        
-    } else {
-        
-        self.status = err.status || 500;
-        
-    }   
-
-    self.app.emit('error', err, self);
-    
-}
-
 var testModule = function(module) {
 
 	try {
@@ -92,7 +74,7 @@ exports.init = function(app) {
             
             catch(err) {
                 
-                errorHandle(this, err);
+                this.app.emit('error', err, this);
                 
             }            
 
@@ -111,7 +93,7 @@ exports.init = function(app) {
 
 			catch(err) {
 
-                errorHandle(this, err);
+                this.app.emit('error', err, this);
 
 			}		
 
@@ -128,7 +110,7 @@ exports.init = function(app) {
             
             catch(err) {
                 
-                errorHandle(this, err);    
+                this.app.emit('error', err, this);    
                 
             }
 
@@ -145,7 +127,7 @@ exports.init = function(app) {
             
             catch(err) {
                 
-                errorHandle(this, err);
+                this.app.emit('error', err, this);
                 
             }            
 
@@ -167,7 +149,7 @@ exports.init = function(app) {
             
             catch(err) {
                 
-                errorHandle(this, err);
+                this.app.emit('error', err, this);
                 
             }
 
@@ -186,7 +168,7 @@ exports.init = function(app) {
 
 			catch(err) {
 
-				errorHandle(this, err);
+				this.app.emit('error', err, this);
 
 			}			
 
@@ -203,7 +185,7 @@ exports.init = function(app) {
             
             catch(err) {
                 
-                errorHandle(this, err);
+                this.app.emit('error', err, this);
                 
             }
             
@@ -221,7 +203,7 @@ exports.init = function(app) {
             
             catch(err) {
                 
-                errorHandle(this, err);
+                this.app.emit('error', err, this);
                 
             }            
 
