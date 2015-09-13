@@ -24,18 +24,15 @@ exports.init = function(app) {
         baseController.init(app, router, koaBody);
 
 	app.use(function *(next) {
-	
-        var now = new Date();        
         
-		this.set('Vary', 'Accept-Encoding');
-	
 		if(app.env === 'development') {
 
 			delete require.cache[require.resolve(__dirname+'/../floe/app/config/page.json')];
 			page = require(__dirname+'/../floe/app/config/page.json')[0];
 
-		}
+		}	
         
+		this.set('Vary', 'Accept-Encoding');
         this.state.cookies = this.cookies;
         this.state.env = app.env;
         
