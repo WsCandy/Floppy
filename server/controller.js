@@ -8,9 +8,7 @@ exports.init = function(app) {
 
         root: 'floe/app/views',
         layout: 'templates/template',
-        cache: (app.env === 'development' ? false : true),
-        open: '<?',
-        close: '?>'
+        cache: (app.env === 'development' ? false : true)
 
 	});
     

@@ -1,37 +1,37 @@
 <!doctype html>
 <html>
 	<head>
-		<link rel="dns-prefetch" href="http://<?- site.url ?>/">
+		<link rel="dns-prefetch" href="http://<%- site.url %>/">
 		<link rel="dns-prefetch" href="//scontent.cdninstagram.com/">
 	    <link rel="dns-prefetch" href="//ajax.googleapis.com/">
 	    <link rel="dns-prefetch" href="//google-analytics.com/">
 	    <link rel="preload" href="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
 
-		<title><?- site.name ?> - <?- view.title ?></title>
-		<meta name="description" content="<?- view.desc ?>">
+		<title><%- site.name %> - <%- view.title %></title>
+		<meta name="description" content="<%- view.desc %>">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         
-        <? /* Remove These */ ?>        
+        <% /* Remove These */ %>        
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Italiana&amp;subset=latin" type="text/css">
-        <? /* End Remove */ ?>
+        <% /* End Remove */ %>
        
-        <? if(cookies.get('css')) { ?>
-            <link rel="stylesheet" href="/assets/css/main.<? if(env !== 'development') {?><?= lastModified('httpdocs/assets/css/main.css')?>.<? } ?>css" type="text/css">    
-        <? } else { ?> 
-        <style><? include ../../../../httpdocs/assets/css/critical.css ?></style>
-        <? } ?>
+        <% if(cookies.get('css')) { %>
+            <link rel="stylesheet" href="/assets/css/main.<% if(env !== 'development') {%><%= lastModified('httpdocs/assets/css/main.css')%>.<% } %>css" type="text/css">    
+        <% } else { %> 
+        <style><% include ../../../../httpdocs/assets/css/critical.css %></style>
+        <% } %>
 		<script>			
-            <? include ../../../../httpdocs/assets/js/vendor/modernizr.custom.js ?><? if(!cookies.get('css')) { ?>Modernizr.load('/assets/css/main.<? if(env !== 'development') {?><?= lastModified("httpdocs/assets/css/main.css")?>.<? } ?>css');<? } ?>Modernizr.load([{load: '//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'},{load: '/assets/js/main.min.<? if(env !== 'development') {?><?= lastModified("httpdocs/assets/js/main.min.js") ?>.<? } ?>js',complete: function(){window.init()}}]);
+            <% include ../../../../httpdocs/assets/js/vendor/modernizr.custom.js %><% if(!cookies.get('css')) { %>Modernizr.load('/assets/css/main.<% if(env !== 'development') {%><%= lastModified("httpdocs/assets/css/main.css")%>.<% } %>css');<% } %>Modernizr.load([{load: '//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'},{load: '/assets/js/main.min.<% if(env !== 'development') {%><%= lastModified("httpdocs/assets/js/main.min.js") %>.<% } %>js',complete: function(){window.init()}}]);
 		</script>
 	</head>
-	<body id="<?- page ?>">
+	<body id="<%- page %>">
        <div class="page-wrap">
             <header class="template__header">
-                <a href="/" title="floe"><? include ../../../../httpdocs/assets/svg/floe.svg ?></a>
+                <a href="/" title="floe"><% include ../../../../httpdocs/assets/svg/floe.svg %></a>
             </header>
-            
-            <?- body ?>
+
+            <%- body %>
             
             <footer class="template__footer">
                <div class="centre-wrap">
@@ -40,7 +40,7 @@
             </footer>
        </div>       
 	</body>
-	<? if(!cookies.get('css')) {	
+	<% if(!cookies.get('css')) {	
         cookies.set('css', 'true');
-    } ?>
+    } %>
 </html>
