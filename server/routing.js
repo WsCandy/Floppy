@@ -30,7 +30,7 @@ exports.init = function(app) {
 			delete require.cache[require.resolve(__dirname+'/../floe/app/config/page.json')];
 			page = require(__dirname+'/../floe/app/config/page.json')[0];
 
-		}	
+		}
         
 		this.set('Vary', 'Accept-Encoding');
         this.state.cookies = this.cookies;
@@ -186,7 +186,6 @@ exports.init = function(app) {
                 
             }
             
-
 		}, testModule('../floe/app/controller/'+this.params['page']) && require('../floe/app/controller/'+this.params['page']).post ? require('../floe/app/controller/'+this.params['page']).post : function *(next) {
 
             try {
