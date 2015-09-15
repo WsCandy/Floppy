@@ -154,7 +154,7 @@ gulp.task('browser-sync', function() {
 		logPrefix: 'Propeller Browser Sync',
     	proxy: {
 		
-		    target: 'http://localhost:4200',
+		    target: 'http://localhost:4201',
 		    middleware: function(req, res, next) {
 		    	
 		    	next();
