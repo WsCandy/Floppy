@@ -30,6 +30,9 @@ exports.init = function(app) {
 		}
         
 		this.set('Vary', 'Accept-Encoding');
+        this.set('Content-Type', 'text/html; charset=UTF-8');
+        this.set('cache-control', 'private, max-age=0');
+        this.set('expires', '-1');
         this.state.cookies = this.cookies;
         this.state.env = app.env;
         
