@@ -1,102 +1,53 @@
 var fs = require('fs');
 
-var self = this;
-	self.app;
-	self.router;
-	self.koaBody;
+exports.init = function(app) {
 
-var images = function() {
-
-	self.app.use(function *(next){
-
-		var error;
-        
+    app.use(function *(next){
 
 		this.state.images = function(path) {
 
-			try {
+            var data = fs.readdirSync(process.env.PWD + '/' + path);
+                finalImages = [];
 
-				var data = fs.readdirSync(process.env.PWD + '/' + path);
-					finalImages = [];
+            for (var image in data) {
 
-				for (var image in data) {
-                    
-                    path = path.replace('httpdocs/', '');
-                    
-					finalImages.push('/' + path + '/' + data[image]);
+                path = path.replace('httpdocs/', '');
 
-				}
+                finalImages.push('/' + path + '/' + data[image]);
 
-				self.images = finalImages;
+            }
 
-			    return self.images;
-
-			}
-
-			catch (err) {
-
-				error = err.message;
-
-			}
+            return finalImages;
 
 		}
 
 		yield next;
 
-		if(error) {;
-
-			this.status = 500;
-			this.body =  'Error ' + this.status + ' ' + error;
-
-		}
-
 	});
-
-}
-
-var lastModified = function() {
-
-	var error;
-
-	self.app.use(function *(next){
+    
+    app.use(function *(next){
+        
+		this.state.fileContents = function(path) {
+            
+            return fs.readFileSync(process.env.PWD + '/' + path, 'utf8');
+            
+        };
+        
+        yield next;
+        
+	});
+    
+    app.use(function *(next){
 
 		this.state.lastModified = function(path) {
-			
-			try {
 
-				var data = fs.statSync(process.env.PWD + '/' + path);
-				return data.mtime.getTime();
-
-			}
-
-			catch (err) {
-
-				error = err.message;
-
-			}
+            var data = fs.statSync(process.env.PWD + '/' + path);
+            return data.mtime.getTime();
 
 		}
 		
-		yield next;
-
-		if(error) {;
-
-			this.status = 500;
-			this.body =  'Error ' + this.status + ' ' + error;
-
-		}			
+		yield next;	
 
 	});
-
-}
-
-exports.init = function(app, router, koaBody) {
-
-	self.app = app;
-	self.router = router;
-	self.koaBody = koaBody;
-
-	images();
-	lastModified();
 
 }

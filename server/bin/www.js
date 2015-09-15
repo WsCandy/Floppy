@@ -8,7 +8,8 @@ var koa = require('koa'),
 	modules = require(__dirname+'/../../floe/app/modules/index.js'),
     fs = require('fs'),
 	logger = require('koa-logger'),
-    rewrite = require(__dirname+'/../../floe/app/config/routes/rewrite.js');
+    rewrite = require(__dirname+'/../../floe/app/config/routes/rewrite.js'),
+    baseController = require(__dirname+'/../../floe/app/controller/base');
 
 var app = module.exports = koa();
 
@@ -29,6 +30,7 @@ app.use(staticCache(__dirname + '/../../httpdocs', {
 app.use(etag());
 
 controller.init(app);
+baseController.init(app);
 modules.init(app);
 routing.init(app);
 

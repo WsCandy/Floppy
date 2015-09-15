@@ -18,10 +18,7 @@ var testModule = function(module) {
 
 }
 
-exports.init = function(app) {
-
-    var baseController = require('../floe/app/controller/base');
-        baseController.init(app, router, koaBody);
+exports.init = function(app) {        
 
 	app.use(function *(next) {
         
