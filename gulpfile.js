@@ -16,7 +16,6 @@ var options = {
 	fs = require('fs'),
 	path = require('path'),
 	browserSync = require('browser-sync').create(),
-    minifyHTML = require('gulp-minify-html'),
 	jsFiles;
 
 var scriptsTask = function() {
@@ -155,7 +154,7 @@ gulp.task('browser-sync', function() {
 		logPrefix: 'Propeller Browser Sync',
     	proxy: {
 		
-		    target: 'http://localhost:4201',
+		    target: 'http://localhost:4200',
 		    middleware: function(req, res, next) {
 		    	
 		    	next();
@@ -167,25 +166,6 @@ gulp.task('browser-sync', function() {
     });
 
 });
-
-gulp.task('html', function() {
-    
-  var opts = {
-      
-    conditionals: true,
-    cdata: true,
-    loose: true,
-    quotes: true
-      
-  };
- 
-  return gulp.src(options.viewsPath+'**/*.html')
-  
-    .pipe(minifyHTML(opts))  
-    .pipe(gulp.dest(options.viewsPath));
-    
-});
-
 
 gulp.task('sass', sassTask);
 gulp.task('scripts', scriptsTask);
