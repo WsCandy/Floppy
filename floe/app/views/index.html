@@ -1,42 +1,39 @@
-<div class="centre-wrap">
-    
-    <h2>Getting started...</h2>
-    
-    <ol>
-        <li>Make sure you edit out <span>@import "base/template";</span> in your main.scss file to remove all this styling... <span>yuk!</span></li>
-        <li>Run <span>gulp</span> from your project directory.</li>
-        <li>Configure your site, check out <span>app/config/site.json</span> - Add your own...!</li>
-        <li>Remove the <span>Google Fonts</span> from <span>app/views/templates/template.html</span> - We don't want it slowing us down... <span>#performance</span></li>
-        <li>Get coding...! The rest is up to you!</li>
-        <li>Delete the contents of this file...</li>
-    </ol>  
-    
-    <h3>What's installed:</h3>
-    <ul>
-        <li><span>Gulp</span></li>
-        <li><span>Imager</span></li>
-        <li><span>Modernizr</span></li>
-        <li><span>jQuery v2.1.4</span></li>
-        <li><span>Koa.js</span></li>
-    </ul>
-    <h3>Available Functions:</h3>
-    <ul>
-        <li><span>images(directory__path)</span> - get all image contents of a directory!</li>
-        <li><span>lastModified(file_path)</span> - get the last modified time of a file!</li>
-        <li><span>fileContents(file_path)</span> - get the content of the specified file, from the root of the site.</li>
-        <li><span>instagram</span> - Valid instagram token in your config? This is your feed object!</li>
-        <li><span>twitter</span> - Twitter username in your config? This is your feed object!</li>
-    </ul>
-    <h3>Modules</h3>    
-    <p>Installing modules will allow you to create custom states for your views, off load common tasks such as social feeds to the server, then cache them, to speed up front end performance.</p>
-   
-    <h3>
-        Don't forget to define your global variables in app/config/site.json!
-    </h3>
-    
-    <ul>        
-        <% for(var key in site) {%>
-            <li><%= key %> : <span><%= site[key] %></span></li>        
-        <% } %>        
-    </ul>
-</div>
+<h2>Getting started...</h2>
+
+<ol>
+    <li>Make sure you edit out <span>@import "base/template";</span> in your main.scss file to remove all this styling... <span>yuk!</span></li>
+    <li>Run <span>gulp</span> from your project directory.</li>
+    <li>Configure your site, check out <span>app/config/site.json</span> - Add your own...!</li>
+    <li>Remove the <span>Google Fonts</span> from <span>app/views/templates/template.html</span> - We don't want it slowing us down... <span>#performance</span></li>
+    <li>Get coding...! The rest is up to you!</li>
+    <li>Delete the contents of this file...</li>
+</ol>  
+
+<h3>What's installed:</h3>
+<ul>
+    <li><span>Gulp</span></li>
+    <li><span>Imager</span></li>
+    <li><span>Modernizr</span></li>
+    <li><span>jQuery v2.1.4</span></li>
+    <li><span>Koa.js</span></li>
+</ul>
+<h3>Available Functions:</h3>
+<ul>
+    <li><span>images(directory__path)</span> - get all image contents of a directory!</li>
+    <li><span>lastModified(file_path)</span> - get the last modified time of a file!</li>
+    <li><span>fileContents(file_path)</span> - get the content of the specified file, from the root of the site.</li>
+    <li><span>instagram</span> - Valid instagram token in your config? This is your feed object!</li>
+    <li><span>twitter</span> - Twitter username in your config? This is your feed object!</li>
+</ul>
+<h3>Modules</h3>    
+<p>Installing modules will allow you to create custom states for your views, off load common tasks such as social feeds to the server, then cache them, to speed up front end performance.</p>
+
+<h3>
+    Don't forget to define your global variables in app/config/site.json!
+</h3>
+
+<ul>        
+    <% for(var key in site) {%>
+        <li><%= key %> : <span><%= site[key] %></span></li>        
+    <% } %>        
+</ul>
