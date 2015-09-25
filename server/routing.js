@@ -1,5 +1,5 @@
 var router = require('koa-router')(),
-	koaBody = require('koa-body')(),
+	koaBody = require('koa-body')({multipart:true}),
 	fs = require('fs'),
 	page = require(__dirname+'/../floe/app/config/page.json')[0],
     redirects = require(__dirname+'/../floe/app/config/routes/redirects.json')[0];
@@ -38,12 +38,14 @@ exports.init = function(app) {
         
 		yield next;
 
-		if(this.response.status === 404) {
+		if(this.response.status >= 400) {
 
-			yield this.render('404', {
+			yield this.render('error', {
 
-		  		view: page['404'] ? page['404'] : page['default'],
-		  		page: 'not-found' 
+		  		view: page['error'] ? page['error'] : page['default'],
+		  		page: 'not-found',
+                status: this.response.status,
+                message: this.response.message
 
 			});
 
@@ -56,7 +58,7 @@ exports.init = function(app) {
         router.redirect(redirect, redirects[redirect]);
         
     }
-
+    
 	router.get('/', function *(next) {
 
 		var controller = testModule('../floe/app/controller/index');
@@ -111,23 +113,6 @@ exports.init = function(app) {
                 
             }
 
-		}, testModule('../floe/app/controller/index') && require('../floe/app/controller/index').post ? require('../floe/app/controller/index').post : function *(next) {
-
-            try {
-                
-                this.status = 403;
-                this.body = this.status + ' ' + this.message + ' - Naughty';
-
-                yield next;
-                
-            }
-            
-            catch(err) {
-                
-                this.app.emit('error', err, this);
-                
-            }            
-
 		});
 
 	});
@@ -166,46 +151,62 @@ exports.init = function(app) {
 			catch(err) {
 
 				this.app.emit('error', err, this);
+                this.status = 404;
 
 			}			
 
 		}
 
-		router.post('/:page', koaBody, function *(next) {
-
-            try {
-                
-                this.page = page;
-                yield next;
-                
-            }
-            
-            catch(err) {
-                
-                this.app.emit('error', err, this);
-                
-            }
-            
-		}, testModule('../floe/app/controller/'+this.params['page']) && require('../floe/app/controller/'+this.params['page']).post ? require('../floe/app/controller/'+this.params['page']).post : function *(next) {
-
-            try {
-                
-                this.status = 403;
-                this.body = this.status + ' ' + this.message + ' - Naughty';
-
-                yield next;
-                
-            }
-            
-            catch(err) {
-                
-                this.app.emit('error', err, this);
-                
-            }            
-
-		});
-
 	});
+    
+    router.post('/rest/:page', koaBody, function *(next) {
+
+        var controller = testModule('../floe/app/controller/rest/'+this.params['page']);
+        
+        try {
+            
+            if(controller.init) {
+            
+                try {
+
+                    controller.init(router, koaBody, this);
+
+                }
+
+                catch(err) {
+
+                    this.app.emit('error', err, this);
+
+                }
+
+            }
+            
+        } catch(err) {
+            
+            this.app.emit('error', err, this);
+            this.status = 404;
+            
+        }
+        
+        yield next;
+
+    }).get('/rest/:page', function *(next) {
+        
+        var controller = testModule('../floe/app/controller/rest/'+this.params['page']);
+        
+        if(controller.init) {
+            
+            this.status = 405;
+            
+        } else {
+            
+            this.status = 404;
+            
+        }
+      
+        yield next;
+        
+    });
 
 	app
 		.use(router.routes())
