@@ -11,7 +11,14 @@ var koa = require('koa'),
     rewrite = require(__dirname+'/../../floe/app/config/routes/rewrite.js'),
     baseController = require(__dirname+'/../../floe/app/controller/base');
 
-var app = module.exports = koa();
+var app = module.exports = koa(),
+    cache = process.env.PWD + '/floe/app/cache';
+
+if(!fs.existsSync(cache)) {
+    
+    fs.mkdir(cache)
+    
+}
 
 rewrite.init(app);
 
