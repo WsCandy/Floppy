@@ -114,8 +114,16 @@ var getTwitter = function(process) {
 
 	fs.readFile(__dirname+'/../../cache/twitter.json', {encoding: 'utf8'}, function(err, data) {
         
-        var info = JSON.parse(data);
-		deferred.resolve(complete(info, process, currentTime));
+        if(!err) {
+            
+            var info = JSON.parse(data);
+            deferred.resolve(complete(info, process, currentTime));
+            
+        } else {
+            
+            deferred.resolve(complete(null, process, currentTime));
+            
+        }  
 
 	});
 

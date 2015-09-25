@@ -1,0 +1,21 @@
+<div class="centre-wrap">
+    <h1>Twitter Feed</h1>
+    
+    <% if(twitter) { %>
+    
+        <% for(var i = 0; i <= 5; i++) { %>    
+
+            <% if(twitter[i]) { %>
+
+                <p><%- twitter[i].text %></p>
+
+            <% } %>
+
+        <% } %>
+    
+    <% } else { %>
+    
+        <p>Twitter appears to be down at the moment, check back later!</p>
+    
+    <% } %>
+</div>
