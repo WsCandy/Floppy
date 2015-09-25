@@ -97,23 +97,8 @@ exports.init = function(app) {
 			}		
 
 		}
-		
-		router.post('/', koaBody, function *(next) {
-            
-            try {
-                
-			 this.page = page;
-			 yield next;
-                
-            } 
-            
-            catch(err) {
-                
-                this.app.emit('error', err, this);    
-                
-            }
-
-		});
+        
+        yield next;
 
 	});
 
@@ -149,13 +134,15 @@ exports.init = function(app) {
 			}
 
 			catch(err) {
-
-				this.app.emit('error', err, this);
-                this.status = 404;
+                
+				this.app.emit('error', err, this);                
+                this.status = 404;        
 
 			}			
 
 		}
+        
+        yield next;
 
 	});
     
