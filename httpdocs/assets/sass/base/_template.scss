@@ -23,6 +23,7 @@ body {
     font-family: 'TwCenMT-Regular', sans-serif;
     color: $primaryColor;
     padding-bottom: 42px;
+    background: url(../img/icefloe-bg.png) no-repeat left 100px;
     
     @include mq(600px) {
             
