@@ -2,18 +2,26 @@
 
 <% if(twitter) { %>
 
-    <% for(var i = 0; i <= 5; i++) { %>    
+   <% if(!twitter.errors) { %>
+   
+        <% for(var i = 0; i <= 5; i++) { %>    
 
-        <% if(twitter[i]) { %>
+            <% if(twitter[i]) { %>
 
-            <p><%- twitter[i].text %></p>
+                <p><%- twitter[i].text %></p>
+
+            <% } %>
 
         <% } %>
-
+    
+    <% } else {%>
+    
+        <p>Error: <%= twitter.errors[0].code %> - <%= twitter.errors[0].message %></p>
+    
     <% } %>
 
 <% } else { %>
 
-    <p>Twitter appears to be down at the moment, check back later!</p>
+    <p>Twitter has not been setup in your config.</p>
 
 <% } %>

@@ -28,12 +28,19 @@ var cacheTwitter = function() {
         'https://api.twitter.com/1.1/statuses/user_timeline.json?count=10&screen_name='+config.twitter,
         '1219737277-9AnhbsG2MC5JnAfxX6agG2z4MHtuFQGP1BfDM4O',
         '8uqop3rdUhdCnNNUZLhaysfOGEf6SsIXBtIvCtf6ggw',           
-        function (err, data, res){
-
-            if(err) console.log(err);
+        function (err, data, res){            
 
             var info = JSON.parse(data);
-            parseData(info);
+            
+            if(!info.errors) {
+                
+                parseData(info);
+                
+            } else {
+                
+                writeCache(info);
+                
+            }
 
         }
     
@@ -73,13 +80,17 @@ exports.init = function(app) {
 }
 
 var twitter = function *(next) {
-    
-    if(config.twitter !== null) {
+        
+    if(config.twitter === null) {
+        
+        this.state.twitter = null;
+        
+    } else {
         
         yield getTwitter(this);
         
     }
-    
+
     yield next;
     
 }
@@ -114,16 +125,16 @@ var getTwitter = function(process) {
 
 	fs.readFile(__dirname+'/../../cache/twitter.json', {encoding: 'utf8'}, function(err, data) {
         
-        if(!err) {
+        try {
             
             var info = JSON.parse(data);
             deferred.resolve(complete(info, process, currentTime));
             
-        } else {
+        } catch(err) {
             
             deferred.resolve(complete(null, process, currentTime));
             
-        }  
+        }
 
 	});
 
