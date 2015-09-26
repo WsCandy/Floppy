@@ -1,0 +1,32 @@
+<h1>Instagram Feed</h1>
+
+<% if(instagram) { %>
+
+    <% if(instagram.data) { %>
+
+        <% for(var i = 0; i <= 20; i++) { %>
+
+            <% if(instagram.data[i]) { %>
+
+                <img src="<%= instagram.data[i].images.standard_resolution.url %>" alt="<%= instagram.data[i].caption.text %>" height="<%= instagram.data[i].images.standard_resolution.height%>" width="<%= instagram.data[i].images.standard_resolution.width%>">
+
+            <% } %>
+
+        <% } %>
+
+    <% } else if(instagram.meta.error_message) { %>
+
+        <p>Error: <%= instagram.meta.code %> - <%= instagram.meta.error_message %></p>
+
+    <% } else { %>
+
+        <p>Intagram appears to be down at the moment, check back later!</p>
+
+    <% } %>
+
+
+<% } else { %>
+    
+    <p>Instagram has not been setup in your config.</p>
+
+<% } %>

@@ -30,9 +30,9 @@ var cacheInsta = function() {
 		});
 
 		response.on('end', function() {
-
-			var info = JSON.parse(body).data;
-
+            
+            var info = JSON.parse(body);            
+            
 			writeCache(info);
 
 		});
@@ -57,12 +57,16 @@ exports.init = function(app) {
 
 var instagram = function *(next) {
     
-    if(config.instagram !== null) {
+    if(config.instagram === null) {
         
-	   yield getInstagram(this);
+        this.state.instagram = null;
         
-    }   
-
+    } else {
+        
+        yield getInstagram(this);
+        
+    }
+    
     yield next;
 
 }
@@ -97,8 +101,16 @@ var getInstagram = function(process) {
 
 	fs.readFile(__dirname+'/../../cache/instagram.json', {encoding: 'utf8'}, function(err, data) {
 
-		var info = JSON.parse(data);
-		deferred.resolve(complete(info, process, currentTime));
+        try {
+            
+            var info = JSON.parse(data);
+            deferred.resolve(complete(info, process, currentTime));
+            
+        } catch(err) {
+            
+            deferred.resolve(complete(null, process, currentTime));
+            
+        }
 
 	});
 
