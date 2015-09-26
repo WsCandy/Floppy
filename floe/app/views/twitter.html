@@ -16,7 +16,11 @@
     
     <% } else {%>
     
-        <p>Error: <%= twitter.errors[0].code %> - <%= twitter.errors[0].message %></p>
+        <% for(var error in twitter.errors) { %>
+        
+            <p>Error: <%= twitter.errors[error].code %> - <%= twitter.errors[error].message %></p>
+        
+        <% } %>    
     
     <% } %>
 
