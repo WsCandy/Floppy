@@ -35,11 +35,12 @@ exports.init = function(app) {
         this.set('expires', '-1');
         this.state.cookies = this.cookies;
         this.state.env = app.env;
+        this.state.error = null;
         
 		yield next;
 
 		if(this.response.status >= 400) {
-
+            
 			yield this.render('error', {
 
 		  		view: page['error'] ? page['error'] : page['default'],
@@ -97,8 +98,23 @@ exports.init = function(app) {
 			}		
 
 		}
-        
-        yield next;
+		
+		router.post('/', koaBody, function *(next) {
+            
+            try {
+                
+			 this.page = page;
+			 yield next;
+                
+            } 
+            
+            catch(err) {
+                
+                this.app.emit('error', err, this);    
+                
+            }
+
+		});
 
 	});
 
@@ -134,15 +150,13 @@ exports.init = function(app) {
 			}
 
 			catch(err) {
-                
-				this.app.emit('error', err, this);                
-                this.status = 404;        
+
+				this.app.emit('error', err, this);
+                this.status = 404;
 
 			}			
 
 		}
-        
-        yield next;
 
 	});
     

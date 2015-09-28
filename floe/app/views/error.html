@@ -1,4 +1,14 @@
-<div class="centre-wrap">
+<section class="main">
     <h1>Error <%= status %> - <%= message %></h1>
-    <p>Ooops... Something appears to have gone wrong... Go back and try again!</p>   
-</div>
+    
+    <% if(env === 'development' && error) { %>
+        
+        <p><%- error %></p>
+    
+    <% } else { %>
+    
+        <p>Ooops, something has gone wrong! Go back and try again!</p>
+        
+    <% } %>
+    
+</section>

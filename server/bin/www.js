@@ -44,18 +44,8 @@ routing.init(app);
 app.on('error', function(err, ctx){
 
 	console.log(err, ctx);
-    
-    ctx.body = err.name + ': ' + err.message;
-    
-    if(err.code === 'ENOENT' && err.syscall !== 'open') {
-        
-        ctx.status = 404;
-        
-    } else {
-        
-        ctx.status = err.status || 500;
-        
-    }
+    ctx.state.error = err;
+    ctx.status = err.status || 500;
 
 });
 
