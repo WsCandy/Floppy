@@ -44,6 +44,7 @@ routing.init(app);
 app.on('error', function(err, ctx){
 
 	console.log(err, ctx);
+    
     ctx.state.error = err;
     ctx.status = err.status || 500;
 

@@ -2,8 +2,16 @@
     <h1>Error <%= status %> - <%= message %></h1>
     
     <% if(env === 'development' && error) { %>
+                
+        <% if(status >= 500) { %>
         
-        <p><%- error %></p>
+            <p><%- error.stack.replace(/\n/g, '<br>') %></p>
+        
+         <% } else { %>
+        
+             <p><%- error %></p>
+           
+         <% } %>
     
     <% } else { %>
     

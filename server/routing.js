@@ -40,7 +40,7 @@ exports.init = function(app) {
 		yield next;
 
 		if(this.response.status >= 400) {
-            
+                    
 			yield this.render('error', {
 
 		  		view: page['error'] ? page['error'] : page['default'],
@@ -197,9 +197,19 @@ exports.init = function(app) {
         
         if(controller.init) {
             
+            var err = new Error('Method not allowed ' + this.method + ' - ' + this.url);
+                        
+            this.state.error = err;
+            this.app.emit('error', err, this);
+            
             this.status = 405;
             
         } else {
+            
+            var err = ReferenceError('View not found ' + this.method + ' - ' + this.url);
+            
+            this.state.error = err;
+            this.app.emit('error', err, this);
             
             this.status = 404;
             

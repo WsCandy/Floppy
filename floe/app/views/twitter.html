@@ -18,7 +18,7 @@
     
         <% for(var error in twitter.errors) { %>
         
-            <p>Error: <%= twitter.errors[error].code %> - <%= twitter.errors[error].message %></p>
+            <p>Error: <%- twitter.errors[error].code %> - <%- twitter.errors[error].message %></p>
         
         <% } %>    
     
