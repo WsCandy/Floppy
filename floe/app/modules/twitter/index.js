@@ -1,7 +1,7 @@
 var OAuth = require('oauth'),
     Q = require('q'),
     fs = require('fs'),
-    config = require(__dirname+'/../../config/site.json')[0],    
+    config = require(__app + '/config/site.json')[0],    
 	currentTime,
     cache,
 	cacheExpire = 5,
@@ -109,7 +109,7 @@ var complete = function(data, process, time) {
 
 var writeCache = function(data) {
 
-	fs.writeFile(__dirname+'/../../cache/twitter.json', JSON.stringify(data), function() {
+	fs.writeFile(__app + '/cache/twitter.json', JSON.stringify(data), function() {
 
 		cache = new Date();
 		cache.setMinutes(cache.getMinutes() + cacheExpire);
@@ -123,7 +123,7 @@ var getTwitter = function(process) {
 	
 	var deferred = Q.defer();
 
-	fs.readFile(__dirname+'/../../cache/twitter.json', {encoding: 'utf8'}, function(err, data) {
+	fs.readFile(__app + '/cache/twitter.json', {encoding: 'utf8'}, function(err, data) {
         
         try {
             

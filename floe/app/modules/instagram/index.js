@@ -2,7 +2,7 @@ var Q = require('q'),
 	https = require('https'),
 	self = this,
 	fs = require('fs'),
-    config = require(__dirname+'/../../config/site.json')[0],
+    config = require(__app + '/config/site.json')[0],
 	cache,
 	currentTime,
 	cacheExpire = 15;
@@ -85,7 +85,7 @@ var complete = function(data, process, time) {
 
 var writeCache = function(data) {
 
-	fs.writeFile(__dirname+'/../../cache/instagram.json', JSON.stringify(data), function() {
+	fs.writeFile(__app + '/cache/instagram.json', JSON.stringify(data), function() {
 
 		cache = new Date();
 		cache.setMinutes(cache.getMinutes() + cacheExpire);
@@ -99,7 +99,7 @@ var getInstagram = function(process) {
 	
 	var deferred = Q.defer();
 
-	fs.readFile(__dirname+'/../../cache/instagram.json', {encoding: 'utf8'}, function(err, data) {
+	fs.readFile(__app + '/cache/instagram.json', {encoding: 'utf8'}, function(err, data) {
 
         try {
             

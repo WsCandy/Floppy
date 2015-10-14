@@ -1,1 +1,1 @@
-web: www
+web: floe/core/bin/www

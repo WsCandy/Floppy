@@ -1,8 +1,8 @@
 var router = require('koa-router')(),
 	koaBody = require('koa-body')({multipart:true}),
 	fs = require('fs'),
-	page = require(__dirname+'/../floe/app/config/page.json')[0],
-    redirects = require(__dirname+'/../floe/app/config/routes/redirects.json')[0];
+	page = require(__app + '/config/page.json')[0],
+    redirects = require(__app + '/config/routes/redirects.json')[0];
 
 var testModule = function(module) {
 
@@ -24,8 +24,8 @@ exports.init = function(app) {
         
 		if(app.env === 'development') {
 
-			delete require.cache[require.resolve(__dirname+'/../floe/app/config/page.json')];
-			page = require(__dirname+'/../floe/app/config/page.json')[0];
+			delete require.cache[require.resolve(__app + '/config/page.json')];
+			page = require(__app + '/config/page.json')[0];
 
 		}
         
@@ -62,7 +62,7 @@ exports.init = function(app) {
     
 	router.get('/', function *(next) {
 
-		var controller = testModule('../floe/app/controller/index');
+		var controller = testModule(__app + '/controller/index');
 		
 		if(controller.params) {
             
@@ -120,7 +120,7 @@ exports.init = function(app) {
 
 	router.get('/:page', function *(next) {
 
-		var controller = testModule('../floe/app/controller/'+this.params['page']);
+		var controller = testModule(__app + '/controller/'+this.params['page']);
 
 		if(controller.params) {
             
@@ -162,7 +162,7 @@ exports.init = function(app) {
     
     router.post('/rest/:page', koaBody, function *(next) {
 
-        var controller = testModule('../floe/app/controller/rest/'+this.params['page']);
+        var controller = testModule(__app + '/controller/rest/'+this.params['page']);
         
         try {
             
@@ -193,7 +193,7 @@ exports.init = function(app) {
 
     }).get('/rest/:page', function *(next) {
         
-        var controller = testModule('../floe/app/controller/rest/'+this.params['page']);
+        var controller = testModule(__app + '/controller/rest/'+this.params['page']);
         
         if(controller.init) {
             

@@ -6,7 +6,7 @@ exports.init = function(app) {
 
 		this.state.images = function(path) {
 
-            var data = fs.readdirSync(process.env.PWD + '/' + path);
+            var data = fs.readdirSync(__root + '/' + path);
                 finalImages = [];
 
             for (var image in data) {
@@ -29,7 +29,7 @@ exports.init = function(app) {
         
 		this.state.fileContents = function(path) {
             
-            return fs.readFileSync(process.env.PWD + '/' + path, 'utf8');
+            return fs.readFileSync(__root + '/' + path, 'utf8');
             
         };
         
@@ -41,7 +41,7 @@ exports.init = function(app) {
 
 		this.state.lastModified = function(path) {
 
-            var data = fs.statSync(process.env.PWD + '/' + path);
+            var data = fs.statSync(__root + '/' + path);
             return data.mtime.getTime();
 
 		}
