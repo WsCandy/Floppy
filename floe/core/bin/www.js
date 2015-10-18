@@ -1,23 +1,25 @@
+var koa = require('koa'),
+    fs = require('fs');
+
 // Set globals
 
 __root = process.env.PWD;
 __docs = process.env.PWD + '/httpdocs';
 __app = process.env.PWD + '/floe/app';
+__core = process.env.PWD + '/floe/core';
 
 // End set globals
 
-var koa = require('koa'),
-	conditional = require('koa-conditional-get'),
+var conditional = require('koa-conditional-get'),
 	staticCache = require('koa-static-cache'),
 	etag = require('koa-etag'),
-	controller = require('../controller/controller'),
-	routing = require('../controller/routing'),
+	controller = require(__core + '/controller/controller'),
+	routing = require(__core + '/controller/routing'),
 	favicon = require('koa-favicon'),
-	modules = require(__dirname+'/../../app/modules/index.js'),
-    fs = require('fs'),
+	modules = require(__core + '/controller/modules.js'),
 	logger = require('koa-logger'),
-    rewrite = require(__dirname+'/../../app/config/routes/rewrite.js'),
-    baseController = require(__dirname+'/../../app/controller/base');
+    rewrite = require(__app + '/config/routes/rewrite.js'),
+    baseController = require(__app + '/controller/base');
 
 var app = module.exports = koa(),
     cache = __app + '/cache';

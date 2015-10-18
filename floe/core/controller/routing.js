@@ -2,21 +2,8 @@ var router = require('koa-router')(),
 	koaBody = require('koa-body')({multipart:true}),
 	fs = require('fs'),
 	page = require(__app + '/config/page.json')[0],
-    redirects = require(__app + '/config/routes/redirects.json')[0];
-
-var testModule = function(module) {
-
-	try {
-		
-		return require(module);
-
-	} catch(err) {
-
-		return false;
-
-	}
-
-}
+    redirects = require(__app + '/config/routes/redirects.json')[0],
+    FloeRequire = require(__core + '/objects/FloeRequire');
 
 exports.init = function(app) {        
 
@@ -62,7 +49,7 @@ exports.init = function(app) {
     
 	router.get('/', function *(next) {
 
-		var controller = testModule(__app + '/controller/index');
+		var controller = FloeRequire.test(__app + '/controller/index');
 		
 		if(controller.params) {
             
@@ -120,7 +107,7 @@ exports.init = function(app) {
 
 	router.get('/:page', function *(next) {
 
-		var controller = testModule(__app + '/controller/'+this.params['page']);
+		var controller = FloeRequire.test(__app + '/controller/'+this.params['page']);
 
 		if(controller.params) {
             
@@ -162,7 +149,7 @@ exports.init = function(app) {
     
     router.post('/rest/:page', koaBody, function *(next) {
 
-        var controller = testModule(__app + '/controller/rest/'+this.params['page']);
+        var controller = FloeRequire.test(__app + '/controller/rest/'+this.params['page']);
         
         try {
             
@@ -193,7 +180,7 @@ exports.init = function(app) {
 
     }).get('/rest/:page', function *(next) {
         
-        var controller = testModule(__app + '/controller/rest/'+this.params['page']);
+        var controller = FloeRequire.test(__app + '/controller/rest/'+this.params['page']);
         
         if(controller.init) {
             
