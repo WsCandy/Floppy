@@ -6,7 +6,7 @@ exports.init = function(app) {
 
 		this.state.images = function(path) {
 
-            var data = fs.readdirSync(__root + '/' + path);
+            var data = fs.readdirSync(path);
                 finalImages = [];
 
             for (var image in data) {
@@ -27,9 +27,22 @@ exports.init = function(app) {
     
     app.use(function *(next){
         
+        var thread = this;
+        
 		this.state.fileContents = function(path) {
             
-            return fs.readFileSync(__root + '/' + path, 'utf8');
+            try {
+                
+                return fs.readFileSync(path, 'utf8');
+                
+            } catch(err) {
+                
+                thread.status = 500;
+                thread.state.error = err;
+                
+                return;
+                
+            }
             
         };
         
@@ -39,10 +52,24 @@ exports.init = function(app) {
     
     app.use(function *(next){
 
+        var thread = this;
+        
 		this.state.lastModified = function(path) {
-
-            var data = fs.statSync(__root + '/' + path);
-            return data.mtime.getTime();
+                        
+            try {
+                
+                var data = fs.statSync(path);
+                return data.mtime.getTime();
+                
+                
+            } catch(err) {
+                
+                thread.status = 500;
+                thread.state.error = err;
+                
+                return;
+                
+            }
 
 		}
 		

@@ -23,6 +23,11 @@ exports.init = function(app) {
         this.state.cookies = this.cookies;
         this.state.env = app.env;
         this.state.error = null;
+        
+        this.__docs = __docs;
+        this.__app = __app;
+        this.__root = __root;
+        this.__core = __core;
     
         for(var redirect in redirects) {
     
