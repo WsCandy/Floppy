@@ -37,8 +37,7 @@ exports.init = function(app) {
                 
             } catch(err) {
                 
-                thread.status = 500;
-                thread.state.error = err;
+                thread.app.emit('error', err, thread);
                 
                 return;
                 
@@ -64,8 +63,7 @@ exports.init = function(app) {
                 
             } catch(err) {
                 
-                thread.status = 500;
-                thread.state.error = err;
+                thread.app.emit('error', err, thread);
                 
                 return;
                 
