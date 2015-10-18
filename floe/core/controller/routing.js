@@ -38,7 +38,9 @@ exports.init = function(app) {
 		yield next;
         
 		if(this.response.status >= 400) {
-                    
+                                            
+            this.response.status = (this.response.status === 200 ? 404 : this.response.status);
+            
 			yield this.render('error', {
 
 		  		view: page['error'] ? page['error'] : page['default'],
