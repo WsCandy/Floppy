@@ -23,9 +23,20 @@ exports.init = function(app) {
         this.state.cookies = this.cookies;
         this.state.env = app.env;
         this.state.error = null;
+    
+        for(var redirect in redirects) {
+    
+            if(this.request.url === redirect) {
+            
+                this.status = 301;
+                this.redirect('back', redirects[redirect]);
+
+            }
+
+        }
         
 		yield next;
-
+        
 		if(this.response.status >= 400) {
                     
 			yield this.render('error', {
@@ -40,13 +51,7 @@ exports.init = function(app) {
 		}		
 
 	});
-    
-    for(var redirect in redirects) {
-    
-        router.redirect(redirect, redirects[redirect]);
         
-    }
-    
 	router.get('/', function *(next) {
 
 		var controller = FloeRequire.test(__app + '/controller/index');

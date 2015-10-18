@@ -2,7 +2,7 @@ var FloeRequire = function(path) {
 
     var self = this;
 
-    this.test = function(path) {
+    self.test = function(path) {
 
         try {
 

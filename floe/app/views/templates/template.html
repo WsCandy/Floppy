@@ -12,17 +12,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         
-        <% /* Remove These */ %>        
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Italiana&amp;subset=latin" type="text/css">
-        <% /* End Remove */ %>
-       
-        <% if(cookies.get('css')) { %>
-            <link rel="stylesheet" href="/assets/css/main.<% if(env !== 'development') {%><%= lastModified('httpdocs/assets/css/main.css')%>.<% } %>css" type="text/css">    
-        <% } else { %> 
-        <style><% include ../../../../httpdocs/assets/css/critical.css %></style>
-        <% } %>
+        <link rel="stylesheet" href="/assets/css/main.<% if(env !== 'development') {%><%= lastModified('httpdocs/assets/css/main.css')%>.<% } %>css" type="text/css">
+        
 		<script>			
-            <% include ../../../../httpdocs/assets/js/vendor/modernizr.custom.js %><% if(!cookies.get('css')) { %>Modernizr.load('/assets/css/main.<% if(env !== 'development') {%><%= lastModified("httpdocs/assets/css/main.css")%>.<% } %>css');<% } %>Modernizr.load([{load: '//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'},{load: '/assets/js/main.min.<% if(env !== 'development') {%><%= lastModified("httpdocs/assets/js/main.min.js") %>.<% } %>js',complete: function(){window.init()}}]);
+            <% include ../../../../httpdocs/assets/js/vendor/modernizr.custom.js %>
+            Modernizr.load([{load: '//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'},{load: '/assets/js/main.min.<% if(env !== 'development') {%><%= lastModified("httpdocs/assets/js/main.min.js") %>.<% } %>js',complete: function(){window.init()}}]);
 		</script>
 	</head>
 	<body id="<%- page %>">
@@ -37,12 +31,9 @@
             
             <footer class="template__footer">
                <div class="centre-wrap">
-                   <p><svg class="footer__logo"><use xlink:href="#flogo"></use></svg> v0.01a - powered by <a class="koa" href="http://koajs.com/" target="_blank" rel="nofollow">koa</a><span>v1.0.0</span></p>
+                   <p><svg class="footer__logo"><use xlink:href="#flogo"></use></svg> v0.01a</p>
                </div>
             </footer>
        </div>       
 	</body>
-	<% if(!cookies.get('css')) {	
-        cookies.set('css', 'true');
-    } %>
 </html>

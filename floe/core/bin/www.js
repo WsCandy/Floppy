@@ -1,5 +1,11 @@
 var koa = require('koa'),
-    fs = require('fs');
+    fs = require('fs'),
+	favicon = require('koa-favicon'),
+    conditional = require('koa-conditional-get'),
+	staticCache = require('koa-static-cache'),
+	etag = require('koa-etag'),
+	logger = require('koa-logger'),
+    rewriter = require('koa-rewrite');
 
 // Set globals
 
@@ -10,15 +16,10 @@ __core = process.env.PWD + '/floe/core';
 
 // End set globals
 
-var conditional = require('koa-conditional-get'),
-	staticCache = require('koa-static-cache'),
-	etag = require('koa-etag'),
-	controller = require(__core + '/controller/controller'),
+var controller = require(__core + '/controller/controller'),
 	routing = require(__core + '/controller/routing'),
-	favicon = require('koa-favicon'),
 	modules = require(__core + '/controller/modules.js'),
-	logger = require('koa-logger'),
-    rewrite = require(__app + '/config/routes/rewrite.js'),
+    rewrites = require(__app + '/config/routes/rewrites.json')[0],
     baseController = require(__app + '/controller/base');
 
 var app = module.exports = koa(),
@@ -30,7 +31,12 @@ if(!fs.existsSync(cache)) {
     
 }
 
-rewrite.init(app);
+for(var rewrite in rewrites) {
+        
+    var regEx = new RegExp(rewrite);    
+    app.use(rewriter(regEx, rewrites[rewrite]))
+
+}
 
 app.use(logger());
 app.use(conditional());
