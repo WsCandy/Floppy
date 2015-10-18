@@ -12,7 +12,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         
-        <link rel="stylesheet" href="/assets/css/main.<% if(env === 'development') {%><%= lastModified(__docs + '/assets/css/main.css')%>.<% } %>css" type="text/css">
+        <link rel="stylesheet" href="/assets/css/main.<% if(env !== 'development') {%><%= lastModified(__docs + '/assets/css/main.css')%>.<% } %>css" type="text/css">
         
 		<script>			
             <%- fileContents(__docs + '/assets/js/vendor/modernizr.custom.js') %>
