@@ -15,22 +15,20 @@
         <link rel="stylesheet" href="/assets/css/main.<% if(env !== 'development') {%><%= lastModified(__docs + '/assets/css/main.css')%>.<% } %>css" type="text/css">
         
 		<script>			
-            <%- fileContents(__docs + '/assets/js/vendor/modernizr.custom.js') %>
-            Modernizr.load([{load: '//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'},{load: '/assets/js/main.min.<% if(env !== 'development') {%><%= lastModified(__docs + "/assets/js/main.min.js") %>.<% } %>js',complete: function(){window.init()}}]);
+            <%- File.getContents(__docs + '/assets/js/vendor/modernizr.custom.js') %>
+            Modernizr.load([{load: '//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'},{load: '/assets/js/main.min.<% if(env !== 'development') {%><%= File.getTime(__docs + "/assets/js/main.min.js") %>.<% } %>js',complete: function(){window.init()}}]);
 		</script>
 	</head>
 	<body id="<%- page %>">
        <div class="page-wrap">
             <header class="template__header">
                 <a href="/" title="floe">
-                   <%- fileContents(__docs + '/assets/svg/floe.svg') %>
+                   <%- File.getContents(__docs + '/assets/svg/floe.svg') %>
                 </a>
             </header>
-           
             <div class="centre-wrap">
-                <%- body %>                
-            </div>          
-            
+                <%- body %>
+            </div>
             <footer class="template__footer">
                <div class="centre-wrap">
                    <p><svg class="footer__logo"><use xlink:href="#flogo"></use></svg> v0.01a</p>

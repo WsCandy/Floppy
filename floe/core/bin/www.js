@@ -17,8 +17,21 @@ __core = process.env.PWD + '/floe/core';
 // End set globals
 
 var app = module.exports = koa(),
-    loader = require(__core + '/loader'),
     cache = __app + '/cache';
+
+__ = function(module) {
+
+    try {
+
+        return require(__core + '/objects/'+ module);
+
+    } catch(err) {
+
+        app.emit('error', err);
+
+    }
+
+};
 
 var controller = require(__core + '/controller'),
 	routing = require(__core + '/routes'),
