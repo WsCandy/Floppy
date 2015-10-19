@@ -9,7 +9,7 @@ exports.init = function(app) {
         layout: 'templates/template',
         cache: (app.env === 'development' ? false : true)
 
-	});    
+	});
 
 	app.use(function *(next) {
 
