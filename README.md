@@ -1,2 +1,3 @@
-# chng
-Management System in Node and Angular
+# Floe
+
+Node js web framework using Koa.js
