@@ -9,6 +9,7 @@ var koa = require('koa'),
 
 // Set globals
 
+
 __root = process.env.PWD;
 __docs = process.env.PWD + '/httpdocs';
 __app = process.env.PWD + '/floe/app';
@@ -16,14 +17,17 @@ __core = process.env.PWD + '/floe/core';
 
 // End set globals
 
+var app = module.exports = koa(),
+    loader = require(__core + '/loader'),
+    cache = __app + '/cache';
+
 var controller = require(__core + '/controller/controller'),
 	routing = require(__core + '/controller/routing'),
 	modules = require(__core + '/controller/modules.js'),
     rewrites = require(__app + '/config/routes/rewrites.json')[0],
     baseController = require(__app + '/controller/base');
 
-var app = module.exports = koa(),
-    cache = __app + '/cache';
+
 
 if(!fs.existsSync(cache)) {
     
@@ -61,6 +65,8 @@ routing.init(app);
 app.on('error', function(err, ctx){
 
 	console.log(err, ctx);
+    
+    console.log('laala');
     
     ctx.state.error = err;
     ctx.status = err.status || 500;
