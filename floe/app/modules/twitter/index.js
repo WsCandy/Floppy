@@ -1,14 +1,15 @@
 var OAuth = require('oauth'),
     Q = require('q'),
     fs = require('fs'),
-    config = require(__app + '/config/site.json')[0],    
+    Config = __('Config'),
+	site = Config.get('site'),    
 	currentTime,
     cache,
 	cacheExpire = 5,
     data = [];
 
 var cacheTwitter = function() {
-    
+        
     currentTime = new Date();    
     
     var oauth = new OAuth.OAuth(
@@ -25,7 +26,7 @@ var cacheTwitter = function() {
     
     oauth.get(
         
-        'https://api.twitter.com/1.1/statuses/user_timeline.json?count=10&screen_name='+config.twitter,
+        'https://api.twitter.com/1.1/statuses/user_timeline.json?count=10&screen_name='+site.twitter,
         '1219737277-9AnhbsG2MC5JnAfxX6agG2z4MHtuFQGP1BfDM4O',
         '8uqop3rdUhdCnNNUZLhaysfOGEf6SsIXBtIvCtf6ggw',           
         function (err, data, res){            
@@ -74,14 +75,14 @@ var cacheTwitter = function() {
 }
 
 exports.init = function(app) {
-    
+        
     app.use(twitter);
     
 }
 
 var twitter = function *(next) {
-        
-    if(config.twitter === null) {
+    
+    if(site.twitter === null) {
         
         this.state.twitter = null;
         
@@ -156,7 +157,7 @@ var parseData = function(data) {
     
 }
 
-if(config.twitter !== null) {
+if(site.twitter !== null) {
     
     cacheTwitter();
     setInterval(cacheTwitter, 1000 * 60 * cacheExpire);

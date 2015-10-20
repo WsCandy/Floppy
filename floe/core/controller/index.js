@@ -1,7 +1,9 @@
 var render = require('koa-ejs'),
-	config = require(__app + '/config/site.json')[0];
+    Config = __('Config'),
+	site = Config.get('site'),
+    app = require(__core + '/bin/www');
 
-exports.init = function(app) {
+exports.init = function() {
     
 	render(app, {
 
@@ -15,12 +17,12 @@ exports.init = function(app) {
 
 		if(app.env === 'development') {
 
-			delete require.cache[require.resolve(__app + '/config/site.json')];
-			config = require(__app + '/config/site.json')[0];
+            Config.delete('site');
+			site = Config.get('site');
 
 		}
         
-  		this.state.site = config;
+  		this.state.site = site;
 		yield next;
 
 	});

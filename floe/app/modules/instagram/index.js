@@ -2,7 +2,8 @@ var Q = require('q'),
 	https = require('https'),
 	self = this,
 	fs = require('fs'),
-    config = require(__app + '/config/site.json')[0],
+    Config = __('Config'),
+    site = Config.get('site'),
 	cache,
 	currentTime,
 	cacheExpire = 15;
@@ -14,7 +15,7 @@ var cacheInsta = function() {
 	var	options = {
 			
         hostname: 'api.instagram.com',
-        path: '/v1/users/self/media/recent?access_token='+config['instagram'],
+        path: '/v1/users/self/media/recent?access_token='+site['instagram'],
         method: 'GET'
 
     };
@@ -57,7 +58,7 @@ exports.init = function(app) {
 
 var instagram = function *(next) {
     
-    if(config.instagram === null) {
+    if(site.instagram === null) {
         
         this.state.instagram = null;
         
@@ -118,7 +119,7 @@ var getInstagram = function(process) {
 
 }
 
-if(config.instagram !== null) {
+if(site.instagram !== null) {
 
     cacheInsta();
     setInterval(cacheInsta, 1000 * 60 * cacheExpire);

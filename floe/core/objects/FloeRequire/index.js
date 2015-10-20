@@ -1,4 +1,6 @@
-var FloeRequire = function(path) {
+var app = require(__core + '/bin/www');
+
+var FloeRequire = function(app) {
 
     var self = this;
 
@@ -18,4 +20,4 @@ var FloeRequire = function(path) {
 
 }
 
-module.exports = new FloeRequire();
+module.exports = new FloeRequire(app);
