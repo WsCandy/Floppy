@@ -37,7 +37,7 @@ var controller = require(__core + '/controller'),
 	routing = require(__core + '/routes'),
 	modules = require(__core + '/modules'),
     rewrites = __('Config').get('routes/rewrites'),
-    baseController = require(__app + '/controller/base');
+    baseController = require(__core + '/controller/base');
 
 if(!fs.existsSync(cache)) {
     

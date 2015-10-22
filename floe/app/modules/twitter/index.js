@@ -31,15 +31,23 @@ var cacheTwitter = function() {
         '8uqop3rdUhdCnNNUZLhaysfOGEf6SsIXBtIvCtf6ggw',           
         function (err, data, res){            
 
-            var info = JSON.parse(data);
-            
-            if(!info.errors) {
+            if(!err) {
                 
-                parseData(info);
+                var info = JSON.parse(data);
+
+                if(!info.errors) {
+
+                    parseData(info);
+
+                } else {
+
+                    writeCache(info);
+
+                }
                 
             } else {
                 
-                writeCache(info);
+                console.log(err);
                 
             }
 
