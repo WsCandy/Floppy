@@ -3,11 +3,9 @@
 var fs = require('fs'),
     app = require(__core + '/bin/www');
 
-var File = function() {
-        
-    var self = this;
-    
-    self.getContents = function(path) {
+class File {
+                
+    static getContents(path) {
             
         try {
 
@@ -25,7 +23,7 @@ var File = function() {
 
     }
     
-    self.getTime = function(path) {
+    static getTime(path) {
                         
         try {
 
@@ -46,7 +44,7 @@ var File = function() {
 
     }
     
-    self.getFiles = function(path) {
+    static getFiles(path) {
         
         try {
             
@@ -79,6 +77,6 @@ var File = function() {
         
     }
     
-}
+}; 
 
-module.exports = new File();
+module.exports = File;

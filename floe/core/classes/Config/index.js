@@ -3,11 +3,9 @@
 var fs = require('fs'),
     app = require(__core + '/bin/www');
 
-var Config = function() {
-        
-    var self = this;
-    
-    self.get = function(config) {
+class Config {
+            
+    static get(config) {
             
         try {
 
@@ -26,7 +24,7 @@ var Config = function() {
 
     }
     
-    self.delete = function(config) {
+    static delete(config) {
         
         try {
             
@@ -47,4 +45,4 @@ var Config = function() {
     
 }
 
-module.exports = new Config();
+module.exports = Config;

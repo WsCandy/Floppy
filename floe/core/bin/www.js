@@ -23,7 +23,7 @@ __ = function(module) {
 
     try {
 
-        return require(__core + '/objects/'+ module);
+        return require(__core + '/classes/'+ module);
 
     } catch(err) {
 
