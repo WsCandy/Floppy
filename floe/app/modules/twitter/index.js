@@ -28,7 +28,7 @@ var cacheTwitter = () => {
     
     oauth.get(
         
-        'https://api.twitter.com/1.1/statuses/user_timeline.json?count=10&screen_name='+site.twitter,
+        `https://api.twitter.com/1.1/statuses/user_timeline.json?count=10&screen_name=${site.twitter}`,
         '1219737277-9AnhbsG2MC5JnAfxX6agG2z4MHtuFQGP1BfDM4O',
         '8uqop3rdUhdCnNNUZLhaysfOGEf6SsIXBtIvCtf6ggw',           
         (err, data, res) => {
@@ -84,7 +84,7 @@ var cacheTwitter = () => {
     
 }
 
-exports.init = function(app) {
+exports.init = (app) => {
         
     app.use(twitter);
     
@@ -106,7 +106,7 @@ var twitter = function *(next) {
     
 }
 
-var complete = function(data, process, time) {
+var complete = (data, process, time) => {
     
 	process.state.twitter = data;
     
@@ -118,23 +118,23 @@ var complete = function(data, process, time) {
 
 }
 
-var writeCache = function(data) {
+var writeCache = (data) => {
 
-	fs.writeFile(__app + '/cache/twitter.json', JSON.stringify(data), () => {
+	fs.writeFile(`${__app}/cache/twitter.json`, JSON.stringify(data), () => {
 
 		cache = new Date();
 		cache.setMinutes(cache.getMinutes() + cacheExpire);
-		console.log('Twitter cache set, expires ' + cache)
+		console.log(`Twitter cache set, expires ${cache}`)
 
 	});
 
 }
 
-var getTwitter = function(process) {
+var getTwitter = (process) => {
 	
 	var deferred = Q.defer();
 
-	fs.readFile(__app + '/cache/twitter.json', {encoding: 'utf8'}, (err, data) => {
+	fs.readFile(`${__app}/cache/twitter.json`, {encoding: 'utf8'}, (err, data) => {
         
         try {
             
@@ -153,7 +153,7 @@ var getTwitter = function(process) {
 
 }
 
-var parseData = function(data) {
+var parseData = (data) => {
     
     for(let tweet in data) {
         

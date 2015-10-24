@@ -1,13 +1,13 @@
 var render = require('koa-ejs'),
     Config = __('Config'),
 	site = Config.get('site'),
-    app = require(__core + '/bin/www');
+    app = require(`${__core}/bin/www`);
 
 exports.init = function() {
     
 	render(app, {
 
-        root: __app + '/views',
+        root: `${__app}/views`,
         layout: 'templates/template',
         cache: (app.env === 'development' ? false : true)
 

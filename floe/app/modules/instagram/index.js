@@ -10,14 +10,14 @@ var Q = require('q'),
 	currentTime,
 	cacheExpire = 15;
 
-var cacheInsta = function() {
+var cacheInsta = () => {
 
 	currentTime = new Date();
 	
 	var	options = {
 			
         hostname: 'api.instagram.com',
-        path: '/v1/users/self/media/recent?access_token='+site['instagram'],
+        path: `/v1/users/self/media/recent?access_token=${site['instagram']}`,
         method: 'GET'
 
     };
@@ -52,7 +52,7 @@ var cacheInsta = function() {
 
 }
 
-exports.init = function(app) {
+exports.init = (app) => {
     
 	app.use(instagram);
 
@@ -74,7 +74,7 @@ var instagram = function *(next) {
 
 }
 
-var complete = function(data, process, time) {
+var complete = (data, process, time) => {
 
 	process.state.instagram = data;
 
@@ -86,23 +86,23 @@ var complete = function(data, process, time) {
 
 }
 
-var writeCache = function(data) {
+var writeCache = (data) => {
 
-	fs.writeFile(__app + '/cache/instagram.json', JSON.stringify(data), () => {
+	fs.writeFile(`${__app}/cache/instagram.json`, JSON.stringify(data), () => {
 
 		cache = new Date();
 		cache.setMinutes(cache.getMinutes() + cacheExpire);
-		console.log('Instagram cache set, expires ' + cache)
+		console.log(`Instagram cache set, expires ${cache}`);
 
 	});
 
 }
 
-var getInstagram = function(process) {
+var getInstagram = (process) => {
 	
 	let deferred = Q.defer();
 
-	fs.readFile(__app + '/cache/instagram.json', {encoding: 'utf8'}, (err, data) => {
+	fs.readFile(`${__app}/cache/instagram.json`, {encoding: 'utf8'}, (err, data) => {
 
         try {
             

@@ -1,7 +1,7 @@
 'use strict';
 
 var fs = require('fs'),
-    app = require(__core + '/bin/www');
+    app = require(`${__core}/bin/www`);
 
 class File {
                 
@@ -53,7 +53,7 @@ class File {
 
             for (let file in data) {
 
-                let stats = fs.statSync(path+ '/' + data[file]);
+                let stats = fs.statSync(`${path}/${data[file]}`);
 
                 if(stats.isFile()) {
 

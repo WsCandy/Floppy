@@ -1,7 +1,7 @@
 'use strict';
 
 var fs = require('fs'),
-    app = require(__core + '/bin/www');
+    app = require(`${__core}/bin/www`);
 
 class Config {
             
@@ -9,13 +9,13 @@ class Config {
             
         try {
 
-            return require(__app + '/config/' + config + '.json')[0];
+            return require(`${__app}/config/${config}.json`)[0];
 
         } catch(err) {
 
             if(app.env === 'development') {
                 
-                console.log(err);                
+                console.log(err);
                 return err;
                 
             }
@@ -28,7 +28,7 @@ class Config {
         
         try {
             
-            delete require.cache[require.resolve(__app + '/config/' + config + '.json')];
+            delete require.cache[require.resolve(`${__app}/config/${config}.json`)];
             
         } catch(err) {
             
