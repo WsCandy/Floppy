@@ -72,7 +72,7 @@ baseController.init(app);
 modules.init(app);
 routing.init(app);
 
-app.on('error', function(err, ctx){
+app.on('error', (err, ctx) => {
 
 	console.log(err, ctx);
     

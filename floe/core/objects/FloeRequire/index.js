@@ -1,3 +1,5 @@
+'use strict';
+
 var app = require(__core + '/bin/www');
 
 var FloeRequire = function(app) {

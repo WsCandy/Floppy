@@ -1,3 +1,5 @@
+'use strict';
+
 var Q = require('q'),
 	https = require('https'),
 	self = this,
@@ -20,25 +22,25 @@ var cacheInsta = function() {
 
     };
 
-	var request = https.request(options, function(response) {
+	var request = https.request(options, (response) => {
 				
-		var body = '';
+		let body = '';
 
-		response.on('data', function(data) {
+		response.on('data', (data) => {
 
 			body += data;
 
 		});
 
-		response.on('end', function() {
+		response.on('end', () => {
             
-            var info = JSON.parse(body);            
+            let info = JSON.parse(body);            
             
 			writeCache(info);
 
 		});
 
-		response.on('error', function(err) {
+		response.on('error', (err) => {
 
 			console.log(err);
 
@@ -86,7 +88,7 @@ var complete = function(data, process, time) {
 
 var writeCache = function(data) {
 
-	fs.writeFile(__app + '/cache/instagram.json', JSON.stringify(data), function() {
+	fs.writeFile(__app + '/cache/instagram.json', JSON.stringify(data), () => {
 
 		cache = new Date();
 		cache.setMinutes(cache.getMinutes() + cacheExpire);
@@ -98,13 +100,13 @@ var writeCache = function(data) {
 
 var getInstagram = function(process) {
 	
-	var deferred = Q.defer();
+	let deferred = Q.defer();
 
-	fs.readFile(__app + '/cache/instagram.json', {encoding: 'utf8'}, function(err, data) {
+	fs.readFile(__app + '/cache/instagram.json', {encoding: 'utf8'}, (err, data) => {
 
         try {
             
-            var info = JSON.parse(data);
+            let info = JSON.parse(data);
             deferred.resolve(complete(info, process, currentTime));
             
         } catch(err) {

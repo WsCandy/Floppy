@@ -1,3 +1,5 @@
+'use strict';
+
 var router = require('koa-router')(),
 	koaBody = require('koa-body')({multipart:true}),
 	fs = require('fs'),
@@ -30,7 +32,7 @@ exports.init = function(app) {
         this.__root = __root;
         this.__core = __core;
         
-        for(var redirect in redirects) {
+        for(let redirect in redirects) {
     
             if(this.request.url === redirect) {
             

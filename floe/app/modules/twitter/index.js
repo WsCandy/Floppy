@@ -1,3 +1,5 @@
+'use strict';
+
 var OAuth = require('oauth'),
     Q = require('q'),
     fs = require('fs'),
@@ -8,8 +10,8 @@ var OAuth = require('oauth'),
 	cacheExpire = 5,
     data = [];
 
-var cacheTwitter = function() {
-        
+var cacheTwitter = () => {
+            
     currentTime = new Date();    
     
     var oauth = new OAuth.OAuth(
@@ -29,11 +31,11 @@ var cacheTwitter = function() {
         'https://api.twitter.com/1.1/statuses/user_timeline.json?count=10&screen_name='+site.twitter,
         '1219737277-9AnhbsG2MC5JnAfxX6agG2z4MHtuFQGP1BfDM4O',
         '8uqop3rdUhdCnNNUZLhaysfOGEf6SsIXBtIvCtf6ggw',           
-        function (err, data, res){            
+        (err, data, res) => {
 
             if(!err) {
                 
-                var info = JSON.parse(data);
+                let info = JSON.parse(data);
 
                 if(!info.errors) {
 
@@ -118,7 +120,7 @@ var complete = function(data, process, time) {
 
 var writeCache = function(data) {
 
-	fs.writeFile(__app + '/cache/twitter.json', JSON.stringify(data), function() {
+	fs.writeFile(__app + '/cache/twitter.json', JSON.stringify(data), () => {
 
 		cache = new Date();
 		cache.setMinutes(cache.getMinutes() + cacheExpire);
@@ -132,11 +134,11 @@ var getTwitter = function(process) {
 	
 	var deferred = Q.defer();
 
-	fs.readFile(__app + '/cache/twitter.json', {encoding: 'utf8'}, function(err, data) {
+	fs.readFile(__app + '/cache/twitter.json', {encoding: 'utf8'}, (err, data) => {
         
         try {
             
-            var info = JSON.parse(data);
+            let info = JSON.parse(data);
             deferred.resolve(complete(info, process, currentTime));
             
         } catch(err) {
@@ -153,7 +155,7 @@ var getTwitter = function(process) {
 
 var parseData = function(data) {
     
-    for(var tweet in data) {
+    for(let tweet in data) {
         
         data[tweet].text = data[tweet].text.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i, '<a href="$1" target="_blank" rel="nofollow">$1</a>');
         data[tweet].text = data[tweet].text.replace(/(^|\s)#(\w+)/g, '$1<a href="https://twitter.com/hashtag/$2" target="_blank" rel="nofollow">#$2</a>');

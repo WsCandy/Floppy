@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require('fs'),
     app = require(__core + '/bin/www');
 
@@ -27,7 +29,8 @@ var File = function() {
                         
         try {
 
-            var data = fs.statSync(path);
+            let data = fs.statSync(path);
+            
             return data.mtime.getTime();
 
 
@@ -50,9 +53,9 @@ var File = function() {
             var data = fs.readdirSync(path);
                 finalFiles = [];
 
-            for (var file in data) {
+            for (let file in data) {
 
-                var stats = fs.statSync(path+ '/' + data[file]);
+                let stats = fs.statSync(path+ '/' + data[file]);
 
                 if(stats.isFile()) {
 
