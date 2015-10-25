@@ -11,18 +11,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         
-        <link rel="stylesheet" href="/assets/css/main.<% if(env !== 'development') {%><%= File.getTime(__docs + '/assets/css/main.css')%>.<% } %>css" type="text/css">
+        <link rel="stylesheet" href="/assets/css/main.<% if(env !== 'development') {%><%= File.getTime(`${__docs}/assets/css/main.css`)%>.<% } %>css" type="text/css">
         
 		<script>			
-            <%- File.getContents(__docs + '/assets/js/vendor/modernizr.custom.js') %>
-            Modernizr.load([{load: '//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'},{load: '/assets/js/main.min.<% if(env !== 'development') {%><%= File.getTime(__docs + "/assets/js/main.min.js") %>.<% } %>js',complete: function(){window.init()}}]);
+            <%- File.getContents(`${__docs}/assets/js/vendor/modernizr.custom.js`) %>
+            Modernizr.load([{load: '//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'},{load: '/assets/js/main.min.<% if(env !== 'development') {%><%= File.getTime(`${__docs}/assets/js/main.min.js`) %>.<% } %>js',complete: function(){window.init()}}]);
 		</script>
 	</head>
 	<body id="<%- page %>">
        <div class="page-wrap">
             <header class="template__header">
                 <a href="/" title="floe">
-                   <%- File.getContents(__docs + '/assets/svg/floe.svg') %>
+                   <%- File.getContents(`${__docs}/assets/svg/floe.svg`) %>
                 </a>
             </header>
             <div class="centre-wrap">

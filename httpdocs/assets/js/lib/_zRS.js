@@ -99,15 +99,20 @@
 				textFade : false,
 				fluidHeight : false,
 				direction : 'forward',
+                allowScrolling: false,
 				speed : 1500,
 				delay: 6000,
+                decimal: 1e3,
 				slideBy: 1,
 				slideSpacing: 0,
 				pager: null,
 				visibleSlides: 1,
+                alignment: null,
+                setVisibleSlides: null,
+                draggable: true,
+                delayedLoad: false,
 				trans_callback: null,
-				pre_trans_callback: null,
-                allowScrolling: false
+				pre_trans_callback: null
 
 			};
 		
@@ -140,27 +145,26 @@
 					}
 
 				}
-
-				if(objs['slides'].count() > 1) {
-
-					objs['controls'].play();
-
-				}
+				
+				objs.controls.play();
 
 				$(window).on('blur', objs['controls'].pause);
-				$(window).on('focus', objs['controls'].play);
-				$(window).on('load', function() {
+				$(window).on('focus', function() {
+                    
+                    if(options.transition === 'slide') {
 
-					if(options['transition'] !== 'fade' && ins.animationFrameSupport === true) {
+                        if(objs['slides'].currentSlide > (objs['slides'].count() -1)) {
 
-						elem['inner'].css({
+                            objs['slides'].currentSlide = 0;
 
-							'height' : 'auto'
-
-						});
-						
-					}
-
+                        }
+                        
+                        ins.publicF.jumpTo(objs['slides'].currentSlide);
+                        
+                    }
+                    
+                    objs['controls'].play();                        
+                    
 				});
 
 			},
@@ -263,7 +267,13 @@
 
 				objs['transition'].goTo(target);
 
-			}
+			},
+            
+            jumpTo: function(target) {
+                
+                objs.transition[options.transition].jumpTo(target);
+                
+            }
 
 		}
 
@@ -285,7 +295,7 @@
 
 			method.setUp = function() {
 
-				elem['inner'] = self.find('.inner-slider');
+				elem['inner'] = self.find('.inner-slider:first');
 				elem['inner'].css({
 
 					'position' : 'relative',
@@ -318,8 +328,16 @@
 			}
 
 			method.reIndex = function() {
-
-				elem['slides'] = self.find('.zRS--slide');				
+                
+                if(elem['inner'].children().hasClass('carousel')) {
+                    
+                    elem['slides'] = elem['inner'].children().children();
+                    
+                } else {
+                    
+				    elem['slides'] = elem['inner'].children();
+                    
+                }                
 
 			}
 
@@ -334,28 +352,59 @@
 			transition.count = 0;
 			transition.opacity = 0;
 			transition.textOpacity = 1;
+            transition.defaultVisible = options.visibleSlides;
 
 			transition.setUp = function() {
 
+                objs['transition'].checkVisible();
 				objs['transition'][options.transition].setUp();
-				objs['transition'].procedural('initial');
+				objs['transition'].procedural(null, null, null, true);
 
 				objs['transition'].after();
 
 			}
+            
+            transition.checkVisible = function() {
+                            
+                if(options.setVisibleSlides && typeof options.setVisibleSlides === 'object') {
 
-			transition.procedural = function(target, difference, direction) {
+                    for(var size in options.setVisibleSlides) {
 
+                        if(document.documentElement.clientWidth <= size) {
+
+                            options.visibleSlides = options.setVisibleSlides[size];
+                            return;
+
+                        } else {
+
+                            options.visibleSlides = transition.defaultVisible;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+			transition.procedural = function(target, difference, direction, initial) {
+                
 				difference = !difference ? options.slideBy : difference;
 				target = !target ? objs['transition'].target(difference) : target;
 
-				if(target == 'initial') {
+				if(initial) {
 
 					for(var i = 0; i < options.visibleSlides; i++) {
 
 						transition.swapImg(elem['slides'].eq(i), difference, direction, 'initial');
 
 					}
+                    
+                    if(options.visibleSlides % 1 !== 0 && options.alignment === 'center') {
+                        
+                        transition.swapImg(elem['slides'].eq(objs['slides'].count() -1), difference, direction, 'initial');
+                        
+                    }
 
 					return;
 
@@ -365,24 +414,39 @@
 
 				for(var i = 0; (difference < 0 ? i > difference : i < difference); (difference < 0 ? i-- : i++)) {
 
-					if(ins.animationFrameSupport === true) {
+					if(ins.animationFrameSupport === true || options.transition === 'slide') {
 
-						if(direction !== 'back') {
+                        var current = objs['slides'].currentSlide;
+                        
+						if(direction !== 'back') {                            
+                            
+                            if(options.visibleSlides % 1 !== 0 && options.alignment === 'center') {
+                                
+                                current +=1;
 
-							var slide = objs['slides'].currentSlide + options['visibleSlides'] - (i + 1);
+                            }
+
+							var slide =  current + Math.ceil(options['visibleSlides']) - (i + 1);
 								slide = (slide >= objs['slides'].count()) ? slide - objs['slides'].count() : slide;
 
 						} else {
 
-							var slide = objs['slides'].currentSlide + i;
+                            if(options.visibleSlides % 1 !== 0 && options.alignment === 'center') {
+                                
+                                current -=1;
 
+                            }
+
+                            
+				            var slide = current - i;
+                            
 						}
 
 						transition.swapImg(elem['slides'].eq(slide), direction, difference);
 
 					} else {						
 
-						transition.swapImg(elem['slides'].eq((difference < 0 ? Math.abs(i) : (i + difference) - (options.visibleSlides === difference ? 0 : difference - options.visibleSlides))), direction, difference);
+						transition.swapImg(elem['slides'].eq((difference < 0 ? Math.abs(i) : (i + difference) - (Math.ceil(options['visibleSlides']) === difference ? 0 : difference - Math.ceil(options['visibleSlides'])))), direction, difference);
 
 					}
 
@@ -392,13 +456,13 @@
 
 			transition.swapImg = function(slide, direction, difference, initial) {
 
-				var images = slide.is('img') ? slide : slide.find('img');
+                var images = slide.is('img') ? slide : slide.find('img');
 
-				if(images.length === 0 && !initial) {
+				if(images.length === 0) {
 
 					transition.count--;	
 
-					if(transition.count === 0) {
+					if(transition.count === 0 && !initial) {
 
 						objs['transition'][options.transition][direction](difference);
 							
@@ -416,7 +480,7 @@
 
 						transition.count--;						
 
-						if(transition.count === 0) {
+						if(transition.count === 0 && !initial) {
 
 							objs['transition'][options.transition][direction](difference);
 							
@@ -427,15 +491,16 @@
 					};
 
 					image.unbind('load').load(function(){
-
+                        
 						transition.count--;
-						image.removeAttr('zrs-src');
+                        $(this).removeAttr('zrs-src');
 
 						if(transition.count == 0 && !initial) {
 
 							objs['transition'][options.transition][direction](difference);
 					           
 						}					
+                        
 
 					}).attr('src', image.attr('zrs-src'));
 
@@ -447,6 +512,8 @@
 
 				if(self.find('*').is(':animated')) return;
 
+                objs['slides'].oldSlide = objs['slides'].currentSlide;
+                
 				transition = !transition ? options.transition : transition;
 				direction = !direction ? options.direction : direction;
 
@@ -458,19 +525,18 @@
 
 				}
 
-				objs['transition'].update(difference);
-				objs['transition'].procedural(null, difference, direction)
-
 				if(typeof options['pre_trans_callback'] === 'function') {
 
 					options['pre_trans_callback']({
 
-						current: elem['slides'].eq(direction == 'back' ? Math.abs(difference) : (ins.animationFrameSupport === true ? objs['slides'].count() -1 : 0)),
-						next: elem['slides'].eq(difference)
+                        current: elem['slides'].eq(objs['slides'].currentSlide)
 
-					});				
+					});
 					
 				}
+                
+				objs['transition'].update(difference);                
+				objs['transition'].procedural(null, difference, direction)
 
 			}
 
@@ -478,8 +544,7 @@
 
 				if(typeof options['trans_callback'] === 'function')	options['trans_callback']({
 
-					current: elem['slides'].eq(0),
-					currentNo: objs['slides'].currentSlide
+					current: elem['slides'].eq(objs['slides'].currentSlide)
 
 				});
 
@@ -517,8 +582,6 @@
 			transition.goTo = function(target) {
 
 				var difference = target - objs['slides'].currentSlide;
-                
-                objs['controls'].pause();
 
 				if(target < objs['slides'].currentSlide) {
 
@@ -542,8 +605,8 @@
 
 					elem['slides'].css({
 
-                        'top' : '0',
-                        'left' : '0',
+						'top' : '0px',
+						'left' : '0px',
 						'float' : 'left',
 						'width' : '100%'
 
@@ -579,7 +642,8 @@
 								elem['slides'].eq(i).css({
 
 									'position' : 'relative',
-									'z-index' : '1'
+									'z-index' : '1',
+                                    'opacity' : '1'
 
 								});								
 
@@ -603,7 +667,8 @@
 								elem['slides'].eq(i).css({
 
 									'position' : 'absolute',
-									'z-index' : '0'
+									'z-index' : '0',
+                                    'opacity' : '1'
 
 								}).hide();
 
@@ -624,7 +689,7 @@
 							if(options['fluidHeight'] === true) {
 
 								var newHeight = elem['slides'].eq(objs['slides'].currentSlide).outerHeight(true);
-
+                                
 								if(elem['inner'].height() < newHeight) {
 
 									elem['inner'].css({
@@ -636,19 +701,16 @@
 								}								
 
 							}
-
-							elem['slides'].eq(objs['slides'].currentSlide).css({
-
-								'z-index' : '2',
-								'position' : (options['fluidHeight'] !== true ? 'relative' : 'absolute')
-
-							});
-
+                            
+                            elem['slides'].eq(objs['slides'].currentSlide).css({
+                                
+                                'z-index' : '1'
+                                
+                            });
 
 							elem['slides'].not(elem['slides'].eq(objs['slides'].currentSlide)).css({
 
-								'z-index' : '0',
-								'position' : 'absolute'
+                                'z-index' : '0'
 
 							});
 
@@ -657,10 +719,10 @@
 						if(options['textFade'] === true) {
 
 							transition.textOpacity-=((1 / (options['speed'] / 10)) * 1.5);
+                            
+							elem['slides'].eq(objs['slides'].oldSlide).css({
 
-							elem['slides'].eq(objs['slides'].currentSlide - difference).css({
-
-								'opacity': transition.textOpacity
+								'opacity': Math.max(transition.textOpacity, 0)
 
 							});
 								
@@ -670,9 +732,9 @@
 
 						elem['slides'].eq(objs['slides'].currentSlide).css({
 
-							'opacity' : transition.opacity
+							'opacity' : Math.min(transition.opacity, 1)
 
-						});
+						});                        
 
 						if(Math.min(transition.opacity, 1) === 1) {
 
@@ -690,10 +752,17 @@
 								});
 								
 							}
+                            
+                            elem['slides'].eq(objs['slides'].currentSlide).css({
+                                
+                                'position' : 'relative'
+                                
+                            });
 
 							elem['slides'].not(elem['slides'].eq(objs['slides'].currentSlide)).css({
 
-								'opacity': transition.opacity
+								'opacity': transition.opacity,
+                                'position' : 'absolute'
 
 							});
 
@@ -812,7 +881,7 @@
 
 				method.pause();
 				
-				if(options['delay'] === 0) return;
+				if(options['delay'] === 0 || objs['slides'].count() <= 1) return;
 				ins.timer = setTimeout(objs['transition'].before, options.delay, options.transition);
 
 			}
