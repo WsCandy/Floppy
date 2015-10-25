@@ -4,7 +4,8 @@ var OAuth = require('oauth'),
     Q = require('q'),
     fs = require('fs'),
     Config = __('Config'),
-	site = Config.get('site'),    
+	site = Config.get('site'),
+    moduleConfig = require('./config.json')[0],
 	currentTime,
     cache,
 	cacheExpire = 5,
@@ -18,8 +19,8 @@ var cacheTwitter = () => {
     
         'https://api.twitter.com/oauth/request_token',
         'https://api.twitter.com/oauth/access_token',
-        'L4E5NrgMI4m8zNNdcjRA',
-        'IpxOX4H35yuotXWodqgSgi9jMi8U0gZvTdktv4',
+        moduleConfig.appConsumerKey,
+        moduleConfig.appSecret,
         '1.0A',
         null,
         'HMAC-SHA1'
@@ -28,9 +29,9 @@ var cacheTwitter = () => {
     
     oauth.get(
         
-        `https://api.twitter.com/1.1/statuses/user_timeline.json?count=10&screen_name=${site.twitter}`,
-        '1219737277-9AnhbsG2MC5JnAfxX6agG2z4MHtuFQGP1BfDM4O',
-        '8uqop3rdUhdCnNNUZLhaysfOGEf6SsIXBtIvCtf6ggw',           
+        `https://api.twitter.com/1.1/statuses/user_timeline.json?count=${moduleConfig.count}&screen_name=${site.twitter}`,
+        moduleConfig.userToken,
+        moduleConfig.userSecret,           
         (err, data, res) => {
 
             if(!err) {
