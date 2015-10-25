@@ -37,7 +37,9 @@ var controller = require(`${__core}/controller`),
 	routing = require(`${__core}/routes`),
 	modules = require(`${__core}/modules`),
     rewrites = __('Config').get('routes/rewrites'),
-    baseController = require(`${__core}/controller/base`);
+    baseController = require(`${__core}/controller/base`),
+    Config = __('Config'),
+    serverConfig = Config.get('server');
 
 if(!fs.existsSync(cache)) {
     
@@ -81,4 +83,4 @@ app.on('error', (err, ctx) => {
 
 });
 
-app.listen(4201);
+app.listen(serverConfig.port);
