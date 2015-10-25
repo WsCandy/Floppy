@@ -6,6 +6,7 @@ var Q = require('q'),
 	fs = require('fs'),
     Config = __('Config'),
     site = Config.get('site'),
+    moduleConfig = require('./config.json')[0],
 	cache,
 	currentTime,
 	cacheExpire = 15;
@@ -17,7 +18,7 @@ var cacheInsta = () => {
 	var	options = {
 			
         hostname: 'api.instagram.com',
-        path: `/v1/${site['instagram'][0]}/${site['instagram'][1]}/media/recent?access_token=414143281.467ede5.b2f838f87a0b418e9d1b7fa21a6d7135`,
+        path: `/v1/${site['instagram'][0]}/${site['instagram'][1]}/media/recent?access_token=${moduleConfig.accessToken}&count=${moduleConfig.count}`,
         method: 'GET'
 
     };

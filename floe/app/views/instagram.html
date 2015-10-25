@@ -4,11 +4,11 @@
 
     <% if(instagram.data) { %>
 
-        <% for(var i = 0; i <= 20; i++) { %>
+        <% for(var data in instagram.data) { %>
 
-            <% if(instagram.data[i]) { %>
+            <% if(instagram.data[data]) { %>
 
-                <img src="<%= instagram.data[i].images.standard_resolution.url %>" alt="<%= instagram.data[i].caption.text %>" height="<%= instagram.data[i].images.standard_resolution.height%>" width="<%= instagram.data[i].images.standard_resolution.width%>">
+                <img class="instagram" src="<%= instagram.data[data].images.standard_resolution.url %>" alt="<%= instagram.data[data].caption.text %>" height="<%= instagram.data[data].images.standard_resolution.height%>" width="<%= instagram.data[data].images.standard_resolution.width%>">
 
             <% } %>
 
