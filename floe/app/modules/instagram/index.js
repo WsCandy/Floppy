@@ -17,7 +17,7 @@ var cacheInsta = () => {
 	var	options = {
 			
         hostname: 'api.instagram.com',
-        path: `/v1/users/self/media/recent?access_token=${site['instagram']}`,
+        path: `/v1/${site['instagram'][0]}/${site['instagram'][1]}/media/recent?access_token=414143281.467ede5.b2f838f87a0b418e9d1b7fa21a6d7135`,
         method: 'GET'
 
     };
