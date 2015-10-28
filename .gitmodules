@@ -1,0 +1,3 @@
+[submodule "floe/core"]
+	path = floe/core
+	url = https://github.com/WsCandy/floe.git
