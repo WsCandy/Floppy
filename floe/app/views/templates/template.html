@@ -15,7 +15,7 @@
         
 		<script>			
             <%- File.getContents(`${__docs}/assets/js/vendor/modernizr.custom.js`) %>
-            Modernizr.load([{load: '//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'},{load: '/assets/js/main.min.<% if(env !== 'development') {%><%= File.getTime(`${__docs}/assets/js/main.min.js`) %>.<% } %>js',complete: function(){window.init()}}]);
+            Modernizr.load([{load: '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'},{load: '/assets/js/main.min.<% if(env !== 'development') {%><%= File.getTime(`${__docs}/assets/js/main.min.js`) %>.<% } %>js',complete: function(){window.init()}}]);
 		</script>
 	</head>
 	<body id="<%- page %>">
