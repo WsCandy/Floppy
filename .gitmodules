@@ -3,4 +3,4 @@
 	url = git@github.com:WsCandy/floe.git
 [submodule "floe-gulp"]
 	path = floe-gulp
-	url = https://github.com/WsCandy/floe-gulp.git
+	url = git@github.com:WsCandy/floe-gulp.git
