@@ -1,26 +1,22 @@
-'use strict';
-
 var OAuth = require('oauth'),
     Q = require('q'),
     fs = require('fs'),
-    Config = __('Config'),
-	site = Config.get('site'),
-    moduleConfig = require('./config.json')[0],
+    config = require(__dirname+'/../../config/site.json')[0],    
 	currentTime,
     cache,
-	cacheExpire = 5,
+	cacheExpire = 2,
     data = [];
 
-var cacheTwitter = () => {
-            
+var cacheTwitter = function() {
+    
     currentTime = new Date();    
     
     var oauth = new OAuth.OAuth(
     
         'https://api.twitter.com/oauth/request_token',
         'https://api.twitter.com/oauth/access_token',
-        moduleConfig.appConsumerKey,
-        moduleConfig.appSecret,
+        'L4E5NrgMI4m8zNNdcjRA',
+        'IpxOX4H35yuotXWodqgSgi9jMi8U0gZvTdktv4',
         '1.0A',
         null,
         'HMAC-SHA1'
@@ -29,28 +25,21 @@ var cacheTwitter = () => {
     
     oauth.get(
         
-        `https://api.twitter.com/1.1/statuses/user_timeline.json?count=${moduleConfig.count}&screen_name=${site.twitter}`,
-        moduleConfig.userToken,
-        moduleConfig.userSecret,           
-        (err, data, res) => {
+//        'https://api.twitter.com/1.1/statuses/user_timeline.json?count=10&screen_name='+config.twitter,
+        'https://api.twitter.com/1.1/search/tweets.json?q=%23pokemon',
+        '1219737277-9AnhbsG2MC5JnAfxX6agG2z4MHtuFQGP1BfDM4O',
+        '8uqop3rdUhdCnNNUZLhaysfOGEf6SsIXBtIvCtf6ggw',           
+        function (err, data, res){            
 
-            if(!err) {
+            var info = JSON.parse(data);
+            
+            if(!info.errors) {
                 
-                let info = JSON.parse(data);
-
-                if(!info.errors) {
-
-                    parseData(info);
-
-                } else {
-
-                    writeCache(info);
-
-                }
+                parseData(info);
                 
             } else {
                 
-                console.log(err);
+                writeCache(info);
                 
             }
 
@@ -85,15 +74,15 @@ var cacheTwitter = () => {
     
 }
 
-exports.init = (app) => {
-        
+exports.init = function() {
+    
     app.use(twitter);
     
 }
 
 var twitter = function *(next) {
-    
-    if(site.twitter === null) {
+        
+    if(config.twitter === null) {
         
         this.state.twitter = null;
         
@@ -107,7 +96,7 @@ var twitter = function *(next) {
     
 }
 
-var complete = (data, process, time) => {
+var complete = function(data, process, time) {
     
 	process.state.twitter = data;
     
@@ -119,27 +108,27 @@ var complete = (data, process, time) => {
 
 }
 
-var writeCache = (data) => {
+var writeCache = function(data) {
 
-	fs.writeFile(`${__app}/cache/twitter.json`, JSON.stringify(data), () => {
+	fs.writeFile(__dirname+'/../../cache/twitter.json', JSON.stringify(data), function() {
 
 		cache = new Date();
 		cache.setMinutes(cache.getMinutes() + cacheExpire);
-		console.log(`Twitter cache set, expires ${cache}`)
+		console.log('Twitter cache set, expires ' + cache)
 
 	});
 
 }
 
-var getTwitter = (process) => {
+var getTwitter = function(process) {
 	
 	var deferred = Q.defer();
 
-	fs.readFile(`${__app}/cache/twitter.json`, {encoding: 'utf8'}, (err, data) => {
+	fs.readFile(__dirname+'/../../cache/twitter.json', {encoding: 'utf8'}, function(err, data) {
         
         try {
             
-            let info = JSON.parse(data);
+            var info = JSON.parse(data);
             deferred.resolve(complete(info, process, currentTime));
             
         } catch(err) {
@@ -154,13 +143,15 @@ var getTwitter = (process) => {
 
 }
 
-var parseData = (data) => {
+var parseData = function(data) {
     
-    for(let tweet in data) {
+    data = data.statuses;    
+    
+    for(var tweet in data) {
         
         data[tweet].text = data[tweet].text.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i, '<a href="$1" target="_blank" rel="nofollow">$1</a>');
-        data[tweet].text = data[tweet].text.replace(/(^|\s)#(\w+)/g, '$1<a href="https://twitter.com/hashtag/$2" target="_blank" rel="nofollow">#$2</a>');
-        data[tweet].text = data[tweet].text.replace(/(^|\s)@(\w+)/g, '$1<a href="http://www.twitter.com/$2" target="_blank" rel="nofollow">@$2</a>');
+        data[tweet].text = data[tweet].text.replace(/(^|\s)#([A-zÀ-ÿ]+)/g, '$1<a href="https://twitter.com/hashtag/$2" target="_blank" rel="nofollow">#$2</a>');
+        data[tweet].text = data[tweet].text.replace(/(^|\s)@([A-zÀ-ÿ]+)/g, '$1<a href="http://www.twitter.com/$2" target="_blank" rel="nofollow">@$2</a>');
         
     }   
     
@@ -168,7 +159,7 @@ var parseData = (data) => {
     
 }
 
-if(site.twitter !== null) {
+if(config.twitter !== null) {
     
     cacheTwitter();
     setInterval(cacheTwitter, 1000 * 60 * cacheExpire);
