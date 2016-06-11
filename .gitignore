@@ -29,6 +29,10 @@ node_modules
 # cache
 floe/app/cache
 
+# PHP Storm
+
+.idea/
+
 # gulp generated files
 
 httpdocs/assets/css/main.css

@@ -33,5 +33,7 @@
     "url": "https://github.com/WsCandy/build-test/issues"
   },
   "homepage": "https://github.com/WsCandy/build-test",
-  "devDependencies": {}
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
 }

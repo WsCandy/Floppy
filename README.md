@@ -1,3 +1,3 @@
-# Floe
+# Floppy
 
-Node js web framework using Koa.js
+Responsive email builder.
