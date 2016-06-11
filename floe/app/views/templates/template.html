@@ -20,19 +20,9 @@
 	</head>
 	<body id="<%- page %>">
        <div class="page-wrap">
-            <header class="template__header">
-                <a href="/" title="floe">
-                   <%- File.getContents(`${__docs}/assets/svg/floe.svg`) %>
-                </a>
-            </header>
             <div class="centre-wrap">
                 <%- body %>
             </div>
-            <footer class="template__footer">
-               <div class="centre-wrap">
-                   <p><svg class="footer__logo"><use xlink:href="#flogo"></use></svg> v0.01a</p>
-               </div>
-            </footer>
        </div>       
 	</body>
 </html>
