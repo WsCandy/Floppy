@@ -1,0 +1,29 @@
+[{
+    
+    "get" : {
+        
+        "/" : "/views/index",
+        "/:page" : "/views/:page"
+        
+    },
+    
+    "post" : {
+        
+        
+        
+    },
+    
+    "rest" : {
+    
+        "get" : {
+
+        },
+        
+        "post" : {
+
+            
+        }
+        
+    }  
+    
+}]
