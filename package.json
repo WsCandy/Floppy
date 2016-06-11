@@ -1,14 +1,14 @@
 {
-  "name": "prop-build-test",
+  "name": "floppy",
   "version": "1.0.0",
-  "description": "Propeller Build test with node",
+  "description": "Floppy Mailer Builder",
   "main": "server/bin/www.js",
   "scripts": {
     "test": "node server/bin/www.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/WsCandy/build-test.git"
+    "url": "https://github.com/WsCandy/Floppy.git"
   },
   "dependencies": {
     "koa": "^1.0.0",
@@ -30,9 +30,9 @@
   "author": "Samuel Woodbridge",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/WsCandy/build-test/issues"
+    "url": "https://github.com/WsCandy/Floppy/issues"
   },
-  "homepage": "https://github.com/WsCandy/build-test",
+  "homepage": "https://github.com/WsCandy/Floppy",
   "devDependencies": {
     "babel-core": "^6.9.1",
     "babel-loader": "^6.2.4",
