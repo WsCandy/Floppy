@@ -1,0 +1,64 @@
+.nav {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 200px;
+
+	background: $p1PrimaryColor;
+
+	&__logo {
+		padding: 40px 0 20px 0;
+
+		// border-bottom: 1px solid $black;
+		text-align: center;
+
+		svg {
+			width: 80px;
+			height: 140px;
+		}
+	}
+
+	&__wrapper {
+		// padding: 20px 0;
+	}
+
+	&__item {
+	    display: block;
+	    width: 100%;
+		padding: 10px 5%;
+
+		// @include font-size(0);
+		font-size: 0;
+		color: $white;
+
+		&:hover,
+		&.is-active {
+			background: $p1SecondaryColor;
+			color: $p1TertiaryColor;
+
+			.nav__item__wrapper {
+				transform: translateX(5%);
+			}
+		}
+
+		&__wrapper {
+			transition: transform 0.25s ease-in-out;
+		}
+
+		.icon {
+			display: inline-block;
+		    width: 30px;
+
+		    font-size: 20px;
+		}
+
+		&__text {
+			display: inline-block;
+
+			// @include font-size(14);
+			font-size: 14px;
+			font-weight: normal;
+		}
+	}
+}

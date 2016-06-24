@@ -1,3 +1,11 @@
+@mixin flex() {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
+
 @mixin width($count, $margin) {
  
 	width: (1 / $count * 100%) - $margin + ($margin / $count);
@@ -41,11 +49,11 @@
 
 }
 
-@mixin font-size($value) {
-
-	$em : $value / 16;
-
-	font-size: $value+px;
-	font-size: $em+em;
-
+// px to rem for font-sizes and line-height
+@mixin font-size($sizeValue: 1.6, $line: $sizeValue * 1.25){
+	font-size: ($sizeValue * 1) + px;
+	line-height: ($line * 1) + px;
+	font-size: ($sizeValue / 10) + rem;
+	line-height: ($line / 10) + rem;
 }
+// usage: @include font-size(13);

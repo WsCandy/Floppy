@@ -13,6 +13,7 @@ MAIN STYLESHEET
 @import "base/mixins";
 @import "base/base";
 @import "base/template";
+@import "base/typography";
 
 
 /*--------------------------------------------------------------
@@ -27,8 +28,10 @@ MAIN STYLESHEET
 --------------------------------------------------------------*/
 
 @import "modules/icon-font";
+@import "modules/grid";
 @import "modules/layout";
 @import "modules/elements";
+@import "modules/nav";
 @import "modules/forms";
 
 @import "modules/prototype";
@@ -38,4 +41,3 @@ MAIN STYLESHEET
 #PAGES
 --------------------------------------------------------------*/
 
-@import "pages/prototype-1";

@@ -1,0 +1,100 @@
+// important to define 62.5% for [rem] font conversion
+html {
+    font-size:62.5%;
+    line-height: 62.5%;
+}
+
+body {
+	padding: 0;
+
+	background: #f4f9f8;
+	@include font-size(16,20);
+}
+
+.page-wrap {
+
+}
+
+.header {
+	width: 100%;
+	height: 40px;
+
+	background: $white;
+	border-bottom: 1px solid #ccc;
+	text-align: right;
+
+	.quicklinks {
+		float: right;
+		height: 100%;
+
+		.quicklink {
+			display: inline-block;
+			height: 100%;
+			padding: 0 5px;
+
+			@include font-size(16,40);
+			vertical-align: middle;
+
+			.icon {
+				// @include font-size(14,40);
+			}
+
+			&--settings {
+
+			}
+
+			&--mails {
+
+			}
+
+			&--alerts {
+
+			}
+
+			&--account {
+
+			}
+
+			&--profile {
+			    display: inline-block;
+			    height: 30px;
+			    width: 30px;
+			    margin-right: 5px;
+
+			    background: $p1PrimaryColor;
+			    border-radius: 50%;
+			    text-align: center;
+			    @include font-size(14,30);
+
+				img {
+					
+				}
+			}
+
+			&--help {
+				padding: 0 20px;
+
+				// background: $p1QuaternaryColor;
+				background: $p1TertiaryColor;
+				color: $white;
+
+				.icon {
+					color: $white;
+				}
+			}
+
+		}
+	}
+}
+
+.main {
+
+}
+
+.container {
+	padding-left: 200px;
+}
+
+.footer {
+
+}
