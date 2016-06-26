@@ -13,6 +13,10 @@
 		
 		<link rel="stylesheet" href="/assets/css/main.<% if(env !== 'development') {%><%= File.getTime(`${__docs}/assets/css/main.css`)%>.<% } %>css" type="text/css">
 		
+		<script src="https://fb.me/react-15.1.0.js"></script>
+		<script src="https://fb.me/react-dom-15.1.0.js"></script>
+
+
 		<script>			
 			<%- File.getContents(`${__docs}/assets/js/vendor/modernizr.custom.js`) %>
 			Modernizr.load([{load: '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'},{load: '/assets/js/main.min.<% if(env !== 'development') {%><%= File.getTime(`${__docs}/assets/js/main.min.js`) %>.<% } %>js',complete: function(){window.init()}}]);
