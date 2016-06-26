@@ -20,15 +20,11 @@ $mq-desk--sml: 960px!default;
 $mq-desk--lrg: 1280px!default;
 
 // Colour palette
-$black:		#000;
-$white:		#fff;
+$error: 			#f54d4d; // l-red
 
-// Prototype
-
-$error:					#f54d4d; // l-red
-
-// Prototype 1
-$p1PrimaryColor:		#2e373e; // grey
-$p1SecondaryColor:		#12232b; // d-grey
-$p1TertiaryColor:		#7bb5cc; //#82ABB3; // l-blue
-$p1QuaternaryColor:		#8bf394; // l-green
+$black:				#000; 	 // black
+$white:				#fff; 	 // white
+$primaryColor:		#2e373e; // grey
+$secondaryColor:	#12232b; // d-grey
+$tertiaryColor:		#82ABB3; //#82ABB3; // l-blue
+$quaternaryColor:	#8bf394; // l-green

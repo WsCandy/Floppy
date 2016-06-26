@@ -5,7 +5,7 @@
 	left: 0;
 	width: 200px;
 
-	background: $p1PrimaryColor;
+	background: $primaryColor;
 
 	&__logo {
 		padding: 40px 0 20px 0;
@@ -30,12 +30,11 @@
 
 		// @include font-size(0);
 		font-size: 0;
-		color: $white;
+		color: $tertiaryColor;
 
 		&:hover,
 		&.is-active {
-			background: $p1SecondaryColor;
-			color: $p1TertiaryColor;
+			background: $secondaryColor;
 
 			.nav__item__wrapper {
 				transform: translateX(5%);
