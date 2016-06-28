@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="dns-prefetch" href="http://<%- site.url %>/">
+		<link rel="dns-prefetch" href="//scontent.cdninstagram.com/">
+		<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+		<link rel="dns-prefetch" href="//google-analytics.com/">
+
+		<title><%- site.name %> - <%- view.title %></title>
+		<meta name="description" content="<%- view.desc %>">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+		<link rel="apple-touch-icon" href="apple-touch-icon.png">
+		
+		<link rel="stylesheet" href="/assets/css/main.<% if(env !== 'development') {%><%= File.getTime(`${__docs}/assets/css/main.css`)%>.<% } %>css" type="text/css">
+		
+		<script src="https://fb.me/react-15.1.0.js"></script>
+		<script src="https://fb.me/react-dom-15.1.0.js"></script>
+
+
+		<script>			
+			<%- File.getContents(`${__docs}/assets/js/vendor/modernizr.custom.js`) %>
+			Modernizr.load([{load: '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'},{load: '/assets/js/main.min.<% if(env !== 'development') {%><%= File.getTime(`${__docs}/assets/js/main.min.js`) %>.<% } %>js',complete: function(){window.init()}}]);
+		</script>
+	</head>
+
+	<body id="<%- page %>">
+
+		<div class="page-wrap">
+
+			<div class="login-page">
+				
+				<div class="login">
+					
+					<p class="login__heading">
+						Log in to your account
+					</p>
+
+					<% include inc/signup-form.html %>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</body>
+	
+</html>

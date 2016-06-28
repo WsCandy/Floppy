@@ -7,7 +7,7 @@ html {
 body {
 	padding: 0;
 
-	background: #f4f9f8;
+	background: #e6f1ef;;
 	@include font-size(16,20);
 }
 
@@ -109,7 +109,7 @@ body {
 }
 
 .main {
-
+	position: relative;
 }
 
 .container {
