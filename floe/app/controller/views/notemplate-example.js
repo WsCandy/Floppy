@@ -1,9 +1,9 @@
 const View = __('View');
 
-exports.init = function *(config, settings) {
+exports.init = function *(page, settings) {
 
 	settings.layout = false;
 
-	yield View.render(settings.page, settings);
+	yield View.render(page, settings);
 
 };
