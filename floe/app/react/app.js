@@ -16,18 +16,31 @@ class ConstructorFrame extends React.Component {
 class Main extends React.Component {
     constructor () {
         super();
-        this.state = { components: [<ImageRegion />, <BlockRegion />] }
+        this.state = { components: [], id: 0 }
     };
     addComponent (element) {
         this.setState(
-            { components: this.state.components.concat(element) }
+            {
+                components: this.state.components.concat(element),
+                id: parseInt(this.state.id) + 1
+            }
         )
     };
-
     reset () {
+        var emptyComponents = this.state.components.slice();
+            for (var i = 0; i < emptyComponents.length; i++) {
+                emptyComponents[i] = null;
+            }
         this.setState(
-            { components: [] }
+            { components: emptyComponents }
         )
+    };
+    removeComponent (id) {
+        var removedComponents = this.state.components.slice();
+        removedComponents[id] = null;
+        this.setState(
+            { components: removedComponents }
+        );
     };
     render () {
         return (
@@ -37,9 +50,9 @@ class Main extends React.Component {
                         <div className="row">
                             <div className="large-8 columns">
                                 <div className="block">
-                                    <button onClick={() => this.addComponent(<BlockRegion />)}>Add Block</button>
-                                    <button onClick={() => this.addComponent(<ImageRegion />)}>Add Image</button>
-                                    <button onClick={() => this.addComponent(<Navigation />)}>Add Navigation</button>
+                                    <button onClick={() => this.addComponent(<BlockRegion id={this.state.id} remove={this.removeComponent.bind(this)} />)}>Add Block</button>
+                                    <button onClick={() => this.addComponent(<ImageRegion id={this.state.id} remove={this.removeComponent.bind(this)} />)} >Add Image</button>
+                                    <button onClick={() => this.addComponent(<Navigation id={this.state.id} remove={this.removeComponent.bind(this)} />)}>Add Navigation</button>
                                     <button onClick={() => this.reset()}>Reset</button>
                                 </div>
                             </div>
