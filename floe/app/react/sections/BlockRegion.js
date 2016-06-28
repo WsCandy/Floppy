@@ -17,7 +17,6 @@ class BlockRegion extends React.Component {
             </div>
         )
     }
-}
-;
+};
 
 export default BlockRegion;
