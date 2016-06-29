@@ -1,17 +1,15 @@
 <form action="" method="post" class="form form--login">
 
-	<div class="form__field-wrap">
-		<label for="login__username" class="form__label"><span class="hidden">Username</span></label>
-		<input type="text" name="login__username" id="login__username" class="form__input" placeholder="Username" required>
+	<div class="field-wrap field-wrap--underlined">
+		<label for="login__username"><span class="hidden">Username</span></label>
+		<input type="text" name="login__username" id="login__username" placeholder="Username" required>
 	</div>
 
-	<div class="form__field-wrap">
-		<label for="login__password" class="form__label"><span class="hidden">Password</span></label>
-		<input type="password" name="login__password" id="login__password" class="form__input" placeholder="Password" required>
+	<div class="form__field-wrap field-wrap--underlined">
+		<label for="login__password"><span class="hidden">Password</span></label>
+		<input type="password" name="login__password" id="login__password" placeholder="Password" required>
 	</div>
 
-	<div class="form__field-wrap">
-		<input class="btn" type="submit" value="Sign In">
-	</div>
+	<input class="btn btn--rounded btn--full btn--ghost" type="submit" value="Sign In">
 
 </form>

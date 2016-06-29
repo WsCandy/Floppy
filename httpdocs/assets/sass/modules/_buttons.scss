@@ -1,15 +1,17 @@
 .btn {
-	width: 250px;
-	padding: 10px 15px;
+	height: 40px;
+	margin: 20px 0;
+	padding: 0 15px;
 
 	cursor: pointer;
 	appearance: none;
 	background-color: $white;
 	outline: 0;
 	border: 0;
-	border-radius: 4px;
 	color: $primaryColor;
-	@include font-size(18, 24);
+
+	@include font-size(14, 24);
+	text-transform: uppercase;
 
 	transition:
 		color 0.25s ease-in-out,
@@ -18,9 +20,28 @@
 	
 	&:hover{
 		background-color: $tertiaryColor;
+		color: $white;
+	}
+
+	&--rounded {
+		border-radius: 20px;
 	}
 
 	&--lrg {
 
+	}
+
+	&--full {
+		width: 100%;
+	}
+
+	&--ghost {
+		background: transparent;
+		border: 2px solid $quaternaryColor;
+		color: $quaternaryColor;
+
+		&:hover {
+			background: $primaryColor;
+		}
 	}
 }

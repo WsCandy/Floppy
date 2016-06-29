@@ -1,18 +1,35 @@
 .form {
 
 	&--login {
+		
+	}
+
+	.field-wrap {
+		margin-bottom: 20px;
+
+		&--underlined {
+			border-bottom: 1px solid $white;
+		}
+	}
+
+	label {
 
 	}
 
-	&__field-wrap {
-
-	}
-
-	&__label {
-
-	}
-
-	&__input {
+	input {
 		width: 100%;
+	}
+
+	input[type="text"],
+	input[type="password"] {
+		height: 40px;
+
+		background: none;
+		outline: none;
+		border: none;
+	}
+
+	input[type="submit"] {
+		margin-top: 40px;
 	}
 }

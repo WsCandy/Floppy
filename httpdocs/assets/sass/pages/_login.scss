@@ -10,8 +10,8 @@
 	background: #EA5C54;
 	background: linear-gradient(
 		135deg,
-		#EA5C54  0%,
-		#bb6dec 100%
+		$tertiaryColor  0%,
+		$quaternaryColor 100%
 	);
 }
 
@@ -23,7 +23,37 @@
 	margin: 0 auto;
 	width: 300px;
 	transform: translateY(-50%);
-	padding: 20px;
+	padding: 40px 20px;
 
 	background: $secondaryColor;
+	background: rgba(18, 35, 43, 0.75);
+	border-bottom: 3px solid $tertiaryColor;
+
+	&__image {
+		margin: 40px 0 20px 0;
+
+		text-align: center;
+
+		.icon {
+			color: $white;
+			@include font-size(100, 120);
+		}
+	}
+
+	&__heading {
+		margin-bottom: 40px;
+
+		color: $quaternaryColor;
+	}
+
+	&__footer {
+		margin: 0;
+
+		color: $grey;
+		text-align: center;
+
+		a {
+			color: $white;
+		}
+	}
 }

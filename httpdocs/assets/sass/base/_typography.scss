@@ -3,5 +3,9 @@ a {
 }
 
 p a {
-	text-decoration: underline;
+	font-weight: normal;
+
+	&:hover {
+		text-decoration: underline;
+	}
 }
