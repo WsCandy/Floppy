@@ -1,14 +1,11 @@
 import Options from '../ui/Options';
 
-class ImageRegion extends React.Component {
-
+class ButtonRegion extends React.Component {
     constructor() {
         super();
         this.state = {
             defaults: {
-                url: 'http://www.propcom.co.uk/assets/img/what-we-do/ecommerce/magento.jpg',
-                width: '100%',
-                height: '200'
+            
             }
         }
     };
@@ -17,12 +14,16 @@ class ImageRegion extends React.Component {
         this.props.remove(id);
     };
 
+    changeWidth(e) {
+        this.setState({
+            width: e.target.value
+        });
+    };
+
     updateState(e) {
         this.setState({
             defaults: {
-                url: e.url,
-                width: e.width,
-                height: e.height
+
             }
         })
     };
@@ -32,9 +33,7 @@ class ImageRegion extends React.Component {
             <div className="row">
                 <div className="large-12 columns">
                     <div className="block" style={{position: "relative"}}>
-                        <img src={this.state.defaults.url}
-                             style={{width: this.state.defaults.width, height: this.state.defaults.height}}/>
-
+                        <button className="btn  btn--ghost">Button</button>
                         <Options remove={this.removeElement.bind(this)}
                                  id={this.props.id}
                                  defaults={this.state.defaults}
@@ -45,6 +44,6 @@ class ImageRegion extends React.Component {
             </div>
         )
     }
-}
+};
 
-export default ImageRegion;
+export default ButtonRegion;

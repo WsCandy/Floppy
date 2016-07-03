@@ -1,9 +1,10 @@
-import BlockRegion from './sections/BlockRegion';
+import TextRegion from './sections/TextRegion';
 import ImageRegion from './sections/ImageRegion';
 import Navigation from './sections/Navigation';
+import ButtonRegion from './sections/ButtonRegion';
 
 class ConstructorFrame extends React.Component {
-    render () {
+    render() {
         var components = this.props.components;
         return (
             <div className="content">
@@ -11,14 +12,16 @@ class ConstructorFrame extends React.Component {
             </div>
         );
     }
-};
+}
+;
 
 class Main extends React.Component {
-    constructor () {
+    constructor() {
         super();
-        this.state = { components: [], id: 0 }
+        this.state = {components: [], id: 0}
     };
-    addComponent (element) {
+
+    addComponent(element) {
         this.setState(
             {
                 components: this.state.components.concat(element),
@@ -26,46 +29,61 @@ class Main extends React.Component {
             }
         )
     };
-    reset () {
+
+    reset() {
         var emptyComponents = this.state.components.slice();
-            for (var i = 0; i < emptyComponents.length; i++) {
-                emptyComponents[i] = null;
-            }
+        for (var i = 0; i < emptyComponents.length; i++) {
+            emptyComponents[i] = null;
+        }
         this.setState(
-            { components: emptyComponents }
+            {components: emptyComponents}
         )
     };
-    removeComponent (id) {
+
+    removeComponent(id) {
         var removedComponents = this.state.components.slice();
         removedComponents[id] = null;
         this.setState(
-            { components: removedComponents }
+            {components: removedComponents}
         );
     };
-    render () {
+
+    render() {
         return (
             <div>
-                <div className="container">
-                    <div className="content">
-                        <div className="row">
-                            <div className="large-8 columns">
-                                <div className="block">
-                                    <button onClick={() => this.addComponent(<BlockRegion id={this.state.id} remove={this.removeComponent.bind(this)} />)}>Add Block</button>
-                                    <button onClick={() => this.addComponent(<ImageRegion id={this.state.id} remove={this.removeComponent.bind(this)} />)} >Add Image</button>
-                                    <button onClick={() => this.addComponent(<Navigation id={this.state.id} remove={this.removeComponent.bind(this)} />)}>Add Navigation</button>
-                                    <button onClick={() => this.reset()}>Reset</button>
-                                </div>
+                <div className="content">
+                    <div className="row">
+                        <div className="large-12 columns">
+                            <div className="block">
+                                <button className="btn  btn--ghost"
+                                        onClick={() => this.addComponent(<TextRegion id={this.state.id} remove={this.removeComponent.bind(this)} />)}>
+                                    Text Block
+                                </button>
+                                <button className="btn  btn--ghost"
+                                        onClick={() => this.addComponent(<ImageRegion id={this.state.id} remove={this.removeComponent.bind(this)} />)}>
+                                    Image Block
+                                </button>
+                                <button className="btn  btn--ghost"
+                                        onClick={() => this.addComponent(<Navigation id={this.state.id} remove={this.removeComponent.bind(this)} />)}>
+                                    Navigation
+                                </button>
+                                <button className="btn  btn--ghost"
+                                        onClick={() => this.addComponent(<ButtonRegion id={this.state.id} remove={this.removeComponent.bind(this)} />)}>
+                                    Buttons
+                                </button>
+                                <button className="btn  btn--ghost" onClick={() => this.reset()}>Reset</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="container">
-                    <ConstructorFrame components={this.state.components} />
+                <div>
+                    <ConstructorFrame components={this.state.components}/>
                 </div>
             </div>
         )
     }
-};
+}
+;
 
 var root = document.getElementById('constructor');
 

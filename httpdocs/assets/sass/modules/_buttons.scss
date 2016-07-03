@@ -1,6 +1,6 @@
 .btn {
 	height: 40px;
-	margin: 20px 0;
+	margin: 20px 1px;
 	padding: 0 15px;
 
 	cursor: pointer;
@@ -15,8 +15,7 @@
 
 	transition:
 		color 0.25s ease-in-out,
-		background-color 0.15s ease-in-out
-	;
+		background-color 0.15s ease-in-out;
 	
 	&:hover{
 		background-color: $tertiaryColor;
@@ -37,11 +36,15 @@
 
 	&--ghost {
 		background: transparent;
-		border: 2px solid $quaternaryColor;
-		color: $quaternaryColor;
+		border: 2px solid $primaryColor;
+		color: $primaryColor;
 
 		&:hover {
 			background: $primaryColor;
 		}
+	}
+
+	&--static {
+		width: 40px;
 	}
 }

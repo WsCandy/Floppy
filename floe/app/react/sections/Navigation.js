@@ -1,26 +1,49 @@
+import Options from '../ui/Options';
+
 class Navigation extends React.Component {
-    handleClick(id) {
+
+    constructor() {
+        super();
+        this.state = {
+            defaults: {}
+        }
+    };
+
+    removeElement(id) {
         this.props.remove(id);
+    };
+
+    updateState(e) {
+        this.setState({
+            defaults: {}
+        })
     };
 
     render() {
         return (
             <div className="row">
-                <div className="large-8 columns">
+                <div className="large-12 columns">
                     <div className="block" style={{position: "relative"}}>
-                        <a>Home</a>
-                        <a>About</a>
-                        <a>Why us</a>
-                        <a>Contact</a>
-                        <div className="overlay__settings" style={{position: "absolute", top: "25px", right: "25px"}}>
-                            <button onClick={this.handleClick.bind(this, this.props.id)}>X</button>
-                        </div>
+                        <nav>
+                            <ul style={{padding: 0}}>
+                                <li style={{display: 'inline-block', marginRight: '20px'}}><a>Home</a></li>
+                                <li style={{display: 'inline-block', marginRight: '20px'}}><a>About</a></li>
+                                <li style={{display: 'inline-block', marginRight: '20px'}}><a>Why us</a></li>
+                                <li style={{display: 'inline-block', marginRight: '20px'}}><a>Contact</a></li>
+                            </ul>
+                        </nav>
+                        <Options remove={this.removeElement.bind(this)}
+                                 id={this.props.id}
+                                 defaults={this.state.defaults}
+                                 update={this.updateState.bind(this)}
+                        />
                     </div>
                 </div>
             </div>
 
         )
     }
-};
+}
+;
 
 export default Navigation;
