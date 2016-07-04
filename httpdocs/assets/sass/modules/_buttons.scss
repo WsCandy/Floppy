@@ -44,6 +44,13 @@
 		}
 	}
 
+	&--mailer {
+		background: $tertiaryColor;
+		color: $white;
+		border: 1px solid $white;
+		width: 100%;
+	}
+
 	&--static {
 		width: 40px;
 	}

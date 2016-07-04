@@ -76,9 +76,27 @@ class Main extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div>
-                    <ConstructorFrame components={this.state.components}/>
-                </div>
+                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td align="center">
+                            <table width="600" align="center" border="0" cellpadding="0" cellspacing="0"
+                                   className="mq-wrap"
+                                   style={{minWidth: '600px'}}>
+                                <tr>
+                                    <td bgcolor="#ffffff" style={{backgroundColor: '#ffffff'}}>
+                                        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td>
+                                                    <ConstructorFrame components={this.state.components}/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
             </div>
         )
     }

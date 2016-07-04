@@ -6,9 +6,9 @@ class ImageRegion extends React.Component {
         super();
         this.state = {
             defaults: {
-                url: 'http://www.propcom.co.uk/assets/img/what-we-do/ecommerce/magento.jpg',
-                width: '100%',
-                height: '200'
+                url: '/assets/img/head-logo.png',
+                width: '80',
+                height: '148'
             }
         }
     };
@@ -29,19 +29,31 @@ class ImageRegion extends React.Component {
 
     render() {
         return (
-            <div className="row">
-                <div className="large-12 columns">
-                    <div className="block" style={{position: "relative"}}>
-                        <img src={this.state.defaults.url}
-                             style={{width: this.state.defaults.width, height: this.state.defaults.height}}/>
-
-                        <Options remove={this.removeElement.bind(this)}
-                                 id={this.props.id}
-                                 defaults={this.state.defaults}
-                                 update={this.updateState.bind(this)}
-                        />
-                    </div>
-                </div>
+            <div style={{position: 'relative'}}>
+                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td bgcolor="#2e373e"
+                            style={{paddingTop: '20px', paddingBottom: '20px', backgroundColor: '#2e373e'}}>
+                            <table width="80" align="center" border="0" cellpadding="0" cellspacing="0"
+                                   style={{margin: '0 auto'}}>
+                                <tr>
+                                    <td>
+                                        <a className="js-link">
+                                            <img src={this.state.defaults.url}
+                                                 style={{width: this.state.defaults.width, height: this.state.defaults.height}}
+                                                 border="0"/>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <Options remove={this.removeElement.bind(this)}
+                         id={this.props.id}
+                         defaults={this.state.defaults}
+                         update={this.updateState.bind(this)}
+                />
             </div>
         )
     }

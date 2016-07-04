@@ -4,9 +4,7 @@ class ButtonRegion extends React.Component {
     constructor() {
         super();
         this.state = {
-            defaults: {
-            
-            }
+            defaults: {}
         }
     };
 
@@ -22,28 +20,37 @@ class ButtonRegion extends React.Component {
 
     updateState(e) {
         this.setState({
-            defaults: {
-
-            }
+            defaults: {}
         })
     };
 
     render() {
         return (
-            <div className="row">
-                <div className="large-12 columns">
-                    <div className="block" style={{position: "relative"}}>
-                        <button className="btn  btn--ghost">Button</button>
-                        <Options remove={this.removeElement.bind(this)}
-                                 id={this.props.id}
-                                 defaults={this.state.defaults}
-                                 update={this.updateState.bind(this)}
-                        />
-                    </div>
-                </div>
+            <div style={{position: 'relative'}}>
+                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style={{paddingRight: '10px', paddingLeft: '10px'}}>
+                            <table width="285" align="center" border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td align="center" bgcolor="#82abb3" className="js-background"
+                                        style={{padding: '10px'}}>
+                                        <div className="text  text--button  js-text">
+                                            <button className="btn  btn--ghost  btn--mailer">Button</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <Options remove={this.removeElement.bind(this)}
+                             id={this.props.id}
+                             defaults={this.state.defaults}
+                             update={this.updateState.bind(this)}
+                    />
+                </table>
             </div>
         )
     }
-};
+}
 
 export default ButtonRegion;
